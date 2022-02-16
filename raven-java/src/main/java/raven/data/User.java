@@ -11,7 +11,7 @@
  */
 
 
-package raven.model;
+package raven.data;
 
 import java.util.Objects;
 

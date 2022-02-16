@@ -6,7 +6,7 @@
  * Contact: api@ravenapp.dev
  */
 
-package raven;
+package raven.utils;
 
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.ResponseBody;

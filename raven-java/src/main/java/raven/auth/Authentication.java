@@ -9,7 +9,7 @@
 
 package raven.auth;
 
-import raven.Pair;
+import raven.utils.Pair;
 
 import java.util.Map;
 import java.util.List;

@@ -7,7 +7,7 @@
  */
 
 
-package raven;
+package raven.utils;
 
 public class Pair {
     private String name = "";

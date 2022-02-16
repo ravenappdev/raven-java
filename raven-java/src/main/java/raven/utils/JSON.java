@@ -7,7 +7,7 @@
  */
 
 
-package raven;
+package raven.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,15 +15,13 @@ import com.google.gson.JsonParseException;
 import com.google.gson.TypeAdapter;
 import com.google.gson.internal.bind.util.ISO8601Utils;
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-import com.google.gson.JsonElement;
 import io.gsonfire.GsonFireBuilder;
+import okio.ByteString;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
 import org.threeten.bp.format.DateTimeFormatter;
-
-import raven.model.*;
-import okio.ByteString;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -32,7 +30,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.ParsePosition;
 import java.util.Date;
-import java.util.Map;
 
 public class JSON {
     private Gson gson;
@@ -44,36 +41,20 @@ public class JSON {
     private ByteArrayAdapter byteArrayAdapter = new ByteArrayAdapter();
 
     public static GsonBuilder createGson() {
-        GsonFireBuilder fireBuilder = new GsonFireBuilder()
-        ;
+        GsonFireBuilder fireBuilder = new GsonFireBuilder();
         GsonBuilder builder = fireBuilder.createGsonBuilder();
         return builder;
     }
 
-    private static String getDiscriminatorValue(JsonElement readElement, String discriminatorField) {
-        JsonElement element = readElement.getAsJsonObject().get(discriminatorField);
-        if(null == element) {
-            throw new IllegalArgumentException("missing discriminator field: <" + discriminatorField + ">");
-        }
-        return element.getAsString();
-    }
-
-    private static Class getClassByDiscriminator(Map classByDiscriminatorValue, String discriminatorValue) {
-        Class clazz = (Class) classByDiscriminatorValue.get(discriminatorValue.toUpperCase());
-        if(null == clazz) {
-            throw new IllegalArgumentException("cannot determine model class of name: <" + discriminatorValue + ">");
-        }
-        return clazz;
-    }
 
     public JSON() {
         gson = createGson()
-            .registerTypeAdapter(Date.class, dateTypeAdapter)
-            .registerTypeAdapter(java.sql.Date.class, sqlDateTypeAdapter)
-            .registerTypeAdapter(OffsetDateTime.class, offsetDateTimeTypeAdapter)
-            .registerTypeAdapter(LocalDate.class, localDateTypeAdapter)
-            .registerTypeAdapter(byte[].class, byteArrayAdapter)
-            .create();
+                .registerTypeAdapter(Date.class, dateTypeAdapter)
+                .registerTypeAdapter(java.sql.Date.class, sqlDateTypeAdapter)
+                .registerTypeAdapter(OffsetDateTime.class, offsetDateTimeTypeAdapter)
+                .registerTypeAdapter(LocalDate.class, localDateTypeAdapter)
+                .registerTypeAdapter(byte[].class, byteArrayAdapter)
+                .create();
     }
 
     /**
@@ -83,22 +64,6 @@ public class JSON {
      */
     public Gson getGson() {
         return gson;
-    }
-
-    /**
-     * Set Gson.
-     *
-     * @param gson Gson
-     * @return JSON
-     */
-    public JSON setGson(Gson gson) {
-        this.gson = gson;
-        return this;
-    }
-
-    public JSON setLenientOnJson(boolean lenientOnJson) {
-        isLenientOnJson = lenientOnJson;
-        return this;
     }
 
     /**
@@ -142,7 +107,7 @@ public class JSON {
     /**
      * Gson TypeAdapter for Byte Array type
      */
-    public class ByteArrayAdapter extends TypeAdapter<byte[]> {
+    public static class ByteArrayAdapter extends TypeAdapter<byte[]> {
 
         @Override
         public void write(JsonWriter out, byte[] value) throws IOException {
@@ -204,7 +169,7 @@ public class JSON {
                 default:
                     String date = in.nextString();
                     if (date.endsWith("+0000")) {
-                        date = date.substring(0, date.length()-5) + "Z";
+                        date = date.substring(0, date.length() - 5) + "Z";
                     }
                     return OffsetDateTime.parse(date, formatter);
             }
@@ -214,7 +179,7 @@ public class JSON {
     /**
      * Gson TypeAdapter for JSR310 LocalDate type
      */
-    public class LocalDateTypeAdapter extends TypeAdapter<LocalDate> {
+    public static class LocalDateTypeAdapter extends TypeAdapter<LocalDate> {
 
         private DateTimeFormatter formatter;
 
@@ -250,16 +215,6 @@ public class JSON {
                     return LocalDate.parse(date, formatter);
             }
         }
-    }
-
-    public JSON setOffsetDateTimeFormat(DateTimeFormatter dateFormat) {
-        offsetDateTimeTypeAdapter.setFormat(dateFormat);
-        return this;
-    }
-
-    public JSON setLocalDateFormat(DateTimeFormatter dateFormat) {
-        localDateTypeAdapter.setFormat(dateFormat);
-        return this;
     }
 
     /**
@@ -354,35 +309,22 @@ public class JSON {
         @Override
         public Date read(JsonReader in) throws IOException {
             try {
-                switch (in.peek()) {
-                    case NULL:
-                        in.nextNull();
-                        return null;
-                    default:
-                        String date = in.nextString();
-                        try {
-                            if (dateFormat != null) {
-                                return dateFormat.parse(date);
-                            }
-                            return ISO8601Utils.parse(date, new ParsePosition(0));
-                        } catch (ParseException e) {
-                            throw new JsonParseException(e);
-                        }
+                if (in.peek() == JsonToken.NULL) {
+                    in.nextNull();
+                    return null;
+                }
+                String date = in.nextString();
+                try {
+                    if (dateFormat != null) {
+                        return dateFormat.parse(date);
+                    }
+                    return ISO8601Utils.parse(date, new ParsePosition(0));
+                } catch (ParseException e) {
+                    throw new JsonParseException(e);
                 }
             } catch (IllegalArgumentException e) {
                 throw new JsonParseException(e);
             }
         }
     }
-
-    public JSON setDateFormat(DateFormat dateFormat) {
-        dateTypeAdapter.setFormat(dateFormat);
-        return this;
-    }
-
-    public JSON setSqlDateFormat(DateFormat dateFormat) {
-        sqlDateTypeAdapter.setFormat(dateFormat);
-        return this;
-    }
-
 }

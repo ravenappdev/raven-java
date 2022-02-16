@@ -76,10 +76,10 @@ import io.swagger.client.*;
 import raven.RavenClient;
 import raven.RavenException;
 import raven.Configuration;
-import raven.api.EventApi;
+import raven.api.SendEventApi;
 import raven.auth.ApiKeyAuth;
-import raven.model.Response;
-import raven.model.SendEventBulk;
+import raven.data.Response;
+import raven.data.SendEventBulk;
 
 public class EventApiExample {
 
@@ -92,14 +92,14 @@ public class EventApiExample {
     // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
     //ApiKeyAuth.setApiKeyPrefix("Token");
 
-    EventApi apiInstance = new EventApi();
+    SendEventApi apiInstance = new SendEventApi();
     String appId = "appId_example"; // String | app id of raven app
     SendEventBulk event = new SendEventBulk(); // SendEventBulk | the body for the event that has to be triggered
     try {
       Response result = apiInstance.sendBulkEvent(appId, event);
       System.out.println(result);
     } catch (RavenException e) {
-      System.err.println("Exception when calling EventApi#sendBulkEvent");
+      System.err.println("Exception when calling SendEventApi#sendBulkEvent");
       e.printStackTrace();
     }
   }

@@ -9,15 +9,16 @@
 
 package raven;
 
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 
 public class RavenException extends Exception {
     private int code = 0;
     private Map<String, List<String>> responseHeaders = null;
     private String responseBody = null;
 
-    public RavenException() {}
+    public RavenException() {
+    }
 
     public RavenException(Throwable throwable) {
         super(throwable);

@@ -11,7 +11,7 @@
  */
 
 
-package raven.model;
+package raven.data;
 
 import com.google.gson.annotations.SerializedName;
 

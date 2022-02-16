@@ -11,12 +11,10 @@
  */
 
 
-package raven.model;
+package raven.data;
 
 import java.util.Objects;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Data

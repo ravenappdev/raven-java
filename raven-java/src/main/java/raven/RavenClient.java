@@ -4,22 +4,25 @@
  *
  * OpenAPI spec version: 1.0.0
  * Contact: api@ravenapp.dev
-*/
+ */
 
 
 package raven;
 
-import com.google.gson.reflect.TypeToken;
 import com.squareup.okhttp.*;
 import com.squareup.okhttp.internal.http.HttpMethod;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor;
 import com.squareup.okhttp.logging.HttpLoggingInterceptor.Level;
-import raven.auth.ApiKeyAuth;
-import raven.auth.Authentication;
 import okio.BufferedSink;
 import okio.Okio;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
+import raven.auth.ApiKeyAuth;
+import raven.auth.Authentication;
+import raven.utils.JSON;
+import raven.utils.Pair;
+import raven.utils.ProgressRequestBody;
+import raven.utils.StringUtil;
 
 import javax.net.ssl.*;
 import java.io.File;
@@ -46,7 +49,7 @@ import java.util.regex.Pattern;
 
 public class RavenClient {
 
-    private String basePath = "https://api.staging.ravenapp.dev";
+    private String basePath = "https://api.ravenapp.dev";
     private boolean debugging = false;
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
     private String tempFolderPath = null;
@@ -312,9 +315,9 @@ public class RavenClient {
      * @param returnType The type of the Java object
      * @return The deserialized Java object
      * @throws RavenException If fail to deserialize response body, i.e. cannot read response body
-     *                      or the Content-Type of the response is not supported.
+     *                        or the Content-Type of the response is not supported.
      */
-    @SuppressWarnings("unchecked")
+
     public <T> T deserialize(Response response, Type returnType) throws RavenException {
         if (response == null || returnType == null) {
             return null;
@@ -539,7 +542,7 @@ public class RavenClient {
      * @param returnType Return type
      * @return Type
      * @throws RavenException If the response has a unsuccessful status code or
-     *                      fail to deserialize the response body
+     *                        fail to deserialize the response body
      */
     public <T> T handleResponse(Response response, Type returnType) throws RavenException {
         if (response.isSuccessful()) {
@@ -563,26 +566,22 @@ public class RavenClient {
             if (response.body() != null) {
                 try {
                     respBody = response.body().string();
-                    if(isJsonMime(response.headers().get("Content-Type"))){
+                    if (isJsonMime(response.headers().get("Content-Type"))) {
                         T resp = json.deserialize(respBody, returnType);
-                        if((resp instanceof raven.model.Response)) {
-                            raven.model.Response resp1 = (raven.model.Response)resp;
+                        if ((resp instanceof raven.data.Response)) {
+                            raven.data.Response resp1 = (raven.data.Response) resp;
                             errorDescription = resp1.getError();
-                        }
-                        else
-                        {
+                        } else {
                             errorDescription = respBody;
                         }
-                    }
-                    else
-                    {
-                      errorDescription = respBody;
+                    } else {
+                        errorDescription = respBody;
                     }
                 } catch (IOException e) {
                     throw new RavenException(response.message(), e, response.code(), response.headers().toMultimap());
                 }
             }
-            throw new RavenException(response.message(), response.code(), response.headers().toMultimap(), errorDescription);
+            throw new RavenException(errorDescription, response.code(), response.headers().toMultimap(), errorDescription);
         }
     }
 

@@ -17,9 +17,12 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
-import raven.model.Response;
-import raven.model.SendEvent;
-import raven.model.SendEventBulk;
+import raven.data.Response;
+import raven.data.SendEvent;
+import raven.data.SendEventBulk;
+import raven.utils.Pair;
+import raven.utils.ProgressRequestBody;
+import raven.utils.ProgressResponseBody;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -27,14 +30,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EventApi {
+public class SendEventApi {
     private RavenClient apiClient;
 
-    public EventApi() {
+    public SendEventApi() {
         this(Configuration.getDefaultApiClient());
     }
 
-    public EventApi(RavenClient apiClient) {
+    public SendEventApi(RavenClient apiClient) {
         this.apiClient = apiClient;
     }
 

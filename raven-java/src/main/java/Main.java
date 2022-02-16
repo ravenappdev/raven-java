@@ -1,7 +1,7 @@
-import raven.RavenException;
 import raven.Configuration;
-import raven.api.EventApi;
-import raven.model.*;
+import raven.RavenException;
+import raven.api.SendEventApi;
+import raven.data.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         Configuration.setApiKey("YXNkaGl3YW1zY2lhdXNuamxxamR3b3ducWlsamRrd3FlcWU=");
 
-        EventApi api = new EventApi();
+        SendEventApi api = new SendEventApi();
 
         String appId = "ead40fc4-34a2-4e7c-abaf-337c00eef79a";
 
@@ -19,13 +19,13 @@ public class Main {
         User user1 = new User();
         user1.setUserId("user1");
         Data data1 = new Data();
-        data1.put("key1","value1");
+        data1.put("key1", "value1");
 
 
         User user2 = new User();
         user2.setUserId("user2");
         Data data2 = new Data();
-        data2.put("key2","value2");
+        data2.put("key2", "value2");
 
         SendEvent obj = new SendEvent.Builder()
                 .event(event)
@@ -38,8 +38,7 @@ public class Main {
         try {
             resp = api.sendEvent(appId, obj);
         } catch (RavenException e) {
-            System.out.println(e.getCode() + " " + e.getMessage());
-            System.out.println(e.getResponseBody());
+            System.out.println(e.getMessage());
             return;
         }
 
@@ -61,8 +60,7 @@ public class Main {
         try {
             resp = api.sendBulkEvent(appId, obj2);
         } catch (RavenException e) {
-            System.out.println(e.getCode());
-            System.out.println(e.getResponseBody());
+            System.out.println(e.getMessage());
             return;
         }
 

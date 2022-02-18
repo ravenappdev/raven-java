@@ -28,12 +28,15 @@ public class SendEvent {
     @SerializedName("data")
     private Data data = null;
 
+    @SerializedName("override")
+    private EventOverride override = null;
+
 
     private SendEvent(Builder builder) {
         this.event = builder.event;
         this.user = builder.user;
         this.data = builder.data;
-
+        this.override = builder.override;
     }
 
     /**
@@ -64,12 +67,22 @@ public class SendEvent {
     }
 
     /**
+     * Get override
+     *
+     * @return override
+     **/
+    public EventOverride getOverride() {
+        return override;
+    }
+
+    /**
      * Builder for the SendEvent class objects
      **/
     public static class Builder {
         private String event;
         private User user;
         private Data data;
+        private EventOverride override;
 
         public Builder() {
         }
@@ -86,6 +99,11 @@ public class SendEvent {
 
         public Builder data(Data data) {
             this.data = data;
+            return this;
+        }
+
+        public Builder override(EventOverride override) {
+            this.override = override;
             return this;
         }
 

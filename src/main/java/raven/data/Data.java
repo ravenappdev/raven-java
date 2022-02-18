@@ -19,7 +19,7 @@ import java.util.HashMap;
 /**
  * Data
  */
-public class Data extends HashMap<String, String> {
+public class Data extends HashMap<String, Object> {
 
   @Override
   public boolean equals(java.lang.Object o) {

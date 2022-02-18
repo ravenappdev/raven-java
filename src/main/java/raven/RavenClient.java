@@ -49,7 +49,7 @@ import java.util.regex.Pattern;
 
 public class RavenClient {
 
-    private String basePath = "https://api.ravenapp.dev";
+    private String basePath = "https://api.staging.ravenapp.dev";
     private boolean debugging = false;
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
     private String tempFolderPath = null;

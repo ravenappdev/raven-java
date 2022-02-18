@@ -38,10 +38,13 @@ public class SendEventBulk {
         User user = null;
         @SerializedName("data")
         Data data = null;
+        @SerializedName("override")
+        EventOverride override = null;
 
         private BatchItem(ItemBuilder builder) {
             this.user = builder.user;
             this.data = builder.data;
+            this.override = builder.override;
         }
 
         public User getUser() {
@@ -52,12 +55,15 @@ public class SendEventBulk {
             return data;
         }
 
+        public EventOverride getOverride() {return override;}
+
         /**
          * Builder for the SendEventBulk.BatchItem class objects
          **/
         public static class ItemBuilder {
             private final User user;
             private Data data;
+            private EventOverride override;
 
             public ItemBuilder(User user) {
                 this.user = user;
@@ -65,6 +71,11 @@ public class SendEventBulk {
 
             public ItemBuilder data(Data data) {
                 this.data = data;
+                return this;
+            }
+
+            public ItemBuilder override(EventOverride override) {
+                this.override = override;
                 return this;
             }
 

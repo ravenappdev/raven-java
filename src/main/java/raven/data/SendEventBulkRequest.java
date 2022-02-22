@@ -21,25 +21,25 @@ import java.util.List;
 /**
  * SendEventBulk
  */
-public class SendEventBulk {
+public class SendEventBulkRequest {
     @SerializedName("event")
-    private String event = null;
+    private String event;
 
     @SerializedName("batch")
-    private List<BatchItem> batch = null;
+    private List<BatchItem> batch;
 
-    SendEventBulk(Builder builder) {
+    SendEventBulkRequest(Builder builder) {
         this.event = builder.event;
         this.batch = builder.batch;
     }
 
     public static class BatchItem {
         @SerializedName("user")
-        User user = null;
+        User user;
         @SerializedName("data")
-        Data data = null;
+        Data data;
         @SerializedName("override")
-        EventOverride override = null;
+        EventOverride override;
 
         private BatchItem(ItemBuilder builder) {
             this.user = builder.user;
@@ -135,13 +135,13 @@ public class SendEventBulk {
             return this;
         }
 
-        public SendEventBulk build() {
-            SendEventBulk obj = new SendEventBulk(this);
+        public SendEventBulkRequest build() {
+            SendEventBulkRequest obj = new SendEventBulkRequest(this);
             validateObject(obj);
             return obj;
         }
 
-        private void validateObject(SendEventBulk obj) {
+        private void validateObject(SendEventBulkRequest obj) {
             if (event == null) {
                 throw new IllegalStateException("event is null");
             }

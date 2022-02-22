@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @param <T> The return type
  */
-public interface ApiCallback<T> {
+public interface APICallback<T> {
     /**
      * This is called when the API call fails.
      *

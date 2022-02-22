@@ -21,17 +21,17 @@ import java.util.Objects;
 /**
  * Response
  */
-public class Response {
+public class SendEventResponse {
     @SerializedName("success")
-    private Boolean success = null;
+    private Boolean success;
 
     @SerializedName("id")
-    private String id = null;
+    private String id;
 
     @SerializedName("error")
-    private String error = null;
+    private String error;
 
-    public Response success(Boolean success) {
+    public SendEventResponse success(Boolean success) {
         this.success = success;
         return this;
     }
@@ -46,7 +46,7 @@ public class Response {
         return success;
     }
 
-    public Response id(String id) {
+    public SendEventResponse id(String id) {
         this.id = id;
         return this;
     }
@@ -65,7 +65,7 @@ public class Response {
         this.id = id;
     }
 
-    public Response error(String error) {
+    public SendEventResponse error(String error) {
         this.error = error;
         return this;
     }
@@ -93,10 +93,10 @@ public class Response {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Response response = (Response) o;
-        return Objects.equals(this.success, response.success) &&
-                Objects.equals(this.id, response.id) &&
-                Objects.equals(this.error, response.error);
+        SendEventResponse sendEventResponse = (SendEventResponse) o;
+        return Objects.equals(this.success, sendEventResponse.success) &&
+                Objects.equals(this.id, sendEventResponse.id) &&
+                Objects.equals(this.error, sendEventResponse.error);
     }
 
     @Override

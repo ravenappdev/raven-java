@@ -9,7 +9,7 @@
 package raven;
 
 public class Configuration {
-    private static RavenClient defaultApiClient = new RavenClient();
+    private static APIClient defaultApiClient = new APIClient();
 
     /**
      * Get the default API client, which would be used when creating API
@@ -17,7 +17,7 @@ public class Configuration {
      *
      * @return Default API client
      */
-    public static RavenClient getDefaultApiClient() {
+    public static APIClient getDefaultApiClient() {
         return defaultApiClient;
     }
 
@@ -36,7 +36,7 @@ public class Configuration {
      *
      * @param apiClient API client
      */
-    public static void setDefaultApiClient(RavenClient apiClient) {
+    public static void setDefaultApiClient(APIClient apiClient) {
         defaultApiClient = apiClient;
     }
 }

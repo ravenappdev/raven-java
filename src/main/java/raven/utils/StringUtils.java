@@ -8,7 +8,7 @@
 
 package raven.utils;
 
-public class StringUtil {
+public class StringUtils {
     /**
      * Join an array of strings with the given separator.
      * <p>

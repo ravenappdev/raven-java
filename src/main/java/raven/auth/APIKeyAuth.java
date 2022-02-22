@@ -13,14 +13,14 @@ import raven.utils.Pair;
 import java.util.List;
 import java.util.Map;
 
-public class ApiKeyAuth implements Authentication {
+public class APIKeyAuth implements Authentication {
     private final String location;
     private final String paramName;
 
     private String apiKey;
     private String apiKeyPrefix;
 
-    public ApiKeyAuth(String location, String paramName) {
+    public APIKeyAuth(String location, String paramName) {
         this.location = location;
         this.paramName = paramName;
     }

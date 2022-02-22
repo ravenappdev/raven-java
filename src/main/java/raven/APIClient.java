@@ -17,12 +17,13 @@ import okio.BufferedSink;
 import okio.Okio;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.OffsetDateTime;
-import raven.auth.ApiKeyAuth;
+import raven.auth.APIKeyAuth;
 import raven.auth.Authentication;
+import raven.data.SendEventResponse;
 import raven.utils.JSON;
 import raven.utils.Pair;
 import raven.utils.ProgressRequestBody;
-import raven.utils.StringUtil;
+import raven.utils.StringUtils;
 
 import javax.net.ssl.*;
 import java.io.File;
@@ -47,7 +48,7 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RavenClient {
+public class APIClient {
 
     private String basePath = "https://api.ravenapp.dev";
     private boolean debugging = false;
@@ -73,7 +74,7 @@ public class RavenClient {
     /*
      * Constructor for RavenClient
      */
-    public RavenClient() {
+    public APIClient() {
         httpClient = new OkHttpClient();
 
         verifyingSsl = true;
@@ -84,7 +85,7 @@ public class RavenClient {
         setUserAgent("raven/1.0.0/java");
 
         //AuthKey object
-        ApiKeyAuth authKey = new ApiKeyAuth("header", "Authorization");
+        APIKeyAuth authKey = new APIKeyAuth("header", "Authorization");
 
         // Setup authentications (key: authentication name, value: authentication).
         authentications = new HashMap<String, Authentication>();
@@ -119,8 +120,8 @@ public class RavenClient {
      */
     public void setApiKey(String apiKey) {
         for (Authentication auth : authentications.values()) {
-            if (auth instanceof ApiKeyAuth) {
-                ((ApiKeyAuth) auth).setApiKey(apiKey);
+            if (auth instanceof APIKeyAuth) {
+                ((APIKeyAuth) auth).setApiKey(apiKey);
                 return;
             }
         }
@@ -134,8 +135,8 @@ public class RavenClient {
      */
     public void setApiKeyPrefix(String apiKeyPrefix) {
         for (Authentication auth : authentications.values()) {
-            if (auth instanceof ApiKeyAuth) {
-                ((ApiKeyAuth) auth).setApiKeyPrefix(apiKeyPrefix);
+            if (auth instanceof APIKeyAuth) {
+                ((APIKeyAuth) auth).setApiKeyPrefix(apiKeyPrefix);
                 return;
             }
         }
@@ -148,7 +149,7 @@ public class RavenClient {
      * @param userAgent HTTP request's user agent
      * @return RavenClient
      */
-    public RavenClient setUserAgent(String userAgent) {
+    public APIClient setUserAgent(String userAgent) {
         addDefaultHeader("User-Agent", userAgent);
         return this;
     }
@@ -160,7 +161,7 @@ public class RavenClient {
      * @param value The header's value
      * @return RavenClient
      */
-    public RavenClient addDefaultHeader(String key, String value) {
+    public APIClient addDefaultHeader(String key, String value) {
         defaultHeaderMap.put(key, value);
         return this;
     }
@@ -180,7 +181,7 @@ public class RavenClient {
      * @param debugging To enable (true) or disable (false) debugging
      * @return RavenClient
      */
-    public RavenClient setDebugging(boolean debugging) {
+    public APIClient setDebugging(boolean debugging) {
         if (debugging != this.debugging) {
             if (debugging) {
                 loggingInterceptor = new HttpLoggingInterceptor();
@@ -268,7 +269,7 @@ public class RavenClient {
                 return accept;
             }
         }
-        return StringUtil.join(accepts, ",");
+        return StringUtils.join(accepts, ",");
     }
 
     /**
@@ -467,7 +468,7 @@ public class RavenClient {
      * @return ApiResponse&lt;T&gt;
      * @throws RavenException If fail to execute the call
      */
-    public <T> ApiResponse<T> execute(Call call) throws RavenException {
+    public <T> APIResponse<T> execute(Call call) throws RavenException {
         return execute(call, null);
     }
 
@@ -482,24 +483,24 @@ public class RavenClient {
      * when returnType is null.
      * @throws RavenException If fail to execute the call
      */
-    public <T> ApiResponse<T> execute(Call call, Type returnType) throws RavenException {
+    public <T> APIResponse<T> execute(Call call, Type returnType) throws RavenException {
         try {
             Response response = call.execute();
             T data = handleResponse(response, returnType);
-            return new ApiResponse<T>(response.code(), response.headers().toMultimap(), data);
+            return new APIResponse<T>(response.code(), response.headers().toMultimap(), data);
         } catch (IOException e) {
             throw new RavenException(e);
         }
     }
 
     /**
-     * {@link #executeAsync(Call, Type, ApiCallback)}
+     * {@link #executeAsync(Call, Type, APICallback)}
      *
      * @param <T>      Type
      * @param call     An instance of the Call object
      * @param callback ApiCallback&lt;T&gt;
      */
-    public <T> void executeAsync(Call call, ApiCallback<T> callback) {
+    public <T> void executeAsync(Call call, APICallback<T> callback) {
         executeAsync(call, null, callback);
     }
 
@@ -513,7 +514,7 @@ public class RavenClient {
      * @see #execute(Call, Type)
      */
     @SuppressWarnings("unchecked")
-    public <T> void executeAsync(Call call, final Type returnType, final ApiCallback<T> callback) {
+    public <T> void executeAsync(Call call, final Type returnType, final APICallback<T> callback) {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
@@ -568,8 +569,8 @@ public class RavenClient {
                     respBody = response.body().string();
                     if (isJsonMime(response.headers().get("Content-Type"))) {
                         T resp = json.deserialize(respBody, returnType);
-                        if ((resp instanceof raven.data.Response)) {
-                            raven.data.Response resp1 = (raven.data.Response) resp;
+                        if ((resp instanceof SendEventResponse)) {
+                            SendEventResponse resp1 = (SendEventResponse) resp;
                             errorDescription = resp1.getError();
                         } else {
                             errorDescription = respBody;

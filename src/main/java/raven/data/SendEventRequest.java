@@ -18,21 +18,21 @@ import com.google.gson.annotations.SerializedName;
 /**
  * SendEvent
  */
-public class SendEvent {
+public class SendEventRequest {
     @SerializedName("event")
-    private String event = null;
+    private String event;
 
     @SerializedName("user")
-    private User user = null;
+    private User user;
 
     @SerializedName("data")
-    private Data data = null;
+    private Data data;
 
     @SerializedName("override")
-    private EventOverride override = null;
+    private EventOverride override;
 
 
-    private SendEvent(Builder builder) {
+    private SendEventRequest(Builder builder) {
         this.event = builder.event;
         this.user = builder.user;
         this.data = builder.data;
@@ -107,13 +107,13 @@ public class SendEvent {
             return this;
         }
 
-        public SendEvent build() {
-            SendEvent obj = new SendEvent(this);
+        public SendEventRequest build() {
+            SendEventRequest obj = new SendEventRequest(this);
             validateObject(obj);
             return obj;
         }
 
-        private void validateObject(SendEvent obj) {
+        private void validateObject(SendEventRequest obj) {
             if (obj.event == null || obj.user == null) {
                 throw new IllegalStateException("event or user is null");
             }

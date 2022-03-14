@@ -51,6 +51,16 @@ public class User {
     return this;
   }
 
+  public User(Builder builder) {
+    this.email = builder.email;
+    this.mobile = builder.mobile;
+    this.whatsappMobile = builder.whatsappMobile;
+    this.onesignalExternalId = builder.onesignalExternalId;
+    this.userId = builder.userId;
+    this.fcmTokens = builder.fcmTokens;
+    this.iosTokens = builder.iosTokens;
+  }
+
    /**
    * Get userId
    * @return userId
@@ -238,6 +248,66 @@ public class User {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
+  }
+
+
+  /**
+   * Builder for the User class objects
+   **/
+  public static class Builder {
+    private String userId;
+
+    private String mobile;
+
+    private String email;
+
+    private String whatsappMobile;
+
+    private String onesignalExternalId;
+
+    private List<String> fcmTokens;
+
+    private List<String> iosTokens;
+
+    public User.Builder mobile(String mobile) {
+      this.mobile = mobile;
+      return this;
+    }
+
+    public User.Builder whatsappMobile(String whatsappMobile) {
+      this.whatsappMobile = whatsappMobile;
+      return this;
+    }
+
+    public User.Builder email(String email) {
+      this.email = email;
+      return this;
+    }
+
+    public User.Builder userId(String userId) {
+      this.userId = userId;
+      return this;
+    }
+
+    public User.Builder onesignalExternalId(String onesignalExternalId) {
+      this.onesignalExternalId = onesignalExternalId;
+      return this;
+    }
+
+    public User.Builder iosTokens(List<String> iosTokens) {
+      this.iosTokens = iosTokens;
+      return this;
+    }
+
+    public User.Builder fcmTokens(List<String> fcmTokens) {
+      this.fcmTokens = fcmTokens;
+      return this;
+    }
+
+    public User build() {
+      return new User(this);
+    }
+
   }
 
 }

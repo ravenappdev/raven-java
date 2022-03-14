@@ -14,7 +14,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 
-
 import raven.data.SendEventResponse;
 import raven.data.SendEventRequest;
 import raven.data.SendEventBulkRequest;
@@ -47,6 +46,34 @@ public class RavenClient {
         this.apiClient = APIClient;
     }
 
+
+    /**
+     * sends the event to the client specified
+     * This API will send the event to the client specified
+     * @param appId app id of raven app (required)
+     * @param event the body for the event that has to be triggered (required)
+     * @return Response
+     * @throws RavenException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public SendEventResponse send(String appId, SendEventRequest event) throws RavenException {
+        APIResponse<SendEventResponse> resp = sendWithHttpInfo(appId, event);
+        return resp.getData();
+    }
+
+    /**
+     * sends the event in bulk to all the users specified
+     * This API will send the event in bulk to the clients specified
+     * @param appId app id of raven app (required)
+     * @param event the body for the event that has to be triggered (required)
+     * @return Response
+     * @throws RavenException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public SendEventResponse sendBulk(String appId, SendEventBulkRequest event) throws RavenException {
+        APIResponse<SendEventResponse> resp = sendBulkWithHttpInfo(appId, event);
+        return resp.getData();
+    }
+
+
     /**
      * Build call for sendBulkEvent
      * @param appId Raven appID (required)
@@ -56,7 +83,7 @@ public class RavenClient {
      * @return Call to execute
      * @throws RavenException If fail to serialize the request body object
      */
-    private com.squareup.okhttp.Call sendBulkEventCall(String appId, SendEventBulkRequest event, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws RavenException {
+    private com.squareup.okhttp.Call sendBulkCall(String appId, SendEventBulkRequest event, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws RavenException {
         Object localVarPostBody = event;
 
         // create path and map variables
@@ -99,7 +126,7 @@ public class RavenClient {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call sendBulkEventValidateBeforeCall(String appId, SendEventBulkRequest event, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws RavenException {
+    private com.squareup.okhttp.Call sendBulkValidateBeforeCall(String appId, SendEventBulkRequest event, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws RavenException {
         
         // verify the required parameter 'appId' is set
         if (appId == null) {
@@ -112,23 +139,11 @@ public class RavenClient {
         }
         
 
-        com.squareup.okhttp.Call call = sendBulkEventCall(appId, event, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = sendBulkCall(appId, event, progressListener, progressRequestListener);
         return call;
 
     }
 
-    /**
-     * sends the event in bulk to all the clients specified
-     * This API will send the event in bulk to the clients specified
-     * @param appId app id of raven app (required)
-     * @param event the body for the event that has to be triggered (required)
-     * @return Response
-     * @throws RavenException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public SendEventResponse sendBulkEvent(String appId, SendEventBulkRequest event) throws RavenException {
-        APIResponse<SendEventResponse> resp = sendBulkEventWithHttpInfo(appId, event);
-        return resp.getData();
-    }
 
     /**
      * sends the event in bulk to all the clients specified
@@ -138,47 +153,12 @@ public class RavenClient {
      * @return ApiResponse&lt;Response&gt;
      * @throws RavenException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    private APIResponse<SendEventResponse> sendBulkEventWithHttpInfo(String appId, SendEventBulkRequest event) throws RavenException {
-        com.squareup.okhttp.Call call = sendBulkEventValidateBeforeCall(appId, event, null, null);
+    private APIResponse<SendEventResponse> sendBulkWithHttpInfo(String appId, SendEventBulkRequest event) throws RavenException {
+        com.squareup.okhttp.Call call = sendBulkValidateBeforeCall(appId, event, null, null);
         Type localVarReturnType = new TypeToken<SendEventResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
-    /**
-     * sends the event in bulk to all the clients specified (asynchronously)
-     * This API will send the event in bulk to the clients specified
-     * @param appId app id of raven app (required)
-     * @param event the body for the event that has to be triggered (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws RavenException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call sendBulkEventAsync(String appId, SendEventBulkRequest event, final APICallback<SendEventResponse> callback) throws RavenException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = sendBulkEventValidateBeforeCall(appId, event, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<SendEventResponse>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
-    }
     /**
      * Build call for sendEvent
      * @param appId app id of raven app (required)
@@ -188,7 +168,7 @@ public class RavenClient {
      * @return Call to execute
      * @throws RavenException If fail to serialize the request body object
      */
-    private com.squareup.okhttp.Call sendEventCall(String appId, SendEventRequest event, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws RavenException {
+    private com.squareup.okhttp.Call sendCall(String appId, SendEventRequest event, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws RavenException {
         Object localVarPostBody = event;
 
         // create path and map variables
@@ -231,7 +211,7 @@ public class RavenClient {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call sendEventValidateBeforeCall(String appId, SendEventRequest event, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws RavenException {
+    private com.squareup.okhttp.Call sendValidateBeforeCall(String appId, SendEventRequest event, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws RavenException {
         
         // verify the required parameter 'appId' is set
         if (appId == null) {
@@ -244,22 +224,9 @@ public class RavenClient {
         }
         
 
-        com.squareup.okhttp.Call call = sendEventCall(appId, event, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = sendCall(appId, event, progressListener, progressRequestListener);
         return call;
 
-    }
-
-    /**
-     * sends the event to the client specified
-     * This API will send the event to the client specified
-     * @param appId app id of raven app (required)
-     * @param event the body for the event that has to be triggered (required)
-     * @return Response
-     * @throws RavenException If fail to call the API, e.g. server error or cannot deserialize the response body
-     */
-    public SendEventResponse sendEvent(String appId, SendEventRequest event) throws RavenException {
-        APIResponse<SendEventResponse> resp = sendEventWithHttpInfo(appId, event);
-        return resp.getData();
     }
 
     /**
@@ -270,45 +237,9 @@ public class RavenClient {
      * @return ApiResponse&lt;Response&gt;
      * @throws RavenException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    private APIResponse<SendEventResponse> sendEventWithHttpInfo(String appId, SendEventRequest event) throws RavenException {
-        com.squareup.okhttp.Call call = sendEventValidateBeforeCall(appId, event, null, null);
+    private APIResponse<SendEventResponse> sendWithHttpInfo(String appId, SendEventRequest event) throws RavenException {
+        com.squareup.okhttp.Call call = sendValidateBeforeCall(appId, event, null, null);
         Type localVarReturnType = new TypeToken<SendEventResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
-    }
-
-    /**
-     * sends the event to the client specified (asynchronously)
-     * This API will send the event to the client specified
-     * @param appId app id of raven app (required)
-     * @param event the body for the event that has to be triggered (required)
-     * @param callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws RavenException If fail to process the API call, e.g. serializing the request body object
-     */
-    public com.squareup.okhttp.Call sendEventAsync(String appId, SendEventRequest event, final APICallback<SendEventResponse> callback) throws RavenException {
-
-        ProgressResponseBody.ProgressListener progressListener = null;
-        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
-
-        if (callback != null) {
-            progressListener = new ProgressResponseBody.ProgressListener() {
-                @Override
-                public void update(long bytesRead, long contentLength, boolean done) {
-                    callback.onDownloadProgress(bytesRead, contentLength, done);
-                }
-            };
-
-            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
-                @Override
-                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
-                    callback.onUploadProgress(bytesWritten, contentLength, done);
-                }
-            };
-        }
-
-        com.squareup.okhttp.Call call = sendEventValidateBeforeCall(appId, event, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<SendEventResponse>(){}.getType();
-        apiClient.executeAsync(call, localVarReturnType, callback);
-        return call;
     }
 }

@@ -30,8 +30,9 @@ import java.util.Map;
 public class RavenClient {
     private APIClient apiClient;
 
-    public RavenClient() {
+    public RavenClient(String secretKey) {
         this(Configuration.getDefaultApiClient());
+        Configuration.setApiKey(secretKey);
     }
 
     public RavenClient(APIClient apiClient) {

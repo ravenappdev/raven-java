@@ -34,7 +34,7 @@ import java.util.Map;
 public class RavenExample {
 
     public static void main(String[] args) {
-        RavenClient client = new RavenClient();
+        RavenClient client = new RavenClient("<secret_key>");
         String appId = "<app_id>";
         SendEventRequest request = new SendEventRequest.Builder().event("payment_complete")
                                             .user(new User.Builder()

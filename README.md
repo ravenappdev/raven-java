@@ -2,7 +2,7 @@
 Java SDK for Raven
 ## Installation
 ```
-go get github.com/ravenappdev/raven-java
+
 ```
 ## Documentation
 

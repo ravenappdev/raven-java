@@ -129,14 +129,19 @@ All URIs are relative to *https://api.ravenapp.dev*
  - [WhatsappOverride](docs/WhatsappOverride.md)
 
 
-## Documentation for Authorization
+[//]: # (## Documentation for Authorization)
 
-Authentication schemes defined for the API:
-### ApiKeyAuth
+[//]: # ()
+[//]: # (Authentication schemes defined for the API:)
 
-- **Type**: API key
-- **API key parameter name**: Authorization
-- **Location**: HTTP header
+[//]: # (### ApiKeyAuth)
+
+[//]: # ()
+[//]: # (- **Type**: API key)
+
+[//]: # (- **API key parameter name**: Authorization)
+
+[//]: # (- **Location**: HTTP header)
 
 
 ## Recommendation

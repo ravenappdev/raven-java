@@ -55,7 +55,7 @@ This API will send the event in bulk to the clients specified
 
 ### Authorization
 
-[ApiKeyAuth](../README.md#ApiKeyAuth)
+**ApiKeyAuth**
 
 ### HTTP request headers
 
@@ -110,7 +110,7 @@ This API will send the event to the client specified
 
 ### Authorization
 
-[**ApiKeyAuth**](../README.md#ApiKeyAuth)
+**ApiKeyAuth**
 
 ### HTTP request headers
 

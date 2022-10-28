@@ -29,7 +29,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'dev.ravenapp'
             artifactId = 'raven-java'
-            version = '0.0.19'
+            version = '0.0.21'
             from components.java
         }
     }

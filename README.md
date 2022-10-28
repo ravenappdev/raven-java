@@ -22,7 +22,7 @@ Add this dependency to your project's POM:
 
 ```xml
 <dependency>
-  <groupId>io.github.fern-api</groupId>
+  <groupId>io.github.ravenappdev</groupId>
   <artifactId>raven</artifactId>
   <version>0.0.15</version>
 </dependency>

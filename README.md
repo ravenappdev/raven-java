@@ -23,7 +23,7 @@ Add this dependency to your project's POM:
 ```xml
 <dependency>
   <groupId>dev.ravenapp</groupId>
-  <artifactId>raven</artifactId>
+  <artifactId>raven-java</artifactId>
   <version>0.0.15</version>
 </dependency>
 ```

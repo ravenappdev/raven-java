@@ -1,6 +1,6 @@
 # Raven Java Library
 
-[![Maven Central](https://img.shields.io/nexus/r/io.github.ravenappdev/raven?server=https%3A%2F%2Fs01.oss.sonatype.org)](https://s01.oss.sonatype.org/content/repositories/releases/io/github/ravenappdev/raven/)
+[![Maven Central](https://img.shields.io/nexus/r/dev.ravenapp/raven?server=https%3A%2F%2Fs01.oss.sonatype.org)](https://s01.oss.sonatype.org/content/repositories/releases/dev/ravenapp/raven/)
 
 ## Documentation
 
@@ -13,7 +13,7 @@ API documentation is available at <https://docs.ravenapp.dev/introduction>.
 Add this dependency to your project's build file:
 
 ```groovy
-implementation "io.github.ravenappdev:raven:0.0.15"
+implementation "dev.ravenapp:raven-java:0.0.15"
 ```
 
 ### Maven users
@@ -22,8 +22,8 @@ Add this dependency to your project's POM:
 
 ```xml
 <dependency>
-  <groupId>io.github.ravenappdev</groupId>
-  <artifactId>raven</artifactId>
+  <groupId>dev.ravenapp</groupId>
+  <artifactId>raven-java</artifactId>
   <version>0.0.15</version>
 </dependency>
 ```

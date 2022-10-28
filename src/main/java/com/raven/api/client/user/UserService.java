@@ -1,6 +1,5 @@
 package com.raven.api.client.user;
 
-import com.fern.java.jackson.ClientObjectMappers;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import com.raven.api.client.Authorization;
 import com.raven.api.client.ids.types.AppId;
@@ -9,6 +8,7 @@ import com.raven.api.client.user.exceptions.CreateOrUpdateException;
 import com.raven.api.client.user.exceptions.GetException;
 import com.raven.api.client.user.types.CreateUserRequest;
 import com.raven.api.client.user.types.RavenUser;
+import com.raven.api.core.ObjectMappers;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
@@ -40,8 +40,8 @@ interface UserService {
   static UserService getClient(String url) {
     return Feign.builder()
         .contract(new OptionalAwareContract(new JAXRSContract()))
-        .decoder(new JacksonDecoder(ClientObjectMappers.JSON_MAPPER))
-        .encoder(new JacksonEncoder(ClientObjectMappers.JSON_MAPPER))
+        .decoder(new JacksonDecoder(ObjectMappers.JSON_MAPPER))
+        .encoder(new JacksonEncoder(ObjectMappers.JSON_MAPPER))
         .errorDecoder(new UserServiceErrorDecoder()).target(UserService.class, url);
   }
 }

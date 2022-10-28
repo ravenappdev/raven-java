@@ -1,5 +1,6 @@
-package com.raven.api.client;
+package com.raven.api;
 
+import com.raven.api.client.Authorization;
 import com.raven.api.client.device.DeviceServiceClient;
 import com.raven.api.client.event.EventServiceClient;
 import com.raven.api.client.user.UserServiceClient;

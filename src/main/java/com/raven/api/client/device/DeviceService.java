@@ -1,16 +1,16 @@
 package com.raven.api.client.device;
 
-import com.fern.java.jackson.ClientObjectMappers;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import com.raven.api.client.Authorization;
 import com.raven.api.client.device.exceptions.AddException;
-import com.raven.api.client.device.exceptions.DeleteDeviceException;
+import com.raven.api.client.device.exceptions.DeleteException;
 import com.raven.api.client.device.exceptions.GetDeviceException;
 import com.raven.api.client.device.exceptions.UpdateException;
 import com.raven.api.client.device.types.Device;
 import com.raven.api.client.ids.types.AppId;
 import com.raven.api.client.ids.types.DeviceId;
 import com.raven.api.client.ids.types.UserId;
+import com.raven.api.core.ObjectMappers;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
@@ -44,9 +44,9 @@ interface DeviceService {
 
   @DELETE
   @Path("/{app_id}/users/{user_id}/devices/{device_id}")
-  void deleteDevice(@HeaderParam("Authorization") Authorization auth,
-      @PathParam("app_id") AppId appId, @PathParam("user_id") UserId userId,
-      @PathParam("device_id") DeviceId deviceId) throws DeleteDeviceException;
+  void delete(@HeaderParam("Authorization") Authorization auth, @PathParam("app_id") AppId appId,
+      @PathParam("user_id") UserId userId, @PathParam("device_id") DeviceId deviceId) throws
+      DeleteException;
 
   @GET
   @Path("/{app_id}/users/{user_id}/devices/{device_id}")
@@ -57,8 +57,8 @@ interface DeviceService {
   static DeviceService getClient(String url) {
     return Feign.builder()
         .contract(new OptionalAwareContract(new JAXRSContract()))
-        .decoder(new JacksonDecoder(ClientObjectMappers.JSON_MAPPER))
-        .encoder(new JacksonEncoder(ClientObjectMappers.JSON_MAPPER))
+        .decoder(new JacksonDecoder(ObjectMappers.JSON_MAPPER))
+        .encoder(new JacksonEncoder(ObjectMappers.JSON_MAPPER))
         .errorDecoder(new DeviceServiceErrorDecoder()).target(DeviceService.class, url);
   }
 }

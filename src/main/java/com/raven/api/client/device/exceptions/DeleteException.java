@@ -17,14 +17,14 @@ import java.util.Objects;
 import java.util.Optional;
 
 @JsonDeserialize(
-    using = DeleteDeviceException.Deserializer.class
+    using = DeleteException.Deserializer.class
 )
-public final class DeleteDeviceException extends Exception {
+public final class DeleteException extends Exception {
   private final Value value;
 
   private int statusCode;
 
-  private DeleteDeviceException(Value value, int statusCode) {
+  private DeleteException(Value value, int statusCode) {
     this.value = value;
     this.statusCode = statusCode;
   }
@@ -37,8 +37,8 @@ public final class DeleteDeviceException extends Exception {
     return this.statusCode;
   }
 
-  public static DeleteDeviceException other(Object unknownValue, int statusCode) {
-    return new DeleteDeviceException(new UnknownErrorValue(unknownValue), statusCode);
+  public static DeleteException other(Object unknownValue, int statusCode) {
+    return new DeleteException(new UnknownErrorValue(unknownValue), statusCode);
   }
 
   public boolean isOther() {
@@ -101,17 +101,17 @@ public final class DeleteDeviceException extends Exception {
 
     @Override
     public String toString() {
-      return "DeleteDeviceException{" + "unknownValue: " + unknownValue + "}";
+      return "DeleteException{" + "unknownValue: " + unknownValue + "}";
     }
   }
 
-  static final class Deserializer extends JsonDeserializer<DeleteDeviceException> {
+  static final class Deserializer extends JsonDeserializer<DeleteException> {
     @Override
-    public DeleteDeviceException deserialize(JsonParser p, DeserializationContext ctx) throws
+    public DeleteException deserialize(JsonParser p, DeserializationContext ctx) throws
         IOException {
       Value value = ctx.readValue(p, Value.class);
       int statusCode = (int) ctx.getAttribute("statusCode");
-      return new DeleteDeviceException(value, statusCode);
+      return new DeleteException(value, statusCode);
     }
   }
 }

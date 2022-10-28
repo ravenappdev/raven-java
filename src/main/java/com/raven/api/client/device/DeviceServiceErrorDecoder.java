@@ -1,10 +1,10 @@
 package com.raven.api.client.device;
 
-import com.fern.java.jackson.ClientObjectMappers;
 import com.raven.api.client.device.exceptions.AddException;
-import com.raven.api.client.device.exceptions.DeleteDeviceException;
+import com.raven.api.client.device.exceptions.DeleteException;
 import com.raven.api.client.device.exceptions.GetDeviceException;
 import com.raven.api.client.device.exceptions.UpdateException;
+import com.raven.api.core.ObjectMappers;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
@@ -24,8 +24,8 @@ final class DeviceServiceErrorDecoder implements ErrorDecoder {
       if (methodKey.contains("update")) {
         return decodeException(response, UpdateException.class);
       }
-      if (methodKey.contains("deleteDevice")) {
-        return decodeException(response, DeleteDeviceException.class);
+      if (methodKey.contains("delete")) {
+        return decodeException(response, DeleteException.class);
       }
       if (methodKey.contains("getDevice")) {
         return decodeException(response, GetDeviceException.class);
@@ -38,6 +38,6 @@ final class DeviceServiceErrorDecoder implements ErrorDecoder {
 
   private static <T extends Exception> Exception decodeException(Response response, Class<T> clazz)
       throws IOException {
-    return ClientObjectMappers.JSON_MAPPER.reader().withAttribute("statusCode", response.status()).readValue(response.body().asInputStream(), clazz);
+    return ObjectMappers.JSON_MAPPER.reader().withAttribute("statusCode", response.status()).readValue(response.body().asInputStream(), clazz);
   }
 }

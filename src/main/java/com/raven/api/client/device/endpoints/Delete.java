@@ -10,8 +10,8 @@ import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
 
-public final class DeleteDevice {
-  private DeleteDevice() {
+public final class Delete {
+  private Delete() {
   }
 
   public static final class Request {
@@ -68,7 +68,7 @@ public final class DeleteDevice {
 
     @Override
     public String toString() {
-      return "DeleteDevice.Request{" + "authOverride: " + authOverride + ", appId: " + appId + ", userId: " + userId + ", deviceId: " + deviceId + "}";
+      return "Delete.Request{" + "authOverride: " + authOverride + ", appId: " + appId + ", userId: " + userId + ", deviceId: " + deviceId + "}";
     }
 
     public static AppIdStage builder() {

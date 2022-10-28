@@ -2,11 +2,11 @@ package com.raven.api.client.device;
 
 import com.raven.api.client.Authorization;
 import com.raven.api.client.device.endpoints.Add;
-import com.raven.api.client.device.endpoints.DeleteDevice;
+import com.raven.api.client.device.endpoints.Delete;
 import com.raven.api.client.device.endpoints.GetDevice;
 import com.raven.api.client.device.endpoints.Update;
 import com.raven.api.client.device.exceptions.AddException;
-import com.raven.api.client.device.exceptions.DeleteDeviceException;
+import com.raven.api.client.device.exceptions.DeleteException;
 import com.raven.api.client.device.exceptions.GetDeviceException;
 import com.raven.api.client.device.exceptions.UpdateException;
 import com.raven.api.client.device.types.Device;
@@ -39,9 +39,9 @@ public final class DeviceServiceClient {
     return this.service.update(authValue, request.getAppId(), request.getUserId(), request.getDeviceId(), request.getBody());
   }
 
-  public void deleteDevice(DeleteDevice.Request request) throws DeleteDeviceException {
-    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required for deleteDevice")));
-    this.service.deleteDevice(authValue, request.getAppId(), request.getUserId(), request.getDeviceId());
+  public void delete(Delete.Request request) throws DeleteException {
+    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required for delete")));
+    this.service.delete(authValue, request.getAppId(), request.getUserId(), request.getDeviceId());
   }
 
   public Device getDevice(GetDevice.Request request) throws GetDeviceException {

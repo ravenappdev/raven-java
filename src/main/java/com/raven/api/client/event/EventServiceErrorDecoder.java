@@ -1,8 +1,8 @@
 package com.raven.api.client.event;
 
-import com.fern.java.jackson.ClientObjectMappers;
 import com.raven.api.client.event.exceptions.SendBulkException;
 import com.raven.api.client.event.exceptions.SendException;
+import com.raven.api.core.ObjectMappers;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
@@ -30,6 +30,6 @@ final class EventServiceErrorDecoder implements ErrorDecoder {
 
   private static <T extends Exception> Exception decodeException(Response response, Class<T> clazz)
       throws IOException {
-    return ClientObjectMappers.JSON_MAPPER.reader().withAttribute("statusCode", response.status()).readValue(response.body().asInputStream(), clazz);
+    return ObjectMappers.JSON_MAPPER.reader().withAttribute("statusCode", response.status()).readValue(response.body().asInputStream(), clazz);
   }
 }

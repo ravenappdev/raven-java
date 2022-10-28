@@ -1,6 +1,5 @@
 package com.raven.api.client.event;
 
-import com.fern.java.jackson.ClientObjectMappers;
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import com.raven.api.client.Authorization;
 import com.raven.api.client.event.exceptions.SendBulkException;
@@ -9,6 +8,7 @@ import com.raven.api.client.event.types.BulkSendEventRequest;
 import com.raven.api.client.event.types.SendEventRequest;
 import com.raven.api.client.event.types.SendEventResponse;
 import com.raven.api.client.ids.types.AppId;
+import com.raven.api.core.ObjectMappers;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
@@ -42,8 +42,8 @@ interface EventService {
   static EventService getClient(String url) {
     return Feign.builder()
         .contract(new OptionalAwareContract(new JAXRSContract()))
-        .decoder(new JacksonDecoder(ClientObjectMappers.JSON_MAPPER))
-        .encoder(new JacksonEncoder(ClientObjectMappers.JSON_MAPPER))
+        .decoder(new JacksonDecoder(ObjectMappers.JSON_MAPPER))
+        .encoder(new JacksonEncoder(ObjectMappers.JSON_MAPPER))
         .errorDecoder(new EventServiceErrorDecoder()).target(EventService.class, url);
   }
 }

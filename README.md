@@ -31,28 +31,20 @@ Add this dependency to your project's POM:
 ## Usage
 
 ```java
-String appId = System.getenv("RAVEN_APP_ID");
-String authKey = System.getenv("RAVEN_TOKEN");
-Authorization auth = Authorization.of(authKey);
-
-RavenApiClient ravenApiClient =
-new RavenApiClient("api.ravenapp.dev", auth);
-
+RavenApiClient ravenApiClient = new RavenApiClient("api.ravenapp.dev", Authorization.of("AuthKey <auth>"));
 try {
     Device device = ravenApiClient.device().add(Add.Request.builder()
-    .appId(AppId.of(appId))
-    .userId(UserId.of("myUser"))
-    .body(Device.builder()
-        .fcmToken("abc123")
-        .id("cdf456")
-        .notificationsDisabled(false)
-        .build())
+      .appId(AppId.of(appId))
+      .userId(UserId.of("myUser"))
+      .body(Device.builder()
+          .fcmToken("abc123")
+          .id("cdf456")
+          .notificationsDisabled(false)
+          .build())
     .build());
     System.out.println("Created a device! The device's Raven ID is " + device.getRavenId());
-    } catch (AddException e) {
-    System.out.println("Failed to create a device" + e.getMessage());
-        }
-    }
+} catch (AddException e) {
+   System.out.println("Failed to create a device" + e.getMessage());
 }
 ```
 

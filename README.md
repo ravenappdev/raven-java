@@ -13,7 +13,7 @@ API documentation is available at <https://docs.ravenapp.dev/introduction>.
 Add this dependency to your project's build file:
 
 ```groovy
-implementation "io.github.fern-api:raven:0.0.15"
+implementation "io.github.ravenappdev:raven:0.0.15"
 ```
 
 ### Maven users

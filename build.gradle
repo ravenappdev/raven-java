@@ -27,9 +27,9 @@ java {
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId = 'io.github.fern-api'
-            artifactId = 'raven'
-            version = '0.0.15'
+            groupId = 'dev.ravenapp'
+            artifactId = 'raven-java'
+            version = '0.0.19'
             from components.java
         }
     }

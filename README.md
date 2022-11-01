@@ -1,6 +1,7 @@
 # Raven Java Library
 
-![Maven Central](https://img.shields.io/maven-central/v/dev.ravenapp/raven-java)
+![Maven Central](https://img.shields.io/maven-central/v/dev.ravenapp/raven-java) 
+![Sonatype Nexus (Releases)](https://img.shields.io/nexus/r/dev.ravenapp/raven-java?server=https%3A%2F%2Fs01.oss.sonatype.org)
 
 ## Documentation
 

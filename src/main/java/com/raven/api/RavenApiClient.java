@@ -3,6 +3,11 @@ package com.raven.api;
 import com.raven.api.client.Authorization;
 import com.raven.api.client.device.DeviceServiceClient;
 import com.raven.api.client.event.EventServiceClient;
+import com.raven.api.client.event.endpoints.Send;
+import com.raven.api.client.event.endpoints.SendBulk;
+import com.raven.api.client.event.exceptions.SendBulkException;
+import com.raven.api.client.event.exceptions.SendException;
+import com.raven.api.client.event.types.SendEventResponse;
 import com.raven.api.client.user.UserServiceClient;
 import java.lang.String;
 import java.util.Objects;
@@ -38,6 +43,14 @@ public final class RavenApiClient {
 
   public final UserServiceClient user() {
     return this.userServiceClient.get();
+  }
+
+  public SendEventResponse send(Send.Request request) throws SendException {
+    return event().send(request);
+  }
+
+  public SendEventResponse sendBulk(SendBulk.Request request) throws SendBulkException {
+    return event().sendBulk(request);
   }
 
   private static <T> Supplier<T> memoize(Supplier<T> delegate) {

@@ -35,8 +35,8 @@ Add this dependency to your project's POM:
 RavenApiClient ravenApiClient = new RavenApiClient("api.ravenapp.dev", Authorization.of("AuthKey <auth>"));
 try {
     Device device = ravenApiClient.device().add(Add.Request.builder()
-      .appId(AppId.of("app-id"))
-      .userId(UserId.of("user-id"))
+      .appId("app-id")
+      .userId("user-id")
       .body(Device.builder()
           .fcmToken("abc123")
           .id("cdf456")

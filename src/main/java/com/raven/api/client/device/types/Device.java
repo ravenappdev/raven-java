@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.raven.api.client.ids.types.DeviceId;
 import java.lang.Boolean;
 import java.lang.Long;
 import java.lang.Object;
@@ -36,7 +35,7 @@ public final class Device {
 
   private final Optional<String> ravenId;
 
-  private final Optional<DeviceId> deviceSid;
+  private final Optional<String> deviceSid;
 
   private final Optional<Boolean> notificationsDisabled;
 
@@ -49,8 +48,8 @@ public final class Device {
   Device(Optional<String> id, Optional<Platform> platform, Optional<String> onesignalPlayerId,
       Optional<String> xiaomiToken, Optional<String> oppoToken, Optional<String> vivoToken,
       Optional<String> huaweiToken, Optional<String> fcmToken, Optional<String> ravenId,
-      Optional<DeviceId> deviceSid, Optional<Boolean> notificationsDisabled,
-      Optional<Long> createdAt, Optional<Long> updatedAt) {
+      Optional<String> deviceSid, Optional<Boolean> notificationsDisabled, Optional<Long> createdAt,
+      Optional<Long> updatedAt) {
     this.id = id;
     this.platform = platform;
     this.onesignalPlayerId = onesignalPlayerId;
@@ -112,7 +111,7 @@ public final class Device {
   }
 
   @JsonProperty("device_sid")
-  public Optional<DeviceId> getDeviceSid() {
+  public Optional<String> getDeviceSid() {
     return deviceSid;
   }
 
@@ -180,7 +179,7 @@ public final class Device {
 
     private Optional<String> ravenId = Optional.empty();
 
-    private Optional<DeviceId> deviceSid = Optional.empty();
+    private Optional<String> deviceSid = Optional.empty();
 
     private Optional<Boolean> notificationsDisabled = Optional.empty();
 
@@ -338,12 +337,12 @@ public final class Device {
         value = "device_sid",
         nulls = Nulls.SKIP
     )
-    public Builder deviceSid(Optional<DeviceId> deviceSid) {
+    public Builder deviceSid(Optional<String> deviceSid) {
       this.deviceSid = deviceSid;
       return this;
     }
 
-    public Builder deviceSid(DeviceId deviceSid) {
+    public Builder deviceSid(String deviceSid) {
       this.deviceSid = Optional.of(deviceSid);
       return this;
     }

@@ -7,7 +7,6 @@ import com.raven.api.client.event.exceptions.SendException;
 import com.raven.api.client.event.types.BulkSendEventRequest;
 import com.raven.api.client.event.types.SendEventRequest;
 import com.raven.api.client.event.types.SendEventResponse;
-import com.raven.api.client.ids.types.AppId;
 import com.raven.api.core.ObjectMappers;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
@@ -31,13 +30,13 @@ interface EventService {
   @Path("/{app_id}/events/send")
   SendEventResponse send(@HeaderParam("Authorization") Authorization auth,
       @HeaderParam("Idempotency-Key") Optional<String> idempotencyKey,
-      @PathParam("app_id") AppId appId, SendEventRequest body) throws SendException;
+      @PathParam("app_id") String appId, SendEventRequest body) throws SendException;
 
   @POST
   @Path("/{app_id}/events/bulk_send")
   SendEventResponse sendBulk(@HeaderParam("Authorization") Authorization auth,
       @HeaderParam("Idempotency-Key") Optional<String> idempotencyKey,
-      @PathParam("app_id") AppId appId, BulkSendEventRequest body) throws SendBulkException;
+      @PathParam("app_id") String appId, BulkSendEventRequest body) throws SendBulkException;
 
   static EventService getClient(String url) {
     return Feign.builder()

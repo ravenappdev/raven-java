@@ -13,13 +13,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 @JsonDeserialize(
     builder = ProviderOverride.Builder.class
 )
 public final class ProviderOverride {
-  private final Map<String, Optional<Object>> payload;
+  private final Map<String, Object> payload;
 
   private final List<Param> formParams;
 
@@ -31,8 +30,8 @@ public final class ProviderOverride {
 
   private int _cachedHashCode;
 
-  ProviderOverride(Map<String, Optional<Object>> payload, List<Param> formParams,
-      List<Param> queryParams, List<Param> pathParams, List<Param> headers) {
+  ProviderOverride(Map<String, Object> payload, List<Param> formParams, List<Param> queryParams,
+      List<Param> pathParams, List<Param> headers) {
     this.payload = payload;
     this.formParams = formParams;
     this.queryParams = queryParams;
@@ -41,7 +40,7 @@ public final class ProviderOverride {
   }
 
   @JsonProperty("payload")
-  public Map<String, Optional<Object>> getPayload() {
+  public Map<String, Object> getPayload() {
     return payload;
   }
 
@@ -96,7 +95,7 @@ public final class ProviderOverride {
       ignoreUnknown = true
   )
   public static final class Builder {
-    private Map<String, Optional<Object>> payload = new LinkedHashMap<>();
+    private Map<String, Object> payload = new LinkedHashMap<>();
 
     private List<Param> formParams = new ArrayList<>();
 
@@ -122,18 +121,18 @@ public final class ProviderOverride {
         value = "payload",
         nulls = Nulls.SKIP
     )
-    public Builder payload(Map<String, Optional<Object>> payload) {
+    public Builder payload(Map<String, Object> payload) {
       this.payload.clear();
       this.payload.putAll(payload);
       return this;
     }
 
-    public Builder putAllPayload(Map<String, Optional<Object>> payload) {
+    public Builder putAllPayload(Map<String, Object> payload) {
       this.payload.putAll(payload);
       return this;
     }
 
-    public Builder payload(String key, Optional<Object> value) {
+    public Builder payload(String key, Object value) {
       this.payload.put(key, value);
       return this;
     }

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.raven.api.client.ids.types.RequestId;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -14,19 +13,19 @@ import java.util.Objects;
     builder = SendEventResponse.Builder.class
 )
 public final class SendEventResponse {
-  private final RequestId id;
+  private final String id;
 
   private final boolean success;
 
   private int _cachedHashCode;
 
-  SendEventResponse(RequestId id, boolean success) {
+  SendEventResponse(String id, boolean success) {
     this.id = id;
     this.success = success;
   }
 
   @JsonProperty("id")
-  public RequestId getId() {
+  public String getId() {
     return id;
   }
 
@@ -63,7 +62,7 @@ public final class SendEventResponse {
   }
 
   public interface IdStage {
-    SuccessStage id(RequestId id);
+    SuccessStage id(String id);
 
     Builder from(SendEventResponse other);
   }
@@ -80,7 +79,7 @@ public final class SendEventResponse {
       ignoreUnknown = true
   )
   static final class Builder implements IdStage, SuccessStage, _FinalStage {
-    private RequestId id;
+    private String id;
 
     private boolean success;
 
@@ -96,7 +95,7 @@ public final class SendEventResponse {
 
     @Override
     @JsonSetter("id")
-    public SuccessStage id(RequestId id) {
+    public SuccessStage id(String id) {
       this.id = id;
       return this;
     }

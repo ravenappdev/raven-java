@@ -1,7 +1,6 @@
 package com.raven.api.client.user.endpoints;
 
 import com.raven.api.client.Authorization;
-import com.raven.api.client.ids.types.AppId;
 import com.raven.api.client.user.types.CreateUserRequest;
 import java.lang.Object;
 import java.lang.Override;
@@ -16,13 +15,13 @@ public final class CreateOrUpdate {
   public static final class Request {
     private final Optional<Authorization> authOverride;
 
-    private final AppId appId;
+    private final String appId;
 
     private final CreateUserRequest body;
 
     private int _cachedHashCode;
 
-    Request(Optional<Authorization> authOverride, AppId appId, CreateUserRequest body) {
+    Request(Optional<Authorization> authOverride, String appId, CreateUserRequest body) {
       this.authOverride = authOverride;
       this.appId = appId;
       this.body = body;
@@ -32,7 +31,7 @@ public final class CreateOrUpdate {
       return authOverride;
     }
 
-    public AppId getAppId() {
+    public String getAppId() {
       return appId;
     }
 
@@ -68,7 +67,7 @@ public final class CreateOrUpdate {
     }
 
     public interface AppIdStage {
-      BodyStage appId(AppId appId);
+      BodyStage appId(String appId);
 
       Builder from(Request other);
     }
@@ -86,7 +85,7 @@ public final class CreateOrUpdate {
     }
 
     static final class Builder implements AppIdStage, BodyStage, _FinalStage {
-      private AppId appId;
+      private String appId;
 
       private CreateUserRequest body;
 
@@ -104,7 +103,7 @@ public final class CreateOrUpdate {
       }
 
       @Override
-      public BodyStage appId(AppId appId) {
+      public BodyStage appId(String appId) {
         this.appId = appId;
         return this;
       }

@@ -2,8 +2,6 @@ package com.raven.api.client.user;
 
 import com.fern.java.jersey.contracts.OptionalAwareContract;
 import com.raven.api.client.Authorization;
-import com.raven.api.client.ids.types.AppId;
-import com.raven.api.client.ids.types.UserId;
 import com.raven.api.client.user.exceptions.CreateOrUpdateException;
 import com.raven.api.client.user.exceptions.GetException;
 import com.raven.api.client.user.types.CreateUserRequest;
@@ -30,12 +28,12 @@ interface UserService {
   @POST
   @Path("/{app_id}/users")
   RavenUser createOrUpdate(@HeaderParam("Authorization") Authorization auth,
-      @PathParam("app_id") AppId appId, CreateUserRequest body) throws CreateOrUpdateException;
+      @PathParam("app_id") String appId, CreateUserRequest body) throws CreateOrUpdateException;
 
   @GET
   @Path("/{app_id}/users/{user_id}")
-  RavenUser get(@HeaderParam("Authorization") Authorization auth, @PathParam("app_id") AppId appId,
-      @PathParam("user_id") UserId userId) throws GetException;
+  RavenUser get(@HeaderParam("Authorization") Authorization auth, @PathParam("app_id") String appId,
+      @PathParam("user_id") String userId) throws GetException;
 
   static UserService getClient(String url) {
     return Feign.builder()

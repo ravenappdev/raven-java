@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.raven.api.client.device.types.Device;
-import com.raven.api.client.ids.types.UserId;
 import java.lang.Long;
 import java.lang.Object;
 import java.lang.Override;
@@ -20,7 +19,7 @@ import java.util.Optional;
     builder = RavenUser.Builder.class
 )
 public final class RavenUser {
-  private final UserId userId;
+  private final String userId;
 
   private final Optional<String> userSid;
 
@@ -60,7 +59,7 @@ public final class RavenUser {
 
   private int _cachedHashCode;
 
-  RavenUser(UserId userId, Optional<String> userSid, Optional<String> onesignalExternalId,
+  RavenUser(String userId, Optional<String> userSid, Optional<String> onesignalExternalId,
       Optional<String> mobile, Optional<String> email, Optional<String> whatsappMobile,
       Optional<List<String>> fcmTopic, Optional<List<String>> fcmDeviceGroup,
       Optional<SlackProfile> slack, Optional<InAppProfile> inApp,
@@ -91,7 +90,7 @@ public final class RavenUser {
   }
 
   @JsonProperty("user_id")
-  public UserId getUserId() {
+  public String getUserId() {
     return userId;
   }
 
@@ -213,7 +212,7 @@ public final class RavenUser {
   }
 
   public interface UserIdStage {
-    _FinalStage userId(UserId userId);
+    _FinalStage userId(String userId);
 
     Builder from(RavenUser other);
   }
@@ -300,7 +299,7 @@ public final class RavenUser {
       ignoreUnknown = true
   )
   static final class Builder implements UserIdStage, _FinalStage {
-    private UserId userId;
+    private String userId;
 
     private Optional<Long> updatedAt = Optional.empty();
 
@@ -367,7 +366,7 @@ public final class RavenUser {
 
     @Override
     @JsonSetter("user_id")
-    public _FinalStage userId(UserId userId) {
+    public _FinalStage userId(String userId) {
       this.userId = userId;
       return this;
     }

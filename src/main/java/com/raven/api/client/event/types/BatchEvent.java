@@ -17,7 +17,7 @@ import java.util.Optional;
     builder = BatchEvent.Builder.class
 )
 public final class BatchEvent {
-  private final Map<String, Optional<Object>> data;
+  private final Map<String, Object> data;
 
   private final Optional<User> user;
 
@@ -25,15 +25,14 @@ public final class BatchEvent {
 
   private int _cachedHashCode;
 
-  BatchEvent(Map<String, Optional<Object>> data, Optional<User> user,
-      Optional<EventOverride> override) {
+  BatchEvent(Map<String, Object> data, Optional<User> user, Optional<EventOverride> override) {
     this.data = data;
     this.user = user;
     this.override = override;
   }
 
   @JsonProperty("data")
-  public Map<String, Optional<Object>> getData() {
+  public Map<String, Object> getData() {
     return data;
   }
 
@@ -78,7 +77,7 @@ public final class BatchEvent {
       ignoreUnknown = true
   )
   public static final class Builder {
-    private Map<String, Optional<Object>> data = new LinkedHashMap<>();
+    private Map<String, Object> data = new LinkedHashMap<>();
 
     private Optional<User> user = Optional.empty();
 
@@ -98,18 +97,18 @@ public final class BatchEvent {
         value = "data",
         nulls = Nulls.SKIP
     )
-    public Builder data(Map<String, Optional<Object>> data) {
+    public Builder data(Map<String, Object> data) {
       this.data.clear();
       this.data.putAll(data);
       return this;
     }
 
-    public Builder putAllData(Map<String, Optional<Object>> data) {
+    public Builder putAllData(Map<String, Object> data) {
       this.data.putAll(data);
       return this;
     }
 
-    public Builder data(String key, Optional<Object> value) {
+    public Builder data(String key, Object value) {
       this.data.put(key, value);
       return this;
     }

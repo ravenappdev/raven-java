@@ -7,9 +7,6 @@ import com.raven.api.client.device.exceptions.DeleteException;
 import com.raven.api.client.device.exceptions.GetDeviceException;
 import com.raven.api.client.device.exceptions.UpdateException;
 import com.raven.api.client.device.types.Device;
-import com.raven.api.client.ids.types.AppId;
-import com.raven.api.client.ids.types.DeviceId;
-import com.raven.api.client.ids.types.UserId;
 import com.raven.api.core.ObjectMappers;
 import feign.Feign;
 import feign.jackson.JacksonDecoder;
@@ -33,26 +30,26 @@ import javax.ws.rs.core.MediaType;
 interface DeviceService {
   @POST
   @Path("/{app_id}/users/{user_id}/devices")
-  Device add(@HeaderParam("Authorization") Authorization auth, @PathParam("app_id") AppId appId,
-      @PathParam("user_id") UserId userId, Device body) throws AddException;
+  Device add(@HeaderParam("Authorization") Authorization auth, @PathParam("app_id") String appId,
+      @PathParam("user_id") String userId, Device body) throws AddException;
 
   @PUT
   @Path("/{app_id}/users/{user_id}/devices/{device_id}")
-  Device update(@HeaderParam("Authorization") Authorization auth, @PathParam("app_id") AppId appId,
-      @PathParam("user_id") UserId userId, @PathParam("device_id") DeviceId deviceId, Device body)
+  Device update(@HeaderParam("Authorization") Authorization auth, @PathParam("app_id") String appId,
+      @PathParam("user_id") String userId, @PathParam("device_id") String deviceId, Device body)
       throws UpdateException;
 
   @DELETE
   @Path("/{app_id}/users/{user_id}/devices/{device_id}")
-  void delete(@HeaderParam("Authorization") Authorization auth, @PathParam("app_id") AppId appId,
-      @PathParam("user_id") UserId userId, @PathParam("device_id") DeviceId deviceId) throws
+  void delete(@HeaderParam("Authorization") Authorization auth, @PathParam("app_id") String appId,
+      @PathParam("user_id") String userId, @PathParam("device_id") String deviceId) throws
       DeleteException;
 
   @GET
   @Path("/{app_id}/users/{user_id}/devices/{device_id}")
   Device getDevice(@HeaderParam("Authorization") Authorization auth,
-      @PathParam("app_id") AppId appId, @PathParam("user_id") UserId userId,
-      @PathParam("device_id") DeviceId deviceId) throws GetDeviceException;
+      @PathParam("app_id") String appId, @PathParam("user_id") String userId,
+      @PathParam("device_id") String deviceId) throws GetDeviceException;
 
   static DeviceService getClient(String url) {
     return Feign.builder()

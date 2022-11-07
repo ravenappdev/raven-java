@@ -20,7 +20,7 @@ import java.util.Optional;
 public final class SendEventRequest {
   private final String event;
 
-  private final Map<String, Optional<Object>> data;
+  private final Map<String, Object> data;
 
   private final Optional<User> user;
 
@@ -30,7 +30,7 @@ public final class SendEventRequest {
 
   private int _cachedHashCode;
 
-  SendEventRequest(String event, Map<String, Optional<Object>> data, Optional<User> user,
+  SendEventRequest(String event, Map<String, Object> data, Optional<User> user,
       Optional<Long> scheduleAt, Optional<EventOverride> override) {
     this.event = event;
     this.data = data;
@@ -45,7 +45,7 @@ public final class SendEventRequest {
   }
 
   @JsonProperty("data")
-  public Map<String, Optional<Object>> getData() {
+  public Map<String, Object> getData() {
     return data;
   }
 
@@ -100,11 +100,11 @@ public final class SendEventRequest {
   public interface _FinalStage {
     SendEventRequest build();
 
-    _FinalStage data(Map<String, Optional<Object>> data);
+    _FinalStage data(Map<String, Object> data);
 
-    _FinalStage putAllData(Map<String, Optional<Object>> data);
+    _FinalStage putAllData(Map<String, Object> data);
 
-    _FinalStage data(String key, Optional<Object> value);
+    _FinalStage data(String key, Object value);
 
     _FinalStage user(Optional<User> user);
 
@@ -131,7 +131,7 @@ public final class SendEventRequest {
 
     private Optional<User> user = Optional.empty();
 
-    private Map<String, Optional<Object>> data = new LinkedHashMap<>();
+    private Map<String, Object> data = new LinkedHashMap<>();
 
     private Builder() {
     }
@@ -202,13 +202,13 @@ public final class SendEventRequest {
     }
 
     @Override
-    public _FinalStage data(String key, Optional<Object> value) {
+    public _FinalStage data(String key, Object value) {
       this.data.put(key, value);
       return this;
     }
 
     @Override
-    public _FinalStage putAllData(Map<String, Optional<Object>> data) {
+    public _FinalStage putAllData(Map<String, Object> data) {
       this.data.putAll(data);
       return this;
     }
@@ -218,7 +218,7 @@ public final class SendEventRequest {
         value = "data",
         nulls = Nulls.SKIP
     )
-    public _FinalStage data(Map<String, Optional<Object>> data) {
+    public _FinalStage data(Map<String, Object> data) {
       this.data.clear();
       this.data.putAll(data);
       return this;

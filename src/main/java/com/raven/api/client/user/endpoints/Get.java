@@ -1,8 +1,6 @@
 package com.raven.api.client.user.endpoints;
 
 import com.raven.api.client.Authorization;
-import com.raven.api.client.ids.types.AppId;
-import com.raven.api.client.ids.types.UserId;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -16,13 +14,13 @@ public final class Get {
   public static final class Request {
     private final Optional<Authorization> authOverride;
 
-    private final AppId appId;
+    private final String appId;
 
-    private final UserId userId;
+    private final String userId;
 
     private int _cachedHashCode;
 
-    Request(Optional<Authorization> authOverride, AppId appId, UserId userId) {
+    Request(Optional<Authorization> authOverride, String appId, String userId) {
       this.authOverride = authOverride;
       this.appId = appId;
       this.userId = userId;
@@ -32,11 +30,11 @@ public final class Get {
       return authOverride;
     }
 
-    public AppId getAppId() {
+    public String getAppId() {
       return appId;
     }
 
-    public UserId getUserId() {
+    public String getUserId() {
       return userId;
     }
 
@@ -68,13 +66,13 @@ public final class Get {
     }
 
     public interface AppIdStage {
-      UserIdStage appId(AppId appId);
+      UserIdStage appId(String appId);
 
       Builder from(Request other);
     }
 
     public interface UserIdStage {
-      _FinalStage userId(UserId userId);
+      _FinalStage userId(String userId);
     }
 
     public interface _FinalStage {
@@ -86,9 +84,9 @@ public final class Get {
     }
 
     static final class Builder implements AppIdStage, UserIdStage, _FinalStage {
-      private AppId appId;
+      private String appId;
 
-      private UserId userId;
+      private String userId;
 
       private Optional<Authorization> authOverride = Optional.empty();
 
@@ -104,13 +102,13 @@ public final class Get {
       }
 
       @Override
-      public UserIdStage appId(AppId appId) {
+      public UserIdStage appId(String appId) {
         this.appId = appId;
         return this;
       }
 
       @Override
-      public _FinalStage userId(UserId userId) {
+      public _FinalStage userId(String userId) {
         this.userId = userId;
         return this;
       }

@@ -2,8 +2,6 @@ package com.raven.api.client.device.endpoints;
 
 import com.raven.api.client.Authorization;
 import com.raven.api.client.device.types.Device;
-import com.raven.api.client.ids.types.AppId;
-import com.raven.api.client.ids.types.UserId;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -17,15 +15,15 @@ public final class Add {
   public static final class Request {
     private final Optional<Authorization> authOverride;
 
-    private final AppId appId;
+    private final String appId;
 
-    private final UserId userId;
+    private final String userId;
 
     private final Device body;
 
     private int _cachedHashCode;
 
-    Request(Optional<Authorization> authOverride, AppId appId, UserId userId, Device body) {
+    Request(Optional<Authorization> authOverride, String appId, String userId, Device body) {
       this.authOverride = authOverride;
       this.appId = appId;
       this.userId = userId;
@@ -36,11 +34,11 @@ public final class Add {
       return authOverride;
     }
 
-    public AppId getAppId() {
+    public String getAppId() {
       return appId;
     }
 
-    public UserId getUserId() {
+    public String getUserId() {
       return userId;
     }
 
@@ -76,13 +74,13 @@ public final class Add {
     }
 
     public interface AppIdStage {
-      UserIdStage appId(AppId appId);
+      UserIdStage appId(String appId);
 
       Builder from(Request other);
     }
 
     public interface UserIdStage {
-      BodyStage userId(UserId userId);
+      BodyStage userId(String userId);
     }
 
     public interface BodyStage {
@@ -98,9 +96,9 @@ public final class Add {
     }
 
     static final class Builder implements AppIdStage, UserIdStage, BodyStage, _FinalStage {
-      private AppId appId;
+      private String appId;
 
-      private UserId userId;
+      private String userId;
 
       private Device body;
 
@@ -119,13 +117,13 @@ public final class Add {
       }
 
       @Override
-      public UserIdStage appId(AppId appId) {
+      public UserIdStage appId(String appId) {
         this.appId = appId;
         return this;
       }
 
       @Override
-      public BodyStage userId(UserId userId) {
+      public BodyStage userId(String userId) {
         this.userId = userId;
         return this;
       }

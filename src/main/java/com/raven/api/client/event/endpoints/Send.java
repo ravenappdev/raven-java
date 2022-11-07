@@ -2,7 +2,6 @@ package com.raven.api.client.event.endpoints;
 
 import com.raven.api.client.Authorization;
 import com.raven.api.client.event.types.SendEventRequest;
-import com.raven.api.client.ids.types.AppId;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -18,13 +17,13 @@ public final class Send {
 
     private final Optional<String> idempotencyKey;
 
-    private final AppId appId;
+    private final String appId;
 
     private final SendEventRequest body;
 
     private int _cachedHashCode;
 
-    Request(Optional<Authorization> authOverride, Optional<String> idempotencyKey, AppId appId,
+    Request(Optional<Authorization> authOverride, Optional<String> idempotencyKey, String appId,
         SendEventRequest body) {
       this.authOverride = authOverride;
       this.idempotencyKey = idempotencyKey;
@@ -40,7 +39,7 @@ public final class Send {
       return idempotencyKey;
     }
 
-    public AppId getAppId() {
+    public String getAppId() {
       return appId;
     }
 
@@ -76,7 +75,7 @@ public final class Send {
     }
 
     public interface AppIdStage {
-      BodyStage appId(AppId appId);
+      BodyStage appId(String appId);
 
       Builder from(Request other);
     }
@@ -98,7 +97,7 @@ public final class Send {
     }
 
     static final class Builder implements AppIdStage, BodyStage, _FinalStage {
-      private AppId appId;
+      private String appId;
 
       private SendEventRequest body;
 
@@ -119,7 +118,7 @@ public final class Send {
       }
 
       @Override
-      public BodyStage appId(AppId appId) {
+      public BodyStage appId(String appId) {
         this.appId = appId;
         return this;
       }

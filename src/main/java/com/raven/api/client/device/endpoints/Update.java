@@ -2,9 +2,6 @@ package com.raven.api.client.device.endpoints;
 
 import com.raven.api.client.Authorization;
 import com.raven.api.client.device.types.Device;
-import com.raven.api.client.ids.types.AppId;
-import com.raven.api.client.ids.types.DeviceId;
-import com.raven.api.client.ids.types.UserId;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -18,17 +15,17 @@ public final class Update {
   public static final class Request {
     private final Optional<Authorization> authOverride;
 
-    private final AppId appId;
+    private final String appId;
 
-    private final UserId userId;
+    private final String userId;
 
-    private final DeviceId deviceId;
+    private final String deviceId;
 
     private final Device body;
 
     private int _cachedHashCode;
 
-    Request(Optional<Authorization> authOverride, AppId appId, UserId userId, DeviceId deviceId,
+    Request(Optional<Authorization> authOverride, String appId, String userId, String deviceId,
         Device body) {
       this.authOverride = authOverride;
       this.appId = appId;
@@ -41,15 +38,15 @@ public final class Update {
       return authOverride;
     }
 
-    public AppId getAppId() {
+    public String getAppId() {
       return appId;
     }
 
-    public UserId getUserId() {
+    public String getUserId() {
       return userId;
     }
 
-    public DeviceId getDeviceId() {
+    public String getDeviceId() {
       return deviceId;
     }
 
@@ -85,17 +82,17 @@ public final class Update {
     }
 
     public interface AppIdStage {
-      UserIdStage appId(AppId appId);
+      UserIdStage appId(String appId);
 
       Builder from(Request other);
     }
 
     public interface UserIdStage {
-      DeviceIdStage userId(UserId userId);
+      DeviceIdStage userId(String userId);
     }
 
     public interface DeviceIdStage {
-      BodyStage deviceId(DeviceId deviceId);
+      BodyStage deviceId(String deviceId);
     }
 
     public interface BodyStage {
@@ -111,11 +108,11 @@ public final class Update {
     }
 
     static final class Builder implements AppIdStage, UserIdStage, DeviceIdStage, BodyStage, _FinalStage {
-      private AppId appId;
+      private String appId;
 
-      private UserId userId;
+      private String userId;
 
-      private DeviceId deviceId;
+      private String deviceId;
 
       private Device body;
 
@@ -135,19 +132,19 @@ public final class Update {
       }
 
       @Override
-      public UserIdStage appId(AppId appId) {
+      public UserIdStage appId(String appId) {
         this.appId = appId;
         return this;
       }
 
       @Override
-      public DeviceIdStage userId(UserId userId) {
+      public DeviceIdStage userId(String userId) {
         this.userId = userId;
         return this;
       }
 
       @Override
-      public BodyStage deviceId(DeviceId deviceId) {
+      public BodyStage deviceId(String deviceId) {
         this.deviceId = deviceId;
         return this;
       }

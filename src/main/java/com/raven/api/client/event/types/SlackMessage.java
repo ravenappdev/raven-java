@@ -3,13 +3,11 @@ package com.raven.api.client.event.types;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
-import java.util.Optional;
 
 @JsonDeserialize(
     builder = SlackMessage.Builder.class
@@ -17,11 +15,11 @@ import java.util.Optional;
 public final class SlackMessage {
   private final String text;
 
-  private final Optional<Object> blocks;
+  private final Object blocks;
 
   private int _cachedHashCode;
 
-  SlackMessage(String text, Optional<Object> blocks) {
+  SlackMessage(String text, Object blocks) {
     this.text = text;
     this.blocks = blocks;
   }
@@ -32,7 +30,7 @@ public final class SlackMessage {
   }
 
   @JsonProperty("blocks")
-  public Optional<Object> getBlocks() {
+  public Object getBlocks() {
     return blocks;
   }
 
@@ -64,26 +62,26 @@ public final class SlackMessage {
   }
 
   public interface TextStage {
-    _FinalStage text(String text);
+    BlocksStage text(String text);
 
     Builder from(SlackMessage other);
   }
 
+  public interface BlocksStage {
+    _FinalStage blocks(Object blocks);
+  }
+
   public interface _FinalStage {
     SlackMessage build();
-
-    _FinalStage blocks(Optional<Object> blocks);
-
-    _FinalStage blocks(Object blocks);
   }
 
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  static final class Builder implements TextStage, _FinalStage {
+  static final class Builder implements TextStage, BlocksStage, _FinalStage {
     private String text;
 
-    private Optional<Object> blocks = Optional.empty();
+    private Object blocks;
 
     private Builder() {
     }
@@ -97,23 +95,14 @@ public final class SlackMessage {
 
     @Override
     @JsonSetter("text")
-    public _FinalStage text(String text) {
+    public BlocksStage text(String text) {
       this.text = text;
       return this;
     }
 
     @Override
+    @JsonSetter("blocks")
     public _FinalStage blocks(Object blocks) {
-      this.blocks = Optional.of(blocks);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "blocks",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage blocks(Optional<Object> blocks) {
       this.blocks = blocks;
       return this;
     }

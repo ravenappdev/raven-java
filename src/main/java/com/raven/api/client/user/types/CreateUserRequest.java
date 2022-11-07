@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.raven.api.client.ids.types.UserId;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -16,7 +15,7 @@ import java.util.Optional;
     builder = CreateUserRequest.Builder.class
 )
 public final class CreateUserRequest {
-  private final UserId userId;
+  private final String userId;
 
   private final Optional<String> mobile;
 
@@ -26,7 +25,7 @@ public final class CreateUserRequest {
 
   private int _cachedHashCode;
 
-  CreateUserRequest(UserId userId, Optional<String> mobile, Optional<String> email,
+  CreateUserRequest(String userId, Optional<String> mobile, Optional<String> email,
       Optional<String> whatsApp) {
     this.userId = userId;
     this.mobile = mobile;
@@ -35,7 +34,7 @@ public final class CreateUserRequest {
   }
 
   @JsonProperty("user_id")
-  public UserId getUserId() {
+  public String getUserId() {
     return userId;
   }
 
@@ -82,7 +81,7 @@ public final class CreateUserRequest {
   }
 
   public interface UserIdStage {
-    _FinalStage userId(UserId userId);
+    _FinalStage userId(String userId);
 
     Builder from(CreateUserRequest other);
   }
@@ -107,7 +106,7 @@ public final class CreateUserRequest {
       ignoreUnknown = true
   )
   static final class Builder implements UserIdStage, _FinalStage {
-    private UserId userId;
+    private String userId;
 
     private Optional<String> whatsApp = Optional.empty();
 
@@ -129,7 +128,7 @@ public final class CreateUserRequest {
 
     @Override
     @JsonSetter("user_id")
-    public _FinalStage userId(UserId userId) {
+    public _FinalStage userId(String userId) {
       this.userId = userId;
       return this;
     }

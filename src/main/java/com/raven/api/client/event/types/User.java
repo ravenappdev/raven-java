@@ -16,7 +16,7 @@ import java.util.Optional;
     builder = User.Builder.class
 )
 public final class User {
-  private final String userId;
+  private final Optional<String> userId;
 
   private final Optional<String> email;
 
@@ -30,7 +30,7 @@ public final class User {
 
   private int _cachedHashCode;
 
-  User(String userId, Optional<String> email, Optional<String> mobile,
+  User(Optional<String> userId, Optional<String> email, Optional<String> mobile,
       Optional<String> whatsappMobile, Optional<String> onesignalExternalId,
       Optional<List<String>> fcmTokens) {
     this.userId = userId;
@@ -42,7 +42,7 @@ public final class User {
   }
 
   @JsonProperty("user_id")
-  public String getUserId() {
+  public Optional<String> getUserId() {
     return userId;
   }
 
@@ -94,60 +94,29 @@ public final class User {
     return "User{" + "userId: " + userId + ", email: " + email + ", mobile: " + mobile + ", whatsappMobile: " + whatsappMobile + ", onesignalExternalId: " + onesignalExternalId + ", fcmTokens: " + fcmTokens + "}";
   }
 
-  public static UserIdStage builder() {
+  public static Builder builder() {
     return new Builder();
-  }
-
-  public interface UserIdStage {
-    _FinalStage userId(String userId);
-
-    Builder from(User other);
-  }
-
-  public interface _FinalStage {
-    User build();
-
-    _FinalStage email(Optional<String> email);
-
-    _FinalStage email(String email);
-
-    _FinalStage mobile(Optional<String> mobile);
-
-    _FinalStage mobile(String mobile);
-
-    _FinalStage whatsappMobile(Optional<String> whatsappMobile);
-
-    _FinalStage whatsappMobile(String whatsappMobile);
-
-    _FinalStage onesignalExternalId(Optional<String> onesignalExternalId);
-
-    _FinalStage onesignalExternalId(String onesignalExternalId);
-
-    _FinalStage fcmTokens(Optional<List<String>> fcmTokens);
-
-    _FinalStage fcmTokens(List<String> fcmTokens);
   }
 
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  static final class Builder implements UserIdStage, _FinalStage {
-    private String userId;
+  public static final class Builder {
+    private Optional<String> userId = Optional.empty();
 
-    private Optional<List<String>> fcmTokens = Optional.empty();
-
-    private Optional<String> onesignalExternalId = Optional.empty();
-
-    private Optional<String> whatsappMobile = Optional.empty();
+    private Optional<String> email = Optional.empty();
 
     private Optional<String> mobile = Optional.empty();
 
-    private Optional<String> email = Optional.empty();
+    private Optional<String> whatsappMobile = Optional.empty();
+
+    private Optional<String> onesignalExternalId = Optional.empty();
+
+    private Optional<List<String>> fcmTokens = Optional.empty();
 
     private Builder() {
     }
 
-    @Override
     public Builder from(User other) {
       userId(other.getUserId());
       email(other.getEmail());
@@ -158,94 +127,90 @@ public final class User {
       return this;
     }
 
-    @Override
-    @JsonSetter("user_id")
-    public _FinalStage userId(String userId) {
+    @JsonSetter(
+        value = "user_id",
+        nulls = Nulls.SKIP
+    )
+    public Builder userId(Optional<String> userId) {
       this.userId = userId;
       return this;
     }
 
-    @Override
-    public _FinalStage fcmTokens(List<String> fcmTokens) {
-      this.fcmTokens = Optional.of(fcmTokens);
+    public Builder userId(String userId) {
+      this.userId = Optional.of(userId);
       return this;
     }
 
-    @Override
-    @JsonSetter(
-        value = "fcm_tokens",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage fcmTokens(Optional<List<String>> fcmTokens) {
-      this.fcmTokens = fcmTokens;
-      return this;
-    }
-
-    @Override
-    public _FinalStage onesignalExternalId(String onesignalExternalId) {
-      this.onesignalExternalId = Optional.of(onesignalExternalId);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "onesignal_external_id",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage onesignalExternalId(Optional<String> onesignalExternalId) {
-      this.onesignalExternalId = onesignalExternalId;
-      return this;
-    }
-
-    @Override
-    public _FinalStage whatsappMobile(String whatsappMobile) {
-      this.whatsappMobile = Optional.of(whatsappMobile);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "whatsapp_mobile",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage whatsappMobile(Optional<String> whatsappMobile) {
-      this.whatsappMobile = whatsappMobile;
-      return this;
-    }
-
-    @Override
-    public _FinalStage mobile(String mobile) {
-      this.mobile = Optional.of(mobile);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "mobile",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage mobile(Optional<String> mobile) {
-      this.mobile = mobile;
-      return this;
-    }
-
-    @Override
-    public _FinalStage email(String email) {
-      this.email = Optional.of(email);
-      return this;
-    }
-
-    @Override
     @JsonSetter(
         value = "email",
         nulls = Nulls.SKIP
     )
-    public _FinalStage email(Optional<String> email) {
+    public Builder email(Optional<String> email) {
       this.email = email;
       return this;
     }
 
-    @Override
+    public Builder email(String email) {
+      this.email = Optional.of(email);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "mobile",
+        nulls = Nulls.SKIP
+    )
+    public Builder mobile(Optional<String> mobile) {
+      this.mobile = mobile;
+      return this;
+    }
+
+    public Builder mobile(String mobile) {
+      this.mobile = Optional.of(mobile);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "whatsapp_mobile",
+        nulls = Nulls.SKIP
+    )
+    public Builder whatsappMobile(Optional<String> whatsappMobile) {
+      this.whatsappMobile = whatsappMobile;
+      return this;
+    }
+
+    public Builder whatsappMobile(String whatsappMobile) {
+      this.whatsappMobile = Optional.of(whatsappMobile);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "onesignal_external_id",
+        nulls = Nulls.SKIP
+    )
+    public Builder onesignalExternalId(Optional<String> onesignalExternalId) {
+      this.onesignalExternalId = onesignalExternalId;
+      return this;
+    }
+
+    public Builder onesignalExternalId(String onesignalExternalId) {
+      this.onesignalExternalId = Optional.of(onesignalExternalId);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "fcm_tokens",
+        nulls = Nulls.SKIP
+    )
+    public Builder fcmTokens(Optional<List<String>> fcmTokens) {
+      this.fcmTokens = fcmTokens;
+      return this;
+    }
+
+    public Builder fcmTokens(List<String> fcmTokens) {
+      this.fcmTokens = Optional.of(fcmTokens);
+      return this;
+    }
+
     public User build() {
       return new User(userId, email, mobile, whatsappMobile, onesignalExternalId, fcmTokens);
     }

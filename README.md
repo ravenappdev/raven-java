@@ -44,7 +44,7 @@ try {
                 .build());
     
     System.out.println(response.getId());
-} catch (AddException e) {
+} catch (SendException e) {
    System.out.println("Failed to send request" + e.getMessage());
 }
 ```

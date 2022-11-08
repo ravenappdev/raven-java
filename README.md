@@ -25,7 +25,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>dev.ravenapp</groupId>
   <artifactId>raven-java</artifactId>
-  <version>0.0.24</version>
+  <version>0.0.31</version>
 </dependency>
 ```
 
@@ -34,16 +34,16 @@ Add this dependency to your project's POM:
 ```java
 RavenApiClient ravenApiClient = new RavenApiClient("api.ravenapp.dev", Authorization.of("AuthKey <auth>"));
 try {
-    Device device = ravenApiClient.device().add(Add.Request.builder()
-      .appId("app-id")
-      .userId("user-id")
-      .body(Device.builder()
-          .fcmToken("abc123")
-          .id("cdf456")
-          .notificationsDisabled(false)
-          .build())
-    .build());
-    System.out.println("Created a device! The device's Raven ID is " + device.getRavenId());
+    var response = client.send(Send.Request.builder()
+                .appId("<app_id>")
+                .body(SendEventRequest.builder()
+                    .event("payment_alert")
+                    .data(Map.of("name", "Adam"))
+                    .user(User.builder().mobile("+1234567890").build())
+                    .build())
+                .build());
+    
+    System.out.println(response.getId());
 } catch (AddException e) {
    System.out.println("Failed to create a device" + e.getMessage());
 }

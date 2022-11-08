@@ -45,7 +45,7 @@ try {
     
     System.out.println(response.getId());
 } catch (AddException e) {
-   System.out.println("Failed to create a device" + e.getMessage());
+   System.out.println("Failed to send request" + e.getMessage());
 }
 ```
 

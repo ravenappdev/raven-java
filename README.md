@@ -14,7 +14,7 @@ API documentation is available at <https://docs.ravenapp.dev/introduction>.
 Add this dependency to your project's build file:
 
 ```groovy
-implementation "dev.ravenapp:raven-java:0.0.32"
+implementation "dev.ravenapp:raven-java:0.0.33"
 ```
 
 ### Maven users
@@ -25,7 +25,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>dev.ravenapp</groupId>
   <artifactId>raven-java</artifactId>
-  <version>0.0.32</version>
+  <version>0.0.33</version>
 </dependency>
 ```
 

@@ -14,7 +14,7 @@ API documentation is available at <https://docs.ravenapp.dev/introduction>.
 Add this dependency to your project's build file:
 
 ```groovy
-implementation "dev.ravenapp:raven-java:0.0.24"
+implementation "dev.ravenapp:raven-java:0.0.32"
 ```
 
 ### Maven users
@@ -25,14 +25,14 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>dev.ravenapp</groupId>
   <artifactId>raven-java</artifactId>
-  <version>0.0.31</version>
+  <version>0.0.32</version>
 </dependency>
 ```
 
 ## Usage
 
 ```java
-RavenApiClient ravenApiClient = new RavenApiClient("api.ravenapp.dev", Authorization.of("AuthKey <auth>"));
+RavenApiClient ravenApiClient = new RavenApiClient(Authorization.of("AuthKey <auth>"));
 try {
     var response = client.send(Send.Request.builder()
                 .appId("<app_id>")

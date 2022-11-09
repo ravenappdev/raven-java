@@ -32,7 +32,7 @@ Add this dependency to your project's POM:
 ## Usage
 
 ```java
-RavenApiClient ravenApiClient = new RavenApiClient("api.ravenapp.dev", Authorization.of("AuthKey <auth>"));
+RavenApiClient ravenApiClient = new RavenApiClient(Authorization.of("AuthKey <auth>"));
 try {
     var response = client.send(Send.Request.builder()
                 .appId("<app_id>")

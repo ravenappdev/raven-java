@@ -9,6 +9,7 @@ import com.raven.api.client.event.exceptions.SendBulkException;
 import com.raven.api.client.event.exceptions.SendException;
 import com.raven.api.client.event.types.SendEventResponse;
 import com.raven.api.client.user.UserServiceClient;
+import com.raven.api.core.Environment;
 import java.lang.String;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
@@ -21,16 +22,14 @@ public final class RavenApiClient {
 
   private final Supplier<UserServiceClient> userServiceClient;
 
-  public RavenApiClient(String url) {
-    this.userServiceClient = memoize(() -> new UserServiceClient(url));
-    this.eventServiceClient = memoize(() -> new EventServiceClient(url));
-    this.deviceServiceClient = memoize(() -> new DeviceServiceClient(url));
+  public RavenApiClient(Authorization auth) {
+    this(Environment.PROD, auth);
   }
 
-  public RavenApiClient(String url, Authorization auth) {
-    this.userServiceClient = memoize(() -> new UserServiceClient(url, auth));
-    this.eventServiceClient = memoize(() -> new EventServiceClient(url, auth));
-    this.deviceServiceClient = memoize(() -> new DeviceServiceClient(url, auth));
+  public RavenApiClient(Environment environment, Authorization auth) {
+    this.userServiceClient = memoize(() -> new UserServiceClient(environment.getUrl(), auth));
+    this.eventServiceClient = memoize(() -> new EventServiceClient(environment.getUrl(), auth));
+    this.deviceServiceClient = memoize(() -> new DeviceServiceClient(environment.getUrl(), auth));
   }
 
   public final DeviceServiceClient device() {

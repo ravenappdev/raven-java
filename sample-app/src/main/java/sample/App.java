@@ -12,8 +12,7 @@ public final class App {
       String authKey = System.getenv("RAVEN_TOKEN");
       Authorization auth = Authorization.of(authKey);
 
-      RavenApiClient ravenApiClient =
-                new RavenApiClient("api.ravenapp.dev", auth);
+      RavenApiClient ravenApiClient = new RavenApiClient(auth);
 
       try {
           Device device = ravenApiClient.device().add(Add.Request.builder()

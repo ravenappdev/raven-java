@@ -5,12 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.raven.api.client.device.types.Device;
 import java.lang.Long;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -31,10 +29,6 @@ public final class RavenUser {
 
   private final Optional<String> whatsappMobile;
 
-  private final Optional<List<String>> fcmTopic;
-
-  private final Optional<List<String>> fcmDeviceGroup;
-
   private final Optional<SlackProfile> slack;
 
   private final Optional<InAppProfile> inApp;
@@ -47,12 +41,6 @@ public final class RavenUser {
 
   private final Optional<List<String>> iosTokens;
 
-  private final Optional<List<Channel>> availableChannels;
-
-  private final List<Device> devices;
-
-  private final Optional<UserPreferences> userPreferences;
-
   private final Optional<Long> createdAt;
 
   private final Optional<Long> updatedAt;
@@ -61,30 +49,22 @@ public final class RavenUser {
 
   RavenUser(String userId, Optional<String> userSid, Optional<String> onesignalExternalId,
       Optional<String> mobile, Optional<String> email, Optional<String> whatsappMobile,
-      Optional<List<String>> fcmTopic, Optional<List<String>> fcmDeviceGroup,
       Optional<SlackProfile> slack, Optional<InAppProfile> inApp,
       Optional<TelegramProfile> telegram, Optional<List<String>> fcmTokens,
       Optional<List<String>> onesignalPlayerIds, Optional<List<String>> iosTokens,
-      Optional<List<Channel>> availableChannels, List<Device> devices,
-      Optional<UserPreferences> userPreferences, Optional<Long> createdAt,
-      Optional<Long> updatedAt) {
+      Optional<Long> createdAt, Optional<Long> updatedAt) {
     this.userId = userId;
     this.userSid = userSid;
     this.onesignalExternalId = onesignalExternalId;
     this.mobile = mobile;
     this.email = email;
     this.whatsappMobile = whatsappMobile;
-    this.fcmTopic = fcmTopic;
-    this.fcmDeviceGroup = fcmDeviceGroup;
     this.slack = slack;
     this.inApp = inApp;
     this.telegram = telegram;
     this.fcmTokens = fcmTokens;
     this.onesignalPlayerIds = onesignalPlayerIds;
     this.iosTokens = iosTokens;
-    this.availableChannels = availableChannels;
-    this.devices = devices;
-    this.userPreferences = userPreferences;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
@@ -119,16 +99,6 @@ public final class RavenUser {
     return whatsappMobile;
   }
 
-  @JsonProperty("fcm_topic")
-  public Optional<List<String>> getFcmTopic() {
-    return fcmTopic;
-  }
-
-  @JsonProperty("fcm_device_group")
-  public Optional<List<String>> getFcmDeviceGroup() {
-    return fcmDeviceGroup;
-  }
-
   @JsonProperty("slack")
   public Optional<SlackProfile> getSlack() {
     return slack;
@@ -159,21 +129,6 @@ public final class RavenUser {
     return iosTokens;
   }
 
-  @JsonProperty("available_channels")
-  public Optional<List<Channel>> getAvailableChannels() {
-    return availableChannels;
-  }
-
-  @JsonProperty("devices")
-  public List<Device> getDevices() {
-    return devices;
-  }
-
-  @JsonProperty("user_preferences")
-  public Optional<UserPreferences> getUserPreferences() {
-    return userPreferences;
-  }
-
   @JsonProperty("created_at")
   public Optional<Long> getCreatedAt() {
     return createdAt;
@@ -191,20 +146,20 @@ public final class RavenUser {
   }
 
   private boolean equalTo(RavenUser other) {
-    return userId.equals(other.userId) && userSid.equals(other.userSid) && onesignalExternalId.equals(other.onesignalExternalId) && mobile.equals(other.mobile) && email.equals(other.email) && whatsappMobile.equals(other.whatsappMobile) && fcmTopic.equals(other.fcmTopic) && fcmDeviceGroup.equals(other.fcmDeviceGroup) && slack.equals(other.slack) && inApp.equals(other.inApp) && telegram.equals(other.telegram) && fcmTokens.equals(other.fcmTokens) && onesignalPlayerIds.equals(other.onesignalPlayerIds) && iosTokens.equals(other.iosTokens) && availableChannels.equals(other.availableChannels) && devices.equals(other.devices) && userPreferences.equals(other.userPreferences) && createdAt.equals(other.createdAt) && updatedAt.equals(other.updatedAt);
+    return userId.equals(other.userId) && userSid.equals(other.userSid) && onesignalExternalId.equals(other.onesignalExternalId) && mobile.equals(other.mobile) && email.equals(other.email) && whatsappMobile.equals(other.whatsappMobile) && slack.equals(other.slack) && inApp.equals(other.inApp) && telegram.equals(other.telegram) && fcmTokens.equals(other.fcmTokens) && onesignalPlayerIds.equals(other.onesignalPlayerIds) && iosTokens.equals(other.iosTokens) && createdAt.equals(other.createdAt) && updatedAt.equals(other.updatedAt);
   }
 
   @Override
   public int hashCode() {
     if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.userId, this.userSid, this.onesignalExternalId, this.mobile, this.email, this.whatsappMobile, this.fcmTopic, this.fcmDeviceGroup, this.slack, this.inApp, this.telegram, this.fcmTokens, this.onesignalPlayerIds, this.iosTokens, this.availableChannels, this.devices, this.userPreferences, this.createdAt, this.updatedAt);
+      _cachedHashCode = Objects.hash(this.userId, this.userSid, this.onesignalExternalId, this.mobile, this.email, this.whatsappMobile, this.slack, this.inApp, this.telegram, this.fcmTokens, this.onesignalPlayerIds, this.iosTokens, this.createdAt, this.updatedAt);
     }
     return _cachedHashCode;
   }
 
   @Override
   public String toString() {
-    return "RavenUser{" + "userId: " + userId + ", userSid: " + userSid + ", onesignalExternalId: " + onesignalExternalId + ", mobile: " + mobile + ", email: " + email + ", whatsappMobile: " + whatsappMobile + ", fcmTopic: " + fcmTopic + ", fcmDeviceGroup: " + fcmDeviceGroup + ", slack: " + slack + ", inApp: " + inApp + ", telegram: " + telegram + ", fcmTokens: " + fcmTokens + ", onesignalPlayerIds: " + onesignalPlayerIds + ", iosTokens: " + iosTokens + ", availableChannels: " + availableChannels + ", devices: " + devices + ", userPreferences: " + userPreferences + ", createdAt: " + createdAt + ", updatedAt: " + updatedAt + "}";
+    return "RavenUser{" + "userId: " + userId + ", userSid: " + userSid + ", onesignalExternalId: " + onesignalExternalId + ", mobile: " + mobile + ", email: " + email + ", whatsappMobile: " + whatsappMobile + ", slack: " + slack + ", inApp: " + inApp + ", telegram: " + telegram + ", fcmTokens: " + fcmTokens + ", onesignalPlayerIds: " + onesignalPlayerIds + ", iosTokens: " + iosTokens + ", createdAt: " + createdAt + ", updatedAt: " + updatedAt + "}";
   }
 
   public static UserIdStage builder() {
@@ -240,14 +195,6 @@ public final class RavenUser {
 
     _FinalStage whatsappMobile(String whatsappMobile);
 
-    _FinalStage fcmTopic(Optional<List<String>> fcmTopic);
-
-    _FinalStage fcmTopic(List<String> fcmTopic);
-
-    _FinalStage fcmDeviceGroup(Optional<List<String>> fcmDeviceGroup);
-
-    _FinalStage fcmDeviceGroup(List<String> fcmDeviceGroup);
-
     _FinalStage slack(Optional<SlackProfile> slack);
 
     _FinalStage slack(SlackProfile slack);
@@ -272,20 +219,6 @@ public final class RavenUser {
 
     _FinalStage iosTokens(List<String> iosTokens);
 
-    _FinalStage availableChannels(Optional<List<Channel>> availableChannels);
-
-    _FinalStage availableChannels(List<Channel> availableChannels);
-
-    _FinalStage devices(List<Device> devices);
-
-    _FinalStage devices(Device devices);
-
-    _FinalStage addAllDevices(List<Device> devices);
-
-    _FinalStage userPreferences(Optional<UserPreferences> userPreferences);
-
-    _FinalStage userPreferences(UserPreferences userPreferences);
-
     _FinalStage createdAt(Optional<Long> createdAt);
 
     _FinalStage createdAt(Long createdAt);
@@ -305,12 +238,6 @@ public final class RavenUser {
 
     private Optional<Long> createdAt = Optional.empty();
 
-    private Optional<UserPreferences> userPreferences = Optional.empty();
-
-    private List<Device> devices = new ArrayList<>();
-
-    private Optional<List<Channel>> availableChannels = Optional.empty();
-
     private Optional<List<String>> iosTokens = Optional.empty();
 
     private Optional<List<String>> onesignalPlayerIds = Optional.empty();
@@ -322,10 +249,6 @@ public final class RavenUser {
     private Optional<InAppProfile> inApp = Optional.empty();
 
     private Optional<SlackProfile> slack = Optional.empty();
-
-    private Optional<List<String>> fcmDeviceGroup = Optional.empty();
-
-    private Optional<List<String>> fcmTopic = Optional.empty();
 
     private Optional<String> whatsappMobile = Optional.empty();
 
@@ -348,17 +271,12 @@ public final class RavenUser {
       mobile(other.getMobile());
       email(other.getEmail());
       whatsappMobile(other.getWhatsappMobile());
-      fcmTopic(other.getFcmTopic());
-      fcmDeviceGroup(other.getFcmDeviceGroup());
       slack(other.getSlack());
       inApp(other.getInApp());
       telegram(other.getTelegram());
       fcmTokens(other.getFcmTokens());
       onesignalPlayerIds(other.getOnesignalPlayerIds());
       iosTokens(other.getIosTokens());
-      availableChannels(other.getAvailableChannels());
-      devices(other.getDevices());
-      userPreferences(other.getUserPreferences());
       createdAt(other.getCreatedAt());
       updatedAt(other.getUpdatedAt());
       return this;
@@ -400,61 +318,6 @@ public final class RavenUser {
     )
     public _FinalStage createdAt(Optional<Long> createdAt) {
       this.createdAt = createdAt;
-      return this;
-    }
-
-    @Override
-    public _FinalStage userPreferences(UserPreferences userPreferences) {
-      this.userPreferences = Optional.of(userPreferences);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "user_preferences",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage userPreferences(Optional<UserPreferences> userPreferences) {
-      this.userPreferences = userPreferences;
-      return this;
-    }
-
-    @Override
-    public _FinalStage addAllDevices(List<Device> devices) {
-      this.devices.addAll(devices);
-      return this;
-    }
-
-    @Override
-    public _FinalStage devices(Device devices) {
-      this.devices.add(devices);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "devices",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage devices(List<Device> devices) {
-      this.devices.clear();
-      this.devices.addAll(devices);
-      return this;
-    }
-
-    @Override
-    public _FinalStage availableChannels(List<Channel> availableChannels) {
-      this.availableChannels = Optional.of(availableChannels);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "available_channels",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage availableChannels(Optional<List<Channel>> availableChannels) {
-      this.availableChannels = availableChannels;
       return this;
     }
 
@@ -555,38 +418,6 @@ public final class RavenUser {
     }
 
     @Override
-    public _FinalStage fcmDeviceGroup(List<String> fcmDeviceGroup) {
-      this.fcmDeviceGroup = Optional.of(fcmDeviceGroup);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "fcm_device_group",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage fcmDeviceGroup(Optional<List<String>> fcmDeviceGroup) {
-      this.fcmDeviceGroup = fcmDeviceGroup;
-      return this;
-    }
-
-    @Override
-    public _FinalStage fcmTopic(List<String> fcmTopic) {
-      this.fcmTopic = Optional.of(fcmTopic);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "fcm_topic",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage fcmTopic(Optional<List<String>> fcmTopic) {
-      this.fcmTopic = fcmTopic;
-      return this;
-    }
-
-    @Override
     public _FinalStage whatsappMobile(String whatsappMobile) {
       this.whatsappMobile = Optional.of(whatsappMobile);
       return this;
@@ -668,7 +499,7 @@ public final class RavenUser {
 
     @Override
     public RavenUser build() {
-      return new RavenUser(userId, userSid, onesignalExternalId, mobile, email, whatsappMobile, fcmTopic, fcmDeviceGroup, slack, inApp, telegram, fcmTokens, onesignalPlayerIds, iosTokens, availableChannels, devices, userPreferences, createdAt, updatedAt);
+      return new RavenUser(userId, userSid, onesignalExternalId, mobile, email, whatsappMobile, slack, inApp, telegram, fcmTokens, onesignalPlayerIds, iosTokens, createdAt, updatedAt);
     }
   }
 }

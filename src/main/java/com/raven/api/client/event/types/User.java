@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.raven.api.client.user.types.InAppProfile;
 import com.raven.api.client.user.types.SlackProfile;
 import com.raven.api.client.user.types.TelegramProfile;
 import java.lang.Object;
@@ -43,8 +42,6 @@ public final class User {
 
   private final Optional<String> fcmDeviceGroup;
 
-  private final Optional<InAppProfile> inApp;
-
   private int _cachedHashCode;
 
   User(Optional<String> userId, Optional<String> email, Optional<String> mobile,
@@ -52,7 +49,7 @@ public final class User {
       Optional<List<String>> onesignalPlayerIds, Optional<List<String>> fcmTokens,
       Optional<List<String>> iosTokens, Optional<SlackProfile> slack,
       Optional<TelegramProfile> telegram, Optional<String> fcmTopic,
-      Optional<String> fcmDeviceGroup, Optional<InAppProfile> inApp) {
+      Optional<String> fcmDeviceGroup) {
     this.userId = userId;
     this.email = email;
     this.mobile = mobile;
@@ -65,7 +62,6 @@ public final class User {
     this.telegram = telegram;
     this.fcmTopic = fcmTopic;
     this.fcmDeviceGroup = fcmDeviceGroup;
-    this.inApp = inApp;
   }
 
   @JsonProperty("user_id")
@@ -128,11 +124,6 @@ public final class User {
     return fcmDeviceGroup;
   }
 
-  @JsonProperty("in_app")
-  public Optional<InAppProfile> getInApp() {
-    return inApp;
-  }
-
   @Override
   public boolean equals(Object other) {
     if (this == other) return true;
@@ -140,20 +131,20 @@ public final class User {
   }
 
   private boolean equalTo(User other) {
-    return userId.equals(other.userId) && email.equals(other.email) && mobile.equals(other.mobile) && whatsappMobile.equals(other.whatsappMobile) && onesignalExternalId.equals(other.onesignalExternalId) && onesignalPlayerIds.equals(other.onesignalPlayerIds) && fcmTokens.equals(other.fcmTokens) && iosTokens.equals(other.iosTokens) && slack.equals(other.slack) && telegram.equals(other.telegram) && fcmTopic.equals(other.fcmTopic) && fcmDeviceGroup.equals(other.fcmDeviceGroup) && inApp.equals(other.inApp);
+    return userId.equals(other.userId) && email.equals(other.email) && mobile.equals(other.mobile) && whatsappMobile.equals(other.whatsappMobile) && onesignalExternalId.equals(other.onesignalExternalId) && onesignalPlayerIds.equals(other.onesignalPlayerIds) && fcmTokens.equals(other.fcmTokens) && iosTokens.equals(other.iosTokens) && slack.equals(other.slack) && telegram.equals(other.telegram) && fcmTopic.equals(other.fcmTopic) && fcmDeviceGroup.equals(other.fcmDeviceGroup);
   }
 
   @Override
   public int hashCode() {
     if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.userId, this.email, this.mobile, this.whatsappMobile, this.onesignalExternalId, this.onesignalPlayerIds, this.fcmTokens, this.iosTokens, this.slack, this.telegram, this.fcmTopic, this.fcmDeviceGroup, this.inApp);
+      _cachedHashCode = Objects.hash(this.userId, this.email, this.mobile, this.whatsappMobile, this.onesignalExternalId, this.onesignalPlayerIds, this.fcmTokens, this.iosTokens, this.slack, this.telegram, this.fcmTopic, this.fcmDeviceGroup);
     }
     return _cachedHashCode;
   }
 
   @Override
   public String toString() {
-    return "User{" + "userId: " + userId + ", email: " + email + ", mobile: " + mobile + ", whatsappMobile: " + whatsappMobile + ", onesignalExternalId: " + onesignalExternalId + ", onesignalPlayerIds: " + onesignalPlayerIds + ", fcmTokens: " + fcmTokens + ", iosTokens: " + iosTokens + ", slack: " + slack + ", telegram: " + telegram + ", fcmTopic: " + fcmTopic + ", fcmDeviceGroup: " + fcmDeviceGroup + ", inApp: " + inApp + "}";
+    return "User{" + "userId: " + userId + ", email: " + email + ", mobile: " + mobile + ", whatsappMobile: " + whatsappMobile + ", onesignalExternalId: " + onesignalExternalId + ", onesignalPlayerIds: " + onesignalPlayerIds + ", fcmTokens: " + fcmTokens + ", iosTokens: " + iosTokens + ", slack: " + slack + ", telegram: " + telegram + ", fcmTopic: " + fcmTopic + ", fcmDeviceGroup: " + fcmDeviceGroup + "}";
   }
 
   public static Builder builder() {
@@ -188,8 +179,6 @@ public final class User {
 
     private Optional<String> fcmDeviceGroup = Optional.empty();
 
-    private Optional<InAppProfile> inApp = Optional.empty();
-
     private Builder() {
     }
 
@@ -206,7 +195,6 @@ public final class User {
       telegram(other.getTelegram());
       fcmTopic(other.getFcmTopic());
       fcmDeviceGroup(other.getFcmDeviceGroup());
-      inApp(other.getInApp());
       return this;
     }
 
@@ -378,22 +366,8 @@ public final class User {
       return this;
     }
 
-    @JsonSetter(
-        value = "in_app",
-        nulls = Nulls.SKIP
-    )
-    public Builder inApp(Optional<InAppProfile> inApp) {
-      this.inApp = inApp;
-      return this;
-    }
-
-    public Builder inApp(InAppProfile inApp) {
-      this.inApp = Optional.of(inApp);
-      return this;
-    }
-
     public User build() {
-      return new User(userId, email, mobile, whatsappMobile, onesignalExternalId, onesignalPlayerIds, fcmTokens, iosTokens, slack, telegram, fcmTopic, fcmDeviceGroup, inApp);
+      return new User(userId, email, mobile, whatsappMobile, onesignalExternalId, onesignalPlayerIds, fcmTokens, iosTokens, slack, telegram, fcmTopic, fcmDeviceGroup);
     }
   }
 }

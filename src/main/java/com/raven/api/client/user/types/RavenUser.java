@@ -31,8 +31,6 @@ public final class RavenUser {
 
   private final Optional<SlackProfile> slack;
 
-  private final Optional<InAppProfile> inApp;
-
   private final Optional<TelegramProfile> telegram;
 
   private final Optional<List<String>> fcmTokens;
@@ -49,10 +47,9 @@ public final class RavenUser {
 
   RavenUser(String userId, Optional<String> userSid, Optional<String> onesignalExternalId,
       Optional<String> mobile, Optional<String> email, Optional<String> whatsappMobile,
-      Optional<SlackProfile> slack, Optional<InAppProfile> inApp,
-      Optional<TelegramProfile> telegram, Optional<List<String>> fcmTokens,
-      Optional<List<String>> onesignalPlayerIds, Optional<List<String>> iosTokens,
-      Optional<Long> createdAt, Optional<Long> updatedAt) {
+      Optional<SlackProfile> slack, Optional<TelegramProfile> telegram,
+      Optional<List<String>> fcmTokens, Optional<List<String>> onesignalPlayerIds,
+      Optional<List<String>> iosTokens, Optional<Long> createdAt, Optional<Long> updatedAt) {
     this.userId = userId;
     this.userSid = userSid;
     this.onesignalExternalId = onesignalExternalId;
@@ -60,7 +57,6 @@ public final class RavenUser {
     this.email = email;
     this.whatsappMobile = whatsappMobile;
     this.slack = slack;
-    this.inApp = inApp;
     this.telegram = telegram;
     this.fcmTokens = fcmTokens;
     this.onesignalPlayerIds = onesignalPlayerIds;
@@ -104,11 +100,6 @@ public final class RavenUser {
     return slack;
   }
 
-  @JsonProperty("in_app")
-  public Optional<InAppProfile> getInApp() {
-    return inApp;
-  }
-
   @JsonProperty("telegram")
   public Optional<TelegramProfile> getTelegram() {
     return telegram;
@@ -146,20 +137,20 @@ public final class RavenUser {
   }
 
   private boolean equalTo(RavenUser other) {
-    return userId.equals(other.userId) && userSid.equals(other.userSid) && onesignalExternalId.equals(other.onesignalExternalId) && mobile.equals(other.mobile) && email.equals(other.email) && whatsappMobile.equals(other.whatsappMobile) && slack.equals(other.slack) && inApp.equals(other.inApp) && telegram.equals(other.telegram) && fcmTokens.equals(other.fcmTokens) && onesignalPlayerIds.equals(other.onesignalPlayerIds) && iosTokens.equals(other.iosTokens) && createdAt.equals(other.createdAt) && updatedAt.equals(other.updatedAt);
+    return userId.equals(other.userId) && userSid.equals(other.userSid) && onesignalExternalId.equals(other.onesignalExternalId) && mobile.equals(other.mobile) && email.equals(other.email) && whatsappMobile.equals(other.whatsappMobile) && slack.equals(other.slack) && telegram.equals(other.telegram) && fcmTokens.equals(other.fcmTokens) && onesignalPlayerIds.equals(other.onesignalPlayerIds) && iosTokens.equals(other.iosTokens) && createdAt.equals(other.createdAt) && updatedAt.equals(other.updatedAt);
   }
 
   @Override
   public int hashCode() {
     if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.userId, this.userSid, this.onesignalExternalId, this.mobile, this.email, this.whatsappMobile, this.slack, this.inApp, this.telegram, this.fcmTokens, this.onesignalPlayerIds, this.iosTokens, this.createdAt, this.updatedAt);
+      _cachedHashCode = Objects.hash(this.userId, this.userSid, this.onesignalExternalId, this.mobile, this.email, this.whatsappMobile, this.slack, this.telegram, this.fcmTokens, this.onesignalPlayerIds, this.iosTokens, this.createdAt, this.updatedAt);
     }
     return _cachedHashCode;
   }
 
   @Override
   public String toString() {
-    return "RavenUser{" + "userId: " + userId + ", userSid: " + userSid + ", onesignalExternalId: " + onesignalExternalId + ", mobile: " + mobile + ", email: " + email + ", whatsappMobile: " + whatsappMobile + ", slack: " + slack + ", inApp: " + inApp + ", telegram: " + telegram + ", fcmTokens: " + fcmTokens + ", onesignalPlayerIds: " + onesignalPlayerIds + ", iosTokens: " + iosTokens + ", createdAt: " + createdAt + ", updatedAt: " + updatedAt + "}";
+    return "RavenUser{" + "userId: " + userId + ", userSid: " + userSid + ", onesignalExternalId: " + onesignalExternalId + ", mobile: " + mobile + ", email: " + email + ", whatsappMobile: " + whatsappMobile + ", slack: " + slack + ", telegram: " + telegram + ", fcmTokens: " + fcmTokens + ", onesignalPlayerIds: " + onesignalPlayerIds + ", iosTokens: " + iosTokens + ", createdAt: " + createdAt + ", updatedAt: " + updatedAt + "}";
   }
 
   public static UserIdStage builder() {
@@ -198,10 +189,6 @@ public final class RavenUser {
     _FinalStage slack(Optional<SlackProfile> slack);
 
     _FinalStage slack(SlackProfile slack);
-
-    _FinalStage inApp(Optional<InAppProfile> inApp);
-
-    _FinalStage inApp(InAppProfile inApp);
 
     _FinalStage telegram(Optional<TelegramProfile> telegram);
 
@@ -246,8 +233,6 @@ public final class RavenUser {
 
     private Optional<TelegramProfile> telegram = Optional.empty();
 
-    private Optional<InAppProfile> inApp = Optional.empty();
-
     private Optional<SlackProfile> slack = Optional.empty();
 
     private Optional<String> whatsappMobile = Optional.empty();
@@ -272,7 +257,6 @@ public final class RavenUser {
       email(other.getEmail());
       whatsappMobile(other.getWhatsappMobile());
       slack(other.getSlack());
-      inApp(other.getInApp());
       telegram(other.getTelegram());
       fcmTokens(other.getFcmTokens());
       onesignalPlayerIds(other.getOnesignalPlayerIds());
@@ -386,22 +370,6 @@ public final class RavenUser {
     }
 
     @Override
-    public _FinalStage inApp(InAppProfile inApp) {
-      this.inApp = Optional.of(inApp);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(
-        value = "in_app",
-        nulls = Nulls.SKIP
-    )
-    public _FinalStage inApp(Optional<InAppProfile> inApp) {
-      this.inApp = inApp;
-      return this;
-    }
-
-    @Override
     public _FinalStage slack(SlackProfile slack) {
       this.slack = Optional.of(slack);
       return this;
@@ -499,7 +467,7 @@ public final class RavenUser {
 
     @Override
     public RavenUser build() {
-      return new RavenUser(userId, userSid, onesignalExternalId, mobile, email, whatsappMobile, slack, inApp, telegram, fcmTokens, onesignalPlayerIds, iosTokens, createdAt, updatedAt);
+      return new RavenUser(userId, userSid, onesignalExternalId, mobile, email, whatsappMobile, slack, telegram, fcmTokens, onesignalPlayerIds, iosTokens, createdAt, updatedAt);
     }
   }
 }

@@ -3,11 +3,13 @@ package com.raven.api.client.user.types;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
+import java.util.Optional;
 
 @JsonDeserialize(
     builder = SlackProfile.Builder.class
@@ -15,13 +17,13 @@ import java.util.Objects;
 public final class SlackProfile {
   private final String accessToken;
 
-  private final String email;
+  private final Optional<String> email;
 
-  private final String channelId;
+  private final Optional<String> channelId;
 
   private int _cachedHashCode;
 
-  SlackProfile(String accessToken, String email, String channelId) {
+  SlackProfile(String accessToken, Optional<String> email, Optional<String> channelId) {
     this.accessToken = accessToken;
     this.email = email;
     this.channelId = channelId;
@@ -33,12 +35,12 @@ public final class SlackProfile {
   }
 
   @JsonProperty("email")
-  public String getEmail() {
+  public Optional<String> getEmail() {
     return email;
   }
 
   @JsonProperty("channel_id")
-  public String getChannelId() {
+  public Optional<String> getChannelId() {
     return channelId;
   }
 
@@ -70,32 +72,32 @@ public final class SlackProfile {
   }
 
   public interface AccessTokenStage {
-    EmailStage accessToken(String accessToken);
+    _FinalStage accessToken(String accessToken);
 
     Builder from(SlackProfile other);
   }
 
-  public interface EmailStage {
-    ChannelIdStage email(String email);
-  }
-
-  public interface ChannelIdStage {
-    _FinalStage channelId(String channelId);
-  }
-
   public interface _FinalStage {
     SlackProfile build();
+
+    _FinalStage email(Optional<String> email);
+
+    _FinalStage email(String email);
+
+    _FinalStage channelId(Optional<String> channelId);
+
+    _FinalStage channelId(String channelId);
   }
 
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  static final class Builder implements AccessTokenStage, EmailStage, ChannelIdStage, _FinalStage {
+  static final class Builder implements AccessTokenStage, _FinalStage {
     private String accessToken;
 
-    private String email;
+    private Optional<String> channelId = Optional.empty();
 
-    private String channelId;
+    private Optional<String> email = Optional.empty();
 
     private Builder() {
     }
@@ -110,22 +112,40 @@ public final class SlackProfile {
 
     @Override
     @JsonSetter("access_token")
-    public EmailStage accessToken(String accessToken) {
+    public _FinalStage accessToken(String accessToken) {
       this.accessToken = accessToken;
       return this;
     }
 
     @Override
-    @JsonSetter("email")
-    public ChannelIdStage email(String email) {
-      this.email = email;
+    public _FinalStage channelId(String channelId) {
+      this.channelId = Optional.of(channelId);
       return this;
     }
 
     @Override
-    @JsonSetter("channel_id")
-    public _FinalStage channelId(String channelId) {
+    @JsonSetter(
+        value = "channel_id",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage channelId(Optional<String> channelId) {
       this.channelId = channelId;
+      return this;
+    }
+
+    @Override
+    public _FinalStage email(String email) {
+      this.email = Optional.of(email);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(
+        value = "email",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage email(Optional<String> email) {
+      this.email = email;
       return this;
     }
 

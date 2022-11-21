@@ -100,11 +100,17 @@ public final class Device {
     return huaweiToken;
   }
 
+  /**
+   * firebase device token
+   */
   @JsonProperty("fcm_token")
   public Optional<String> getFcmToken() {
     return fcmToken;
   }
 
+  /**
+   * user id affiliated with device
+   */
   @JsonProperty("raven_id")
   public Optional<String> getRavenId() {
     return ravenId;
@@ -314,6 +320,9 @@ public final class Device {
       return this;
     }
 
+    /**
+     * firebase device token
+     */
     public Builder fcmToken(String fcmToken) {
       this.fcmToken = Optional.of(fcmToken);
       return this;
@@ -328,6 +337,9 @@ public final class Device {
       return this;
     }
 
+    /**
+     * user id affiliated with device
+     */
     public Builder ravenId(String ravenId) {
       this.ravenId = Optional.of(ravenId);
       return this;

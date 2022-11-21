@@ -90,7 +90,7 @@ public final class Attachment {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  static final class Builder implements FileNameStage, ContentStage, UrlStage, _FinalStage {
+  public static final class Builder implements FileNameStage, ContentStage, UrlStage, _FinalStage {
     private String fileName;
 
     private String content;

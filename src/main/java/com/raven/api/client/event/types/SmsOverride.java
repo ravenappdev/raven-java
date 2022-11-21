@@ -91,7 +91,7 @@ public final class SmsOverride implements IChannelOverride {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  static final class Builder implements ScheduleAtStage, SenderStage, MessageStage, _FinalStage {
+  public static final class Builder implements ScheduleAtStage, SenderStage, MessageStage, _FinalStage {
     private long scheduleAt;
 
     private String sender;

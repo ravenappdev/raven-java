@@ -13,37 +13,43 @@ public final class Add {
   }
 
   public static final class Request {
-    private final Optional<Authorization> authOverride;
-
     private final String appId;
 
     private final String userId;
 
     private final Device body;
 
+    private final Optional<Authorization> authOverride;
+
     private int _cachedHashCode;
 
-    Request(Optional<Authorization> authOverride, String appId, String userId, Device body) {
-      this.authOverride = authOverride;
+    Request(String appId, String userId, Device body, Optional<Authorization> authOverride) {
       this.appId = appId;
       this.userId = userId;
       this.body = body;
+      this.authOverride = authOverride;
     }
 
-    public Optional<Authorization> getAuthOverride() {
-      return authOverride;
-    }
-
+    /**
+     * your app identifier
+     */
     public String getAppId() {
       return appId;
     }
 
+    /**
+     * your user identifier
+     */
     public String getUserId() {
       return userId;
     }
 
     public Device getBody() {
       return body;
+    }
+
+    public Optional<Authorization> getAuthOverride() {
+      return authOverride;
     }
 
     @Override
@@ -53,20 +59,20 @@ public final class Add {
     }
 
     private boolean equalTo(Request other) {
-      return authOverride.equals(other.authOverride) && appId.equals(other.appId) && userId.equals(other.userId) && body.equals(other.body);
+      return appId.equals(other.appId) && userId.equals(other.userId) && body.equals(other.body) && authOverride.equals(other.authOverride);
     }
 
     @Override
     public int hashCode() {
       if (_cachedHashCode == 0) {
-        _cachedHashCode = Objects.hash(this.authOverride, this.appId, this.userId, this.body);
+        _cachedHashCode = Objects.hash(this.appId, this.userId, this.body, this.authOverride);
       }
       return _cachedHashCode;
     }
 
     @Override
     public String toString() {
-      return "Add.Request{" + "authOverride: " + authOverride + ", appId: " + appId + ", userId: " + userId + ", body: " + body + "}";
+      return "Add.Request{" + "appId: " + appId + ", userId: " + userId + ", body: " + body + ", authOverride: " + authOverride + "}";
     }
 
     public static AppIdStage builder() {
@@ -95,7 +101,7 @@ public final class Add {
       _FinalStage authOverride(Authorization authOverride);
     }
 
-    static final class Builder implements AppIdStage, UserIdStage, BodyStage, _FinalStage {
+    public static final class Builder implements AppIdStage, UserIdStage, BodyStage, _FinalStage {
       private String appId;
 
       private String userId;
@@ -109,19 +115,25 @@ public final class Add {
 
       @Override
       public Builder from(Request other) {
-        authOverride(other.getAuthOverride());
         appId(other.getAppId());
         userId(other.getUserId());
         body(other.getBody());
+        authOverride(other.getAuthOverride());
         return this;
       }
 
+      /**
+       * your app identifier
+       */
       @Override
       public UserIdStage appId(String appId) {
         this.appId = appId;
         return this;
       }
 
+      /**
+       * your user identifier
+       */
       @Override
       public BodyStage userId(String userId) {
         this.userId = userId;
@@ -148,7 +160,7 @@ public final class Add {
 
       @Override
       public Request build() {
-        return new Request(authOverride, appId, userId, body);
+        return new Request(appId, userId, body, authOverride);
       }
     }
   }

@@ -33,6 +33,10 @@ public final class CreateUserRequest {
     this.whatsApp = whatsApp;
   }
 
+  /**
+   * Your user identifier.
+   * if user_id already exists, user properties will be updated else a new user will be created
+   */
   @JsonProperty("user_id")
   public String getUserId() {
     return userId;
@@ -48,6 +52,9 @@ public final class CreateUserRequest {
     return email;
   }
 
+  /**
+   * include this only when user's whatsapp mobile is different than primary mobile
+   */
   @JsonProperty("whats_app")
   public Optional<String> getWhatsApp() {
     return whatsApp;
@@ -99,13 +106,16 @@ public final class CreateUserRequest {
 
     _FinalStage whatsApp(Optional<String> whatsApp);
 
+    /**
+     * include this only when user's whatsapp mobile is different than primary mobile
+     */
     _FinalStage whatsApp(String whatsApp);
   }
 
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  static final class Builder implements UserIdStage, _FinalStage {
+  public static final class Builder implements UserIdStage, _FinalStage {
     private String userId;
 
     private Optional<String> whatsApp = Optional.empty();
@@ -126,6 +136,10 @@ public final class CreateUserRequest {
       return this;
     }
 
+    /**
+     * Your user identifier.
+     * if user_id already exists, user properties will be updated else a new user will be created
+     */
     @Override
     @JsonSetter("user_id")
     public _FinalStage userId(String userId) {
@@ -133,6 +147,9 @@ public final class CreateUserRequest {
       return this;
     }
 
+    /**
+     * include this only when user's whatsapp mobile is different than primary mobile
+     */
     @Override
     public _FinalStage whatsApp(String whatsApp) {
       this.whatsApp = Optional.of(whatsApp);

@@ -92,7 +92,7 @@ public final class SlackProfile {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  static final class Builder implements AccessTokenStage, _FinalStage {
+  public static final class Builder implements AccessTokenStage, _FinalStage {
     private String accessToken;
 
     private Optional<String> channelId = Optional.empty();

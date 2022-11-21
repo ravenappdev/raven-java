@@ -25,13 +25,19 @@ public final class UserServiceClient {
     this.auth = Optional.of(auth);
   }
 
+  /**
+   * Creates an AppUser if doesn't exist already, or updates user properties
+   */
   public RavenUser createOrUpdate(CreateOrUpdate.Request request) throws CreateOrUpdateException {
-    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required for createOrUpdate")));
+    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
     return this.service.createOrUpdate(authValue, request.getAppId(), request.getBody());
   }
 
+  /**
+   * Gets the requested user
+   */
   public RavenUser get(Get.Request request) throws GetException {
-    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required for get")));
+    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
     return this.service.get(authValue, request.getAppId(), request.getUserId());
   }
 }

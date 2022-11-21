@@ -25,13 +25,16 @@ public final class EventServiceClient {
     this.auth = Optional.of(auth);
   }
 
+  /**
+   * This endpoint allows you to send messages
+   */
   public SendEventResponse send(Send.Request request) throws SendException {
-    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required for send")));
+    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
     return this.service.send(authValue, request.getIdempotencyKey(), request.getAppId(), request.getBody());
   }
 
   public SendEventResponse sendBulk(SendBulk.Request request) throws SendBulkException {
-    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required for sendBulk")));
+    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
     return this.service.sendBulk(authValue, request.getIdempotencyKey(), request.getAppId(), request.getBody());
   }
 }

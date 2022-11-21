@@ -78,7 +78,7 @@ public final class EmailRecipient {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  static final class Builder implements NameStage, AddressStage, _FinalStage {
+  public static final class Builder implements NameStage, AddressStage, _FinalStage {
     private String name;
 
     private String address;

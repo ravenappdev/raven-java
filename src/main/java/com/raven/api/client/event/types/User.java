@@ -64,6 +64,10 @@ public final class User {
     this.fcmDeviceGroup = fcmDeviceGroup;
   }
 
+  /**
+   * userId to send the notifications to.
+   * This is  your own user identifier which you have used to create user on Raven
+   */
   @JsonProperty("user_id")
   public Optional<String> getUserId() {
     return userId;
@@ -74,16 +78,26 @@ public final class User {
     return email;
   }
 
+  /**
+   * mobile with country code prefix (e.g +91)
+   */
   @JsonProperty("mobile")
   public Optional<String> getMobile() {
     return mobile;
   }
 
+  /**
+   * mobile with country code prefix (e.g. +91).
+   * if empty, <code>mobile</code> is considered for whatsapp
+   */
   @JsonProperty("whatsapp_mobile")
   public Optional<String> getWhatsappMobile() {
     return whatsappMobile;
   }
 
+  /**
+   * <a href="https://documentation.onesignal.com/docs/external-user-ids">OneSignal external user IDs</a>
+   */
   @JsonProperty("onesignal_external_id")
   public Optional<String> getOnesignalExternalId() {
     return onesignalExternalId;
@@ -94,6 +108,9 @@ public final class User {
     return onesignalPlayerIds;
   }
 
+  /**
+   * List of fcm tokens.  eg. [&quot;&lt;fcmtoken1&quot;, &quot;<fcmtoken2>&quot;]
+   */
   @JsonProperty("fcm_tokens")
   public Optional<List<String>> getFcmTokens() {
     return fcmTokens;
@@ -207,6 +224,10 @@ public final class User {
       return this;
     }
 
+    /**
+     * userId to send the notifications to.
+     * This is  your own user identifier which you have used to create user on Raven
+     */
     public Builder userId(String userId) {
       this.userId = Optional.of(userId);
       return this;
@@ -235,6 +256,9 @@ public final class User {
       return this;
     }
 
+    /**
+     * mobile with country code prefix (e.g +91)
+     */
     public Builder mobile(String mobile) {
       this.mobile = Optional.of(mobile);
       return this;
@@ -249,6 +273,10 @@ public final class User {
       return this;
     }
 
+    /**
+     * mobile with country code prefix (e.g. +91).
+     * if empty, <code>mobile</code> is considered for whatsapp
+     */
     public Builder whatsappMobile(String whatsappMobile) {
       this.whatsappMobile = Optional.of(whatsappMobile);
       return this;
@@ -263,6 +291,9 @@ public final class User {
       return this;
     }
 
+    /**
+     * <a href="https://documentation.onesignal.com/docs/external-user-ids">OneSignal external user IDs</a>
+     */
     public Builder onesignalExternalId(String onesignalExternalId) {
       this.onesignalExternalId = Optional.of(onesignalExternalId);
       return this;
@@ -291,6 +322,9 @@ public final class User {
       return this;
     }
 
+    /**
+     * List of fcm tokens.  eg. [&quot;&lt;fcmtoken1&quot;, &quot;<fcmtoken2>&quot;]
+     */
     public Builder fcmTokens(List<String> fcmTokens) {
       this.fcmTokens = Optional.of(fcmTokens);
       return this;

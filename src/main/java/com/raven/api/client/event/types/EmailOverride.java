@@ -137,7 +137,7 @@ public final class EmailOverride implements IChannelOverride {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements ScheduleAtStage, FromStage, MessageStage, _FinalStage {
+  static final class Builder implements ScheduleAtStage, FromStage, MessageStage, _FinalStage {
     private long scheduleAt;
 
     private EmailRecipient from;

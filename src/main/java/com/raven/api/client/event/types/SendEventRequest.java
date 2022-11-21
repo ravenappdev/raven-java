@@ -39,21 +39,11 @@ public final class SendEventRequest {
     this.override = override;
   }
 
-  /**
-   * event name
-   */
   @JsonProperty("event")
   public String getEvent() {
     return event;
   }
 
-  /**
-   * {
-   * &quot;param1&quot; : &quot;<value1>&quot;,
-   * &quot;param2&quot; : &quot;<value2>&quot;,
-   * &quot;param3&quot; : object/array&quot;
-   * }
-   */
   @JsonProperty("data")
   public Map<String, Object> getData() {
     return data;
@@ -64,10 +54,6 @@ public final class SendEventRequest {
     return user;
   }
 
-  /**
-   * Time to send message expressed as UTC milliseconds.
-   * If not present, message will be sent immediately.
-   */
   @JsonProperty("scheduleAt")
   public Optional<Long> getScheduleAt() {
     return scheduleAt;
@@ -116,22 +102,8 @@ public final class SendEventRequest {
 
     _FinalStage data(Map<String, Object> data);
 
-    /**
-     * {
-     * &quot;param1&quot; : &quot;<value1>&quot;,
-     * &quot;param2&quot; : &quot;<value2>&quot;,
-     * &quot;param3&quot; : object/array&quot;
-     * }
-     */
     _FinalStage putAllData(Map<String, Object> data);
 
-    /**
-     * {
-     * &quot;param1&quot; : &quot;<value1>&quot;,
-     * &quot;param2&quot; : &quot;<value2>&quot;,
-     * &quot;param3&quot; : object/array&quot;
-     * }
-     */
     _FinalStage data(String key, Object value);
 
     _FinalStage user(Optional<User> user);
@@ -140,10 +112,6 @@ public final class SendEventRequest {
 
     _FinalStage scheduleAt(Optional<Long> scheduleAt);
 
-    /**
-     * Time to send message expressed as UTC milliseconds.
-     * If not present, message will be sent immediately.
-     */
     _FinalStage scheduleAt(Long scheduleAt);
 
     _FinalStage override(Optional<EventOverride> override);
@@ -154,7 +122,7 @@ public final class SendEventRequest {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements EventStage, _FinalStage {
+  static final class Builder implements EventStage, _FinalStage {
     private String event;
 
     private Optional<EventOverride> override = Optional.empty();
@@ -178,9 +146,6 @@ public final class SendEventRequest {
       return this;
     }
 
-    /**
-     * event name
-     */
     @Override
     @JsonSetter("event")
     public _FinalStage event(String event) {
@@ -204,10 +169,6 @@ public final class SendEventRequest {
       return this;
     }
 
-    /**
-     * Time to send message expressed as UTC milliseconds.
-     * If not present, message will be sent immediately.
-     */
     @Override
     public _FinalStage scheduleAt(Long scheduleAt) {
       this.scheduleAt = Optional.of(scheduleAt);
@@ -240,26 +201,12 @@ public final class SendEventRequest {
       return this;
     }
 
-    /**
-     * {
-     * &quot;param1&quot; : &quot;<value1>&quot;,
-     * &quot;param2&quot; : &quot;<value2>&quot;,
-     * &quot;param3&quot; : object/array&quot;
-     * }
-     */
     @Override
     public _FinalStage data(String key, Object value) {
       this.data.put(key, value);
       return this;
     }
 
-    /**
-     * {
-     * &quot;param1&quot; : &quot;<value1>&quot;,
-     * &quot;param2&quot; : &quot;<value2>&quot;,
-     * &quot;param3&quot; : object/array&quot;
-     * }
-     */
     @Override
     public _FinalStage putAllData(Map<String, Object> data) {
       this.data.putAll(data);

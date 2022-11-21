@@ -78,7 +78,7 @@ public final class Param {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements NameStage, ValueStage, _FinalStage {
+  static final class Builder implements NameStage, ValueStage, _FinalStage {
     private String name;
 
     private String value;

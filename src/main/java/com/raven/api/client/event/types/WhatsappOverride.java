@@ -79,7 +79,7 @@ public final class WhatsappOverride implements IChannelOverride {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements ScheduleAtStage, MessageStage, _FinalStage {
+  static final class Builder implements ScheduleAtStage, MessageStage, _FinalStage {
     private long scheduleAt;
 
     private SmsMessage message;

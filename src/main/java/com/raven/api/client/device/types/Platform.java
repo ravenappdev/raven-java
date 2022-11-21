@@ -10,9 +10,9 @@ import java.util.Locale;
 public final class Platform {
   public static final Platform ANDROID = new Platform(Value.ANDROID, "android");
 
-  public static final Platform IOS = new Platform(Value.IOS, "ios");
-
   public static final Platform WEB = new Platform(Value.WEB, "web");
+
+  public static final Platform IOS = new Platform(Value.IOS, "ios");
 
   private final Value value;
 
@@ -48,10 +48,10 @@ public final class Platform {
     switch (value) {
       case ANDROID:
         return visitor.visitAndroid();
-      case IOS:
-        return visitor.visitIos();
       case WEB:
         return visitor.visitWeb();
+      case IOS:
+        return visitor.visitIos();
       case UNKNOWN:
       default:
         return visitor.visitUnknown(string);
@@ -66,10 +66,10 @@ public final class Platform {
     switch (upperCasedValue) {
       case "android":
         return ANDROID;
-      case "ios":
-        return IOS;
       case "web":
         return WEB;
+      case "ios":
+        return IOS;
       default:
         return new Platform(Value.UNKNOWN, upperCasedValue);
     }

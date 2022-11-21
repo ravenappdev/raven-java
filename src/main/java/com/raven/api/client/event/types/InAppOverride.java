@@ -67,7 +67,7 @@ public final class InAppOverride implements IChannelOverride {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements ScheduleAtStage, _FinalStage {
+  static final class Builder implements ScheduleAtStage, _FinalStage {
     private long scheduleAt;
 
     private Builder() {

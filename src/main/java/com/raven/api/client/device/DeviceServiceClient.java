@@ -29,37 +29,23 @@ public final class DeviceServiceClient {
     this.auth = Optional.of(auth);
   }
 
-  /**
-   * Add Device for a User.
-   * If a device_sid is specified, then devices will be merged if one is found.
-   * If no device_sid is specified, then a new device will be created.
-   */
   public Device add(Add.Request request) throws AddException {
-    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
+    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required for add")));
     return this.service.add(authValue, request.getAppId(), request.getUserId(), request.getBody());
   }
 
-  /**
-   * Update a Device for a User.
-   */
   public Device update(Update.Request request) throws UpdateException {
-    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
+    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required for update")));
     return this.service.update(authValue, request.getAppId(), request.getUserId(), request.getDeviceId(), request.getBody());
   }
 
-  /**
-   * Delete a Device for a User
-   */
   public void delete(Delete.Request request) throws DeleteException {
-    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
+    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required for delete")));
     this.service.delete(authValue, request.getAppId(), request.getUserId(), request.getDeviceId());
   }
 
-  /**
-   * Get a Device for a User
-   */
   public Device getDevice(GetDevice.Request request) throws GetDeviceException {
-    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
+    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required for getDevice")));
     return this.service.getDevice(authValue, request.getAppId(), request.getUserId(), request.getDeviceId());
   }
 }

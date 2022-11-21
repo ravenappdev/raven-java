@@ -31,13 +31,6 @@ public final class BatchEvent {
     this.override = override;
   }
 
-  /**
-   * {
-   * &quot;param1&quot; : &quot;<value1>&quot;,
-   * &quot;param2&quot; : &quot;<value2>&quot;,
-   * &quot;param3&quot; : object/array&quot;
-   * }
-   */
   @JsonProperty("data")
   public Map<String, Object> getData() {
     return data;
@@ -110,25 +103,11 @@ public final class BatchEvent {
       return this;
     }
 
-    /**
-     * {
-     * &quot;param1&quot; : &quot;<value1>&quot;,
-     * &quot;param2&quot; : &quot;<value2>&quot;,
-     * &quot;param3&quot; : object/array&quot;
-     * }
-     */
     public Builder putAllData(Map<String, Object> data) {
       this.data.putAll(data);
       return this;
     }
 
-    /**
-     * {
-     * &quot;param1&quot; : &quot;<value1>&quot;,
-     * &quot;param2&quot; : &quot;<value2>&quot;,
-     * &quot;param3&quot; : object/array&quot;
-     * }
-     */
     public Builder data(String key, Object value) {
       this.data.put(key, value);
       return this;

@@ -66,7 +66,7 @@ public final class SmsMessage {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements TextStage, _FinalStage {
+  static final class Builder implements TextStage, _FinalStage {
     private String text;
 
     private Builder() {

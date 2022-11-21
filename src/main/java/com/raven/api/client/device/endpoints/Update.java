@@ -13,6 +13,8 @@ public final class Update {
   }
 
   public static final class Request {
+    private final Optional<Authorization> authOverride;
+
     private final String appId;
 
     private final String userId;
@@ -21,46 +23,35 @@ public final class Update {
 
     private final Device body;
 
-    private final Optional<Authorization> authOverride;
-
     private int _cachedHashCode;
 
-    Request(String appId, String userId, String deviceId, Device body,
-        Optional<Authorization> authOverride) {
+    Request(Optional<Authorization> authOverride, String appId, String userId, String deviceId,
+        Device body) {
+      this.authOverride = authOverride;
       this.appId = appId;
       this.userId = userId;
       this.deviceId = deviceId;
       this.body = body;
-      this.authOverride = authOverride;
     }
 
-    /**
-     * your app identifier
-     */
+    public Optional<Authorization> getAuthOverride() {
+      return authOverride;
+    }
+
     public String getAppId() {
       return appId;
     }
 
-    /**
-     * your user identifier
-     */
     public String getUserId() {
       return userId;
     }
 
-    /**
-     * your device identifier; the same as device_sid
-     */
     public String getDeviceId() {
       return deviceId;
     }
 
     public Device getBody() {
       return body;
-    }
-
-    public Optional<Authorization> getAuthOverride() {
-      return authOverride;
     }
 
     @Override
@@ -70,20 +61,20 @@ public final class Update {
     }
 
     private boolean equalTo(Request other) {
-      return appId.equals(other.appId) && userId.equals(other.userId) && deviceId.equals(other.deviceId) && body.equals(other.body) && authOverride.equals(other.authOverride);
+      return authOverride.equals(other.authOverride) && appId.equals(other.appId) && userId.equals(other.userId) && deviceId.equals(other.deviceId) && body.equals(other.body);
     }
 
     @Override
     public int hashCode() {
       if (_cachedHashCode == 0) {
-        _cachedHashCode = Objects.hash(this.appId, this.userId, this.deviceId, this.body, this.authOverride);
+        _cachedHashCode = Objects.hash(this.authOverride, this.appId, this.userId, this.deviceId, this.body);
       }
       return _cachedHashCode;
     }
 
     @Override
     public String toString() {
-      return "Update.Request{" + "appId: " + appId + ", userId: " + userId + ", deviceId: " + deviceId + ", body: " + body + ", authOverride: " + authOverride + "}";
+      return "Update.Request{" + "authOverride: " + authOverride + ", appId: " + appId + ", userId: " + userId + ", deviceId: " + deviceId + ", body: " + body + "}";
     }
 
     public static AppIdStage builder() {
@@ -116,7 +107,7 @@ public final class Update {
       _FinalStage authOverride(Authorization authOverride);
     }
 
-    public static final class Builder implements AppIdStage, UserIdStage, DeviceIdStage, BodyStage, _FinalStage {
+    static final class Builder implements AppIdStage, UserIdStage, DeviceIdStage, BodyStage, _FinalStage {
       private String appId;
 
       private String userId;
@@ -132,35 +123,26 @@ public final class Update {
 
       @Override
       public Builder from(Request other) {
+        authOverride(other.getAuthOverride());
         appId(other.getAppId());
         userId(other.getUserId());
         deviceId(other.getDeviceId());
         body(other.getBody());
-        authOverride(other.getAuthOverride());
         return this;
       }
 
-      /**
-       * your app identifier
-       */
       @Override
       public UserIdStage appId(String appId) {
         this.appId = appId;
         return this;
       }
 
-      /**
-       * your user identifier
-       */
       @Override
       public DeviceIdStage userId(String userId) {
         this.userId = userId;
         return this;
       }
 
-      /**
-       * your device identifier; the same as device_sid
-       */
       @Override
       public BodyStage deviceId(String deviceId) {
         this.deviceId = deviceId;
@@ -187,7 +169,7 @@ public final class Update {
 
       @Override
       public Request build() {
-        return new Request(appId, userId, deviceId, body, authOverride);
+        return new Request(authOverride, appId, userId, deviceId, body);
       }
     }
   }

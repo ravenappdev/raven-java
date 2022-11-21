@@ -78,7 +78,7 @@ public final class SlackMessage {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements TextStage, BlocksStage, _FinalStage {
+  static final class Builder implements TextStage, BlocksStage, _FinalStage {
     private String text;
 
     private Object blocks;

@@ -39,11 +39,21 @@ public final class SendEventRequest {
     this.override = override;
   }
 
+  /**
+   * @return event name
+   */
   @JsonProperty("event")
   public String getEvent() {
     return event;
   }
 
+  /**
+   * @return {
+   * &quot;param1&quot; : &quot;&lt;value1&gt;&quot;,
+   * &quot;param2&quot; : &quot;&lt;value2&gt;&quot;,
+   * &quot;param3&quot; : object/array&quot;
+   * }
+   */
   @JsonProperty("data")
   public Map<String, Object> getData() {
     return data;
@@ -54,6 +64,10 @@ public final class SendEventRequest {
     return user;
   }
 
+  /**
+   * @return Time to send message expressed as UTC milliseconds.
+   * If not present, message will be sent immediately.
+   */
   @JsonProperty("scheduleAt")
   public Optional<Long> getScheduleAt() {
     return scheduleAt;
@@ -122,7 +136,7 @@ public final class SendEventRequest {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  static final class Builder implements EventStage, _FinalStage {
+  public static final class Builder implements EventStage, _FinalStage {
     private String event;
 
     private Optional<EventOverride> override = Optional.empty();
@@ -146,6 +160,10 @@ public final class SendEventRequest {
       return this;
     }
 
+    /**
+     * <p>event name</p>
+     * @return Reference to {@code this} so that method calls can be chained together.
+     */
     @Override
     @JsonSetter("event")
     public _FinalStage event(String event) {
@@ -169,6 +187,11 @@ public final class SendEventRequest {
       return this;
     }
 
+    /**
+     * <p>Time to send message expressed as UTC milliseconds.
+     * If not present, message will be sent immediately.</p>
+     * @return Reference to {@code this} so that method calls can be chained together.
+     */
     @Override
     public _FinalStage scheduleAt(Long scheduleAt) {
       this.scheduleAt = Optional.of(scheduleAt);
@@ -201,12 +224,28 @@ public final class SendEventRequest {
       return this;
     }
 
+    /**
+     * <p>{
+     * &quot;param1&quot; : &quot;&lt;value1&gt;&quot;,
+     * &quot;param2&quot; : &quot;&lt;value2&gt;&quot;,
+     * &quot;param3&quot; : object/array&quot;
+     * }</p>
+     * @return Reference to {@code this} so that method calls can be chained together.
+     */
     @Override
     public _FinalStage data(String key, Object value) {
       this.data.put(key, value);
       return this;
     }
 
+    /**
+     * <p>{
+     * &quot;param1&quot; : &quot;&lt;value1&gt;&quot;,
+     * &quot;param2&quot; : &quot;&lt;value2&gt;&quot;,
+     * &quot;param3&quot; : object/array&quot;
+     * }</p>
+     * @return Reference to {@code this} so that method calls can be chained together.
+     */
     @Override
     public _FinalStage putAllData(Map<String, Object> data) {
       this.data.putAll(data);

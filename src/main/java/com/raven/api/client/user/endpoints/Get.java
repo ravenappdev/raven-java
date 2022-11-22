@@ -12,30 +12,36 @@ public final class Get {
   }
 
   public static final class Request {
-    private final Optional<Authorization> authOverride;
-
     private final String appId;
 
     private final String userId;
 
+    private final Optional<Authorization> authOverride;
+
     private int _cachedHashCode;
 
-    Request(Optional<Authorization> authOverride, String appId, String userId) {
-      this.authOverride = authOverride;
+    Request(String appId, String userId, Optional<Authorization> authOverride) {
       this.appId = appId;
       this.userId = userId;
+      this.authOverride = authOverride;
     }
 
-    public Optional<Authorization> getAuthOverride() {
-      return authOverride;
-    }
-
+    /**
+     * @return your app identifier
+     */
     public String getAppId() {
       return appId;
     }
 
+    /**
+     * @return your user identifier
+     */
     public String getUserId() {
       return userId;
+    }
+
+    public Optional<Authorization> getAuthOverride() {
+      return authOverride;
     }
 
     @Override
@@ -45,20 +51,20 @@ public final class Get {
     }
 
     private boolean equalTo(Request other) {
-      return authOverride.equals(other.authOverride) && appId.equals(other.appId) && userId.equals(other.userId);
+      return appId.equals(other.appId) && userId.equals(other.userId) && authOverride.equals(other.authOverride);
     }
 
     @Override
     public int hashCode() {
       if (_cachedHashCode == 0) {
-        _cachedHashCode = Objects.hash(this.authOverride, this.appId, this.userId);
+        _cachedHashCode = Objects.hash(this.appId, this.userId, this.authOverride);
       }
       return _cachedHashCode;
     }
 
     @Override
     public String toString() {
-      return "Get.Request{" + "authOverride: " + authOverride + ", appId: " + appId + ", userId: " + userId + "}";
+      return "Get.Request{" + "appId: " + appId + ", userId: " + userId + ", authOverride: " + authOverride + "}";
     }
 
     public static AppIdStage builder() {
@@ -83,7 +89,7 @@ public final class Get {
       _FinalStage authOverride(Authorization authOverride);
     }
 
-    static final class Builder implements AppIdStage, UserIdStage, _FinalStage {
+    public static final class Builder implements AppIdStage, UserIdStage, _FinalStage {
       private String appId;
 
       private String userId;
@@ -95,18 +101,26 @@ public final class Get {
 
       @Override
       public Builder from(Request other) {
-        authOverride(other.getAuthOverride());
         appId(other.getAppId());
         userId(other.getUserId());
+        authOverride(other.getAuthOverride());
         return this;
       }
 
+      /**
+       * <p>your app identifier</p>
+       * @return Reference to {@code this} so that method calls can be chained together.
+       */
       @Override
       public UserIdStage appId(String appId) {
         this.appId = appId;
         return this;
       }
 
+      /**
+       * <p>your user identifier</p>
+       * @return Reference to {@code this} so that method calls can be chained together.
+       */
       @Override
       public _FinalStage userId(String userId) {
         this.userId = userId;
@@ -127,7 +141,7 @@ public final class Get {
 
       @Override
       public Request build() {
-        return new Request(authOverride, appId, userId);
+        return new Request(appId, userId, authOverride);
       }
     }
   }

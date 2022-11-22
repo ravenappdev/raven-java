@@ -64,6 +64,10 @@ public final class User {
     this.fcmDeviceGroup = fcmDeviceGroup;
   }
 
+  /**
+   * @return userId to send the notifications to.
+   * This is  your own user identifier which you have used to create user on Raven
+   */
   @JsonProperty("user_id")
   public Optional<String> getUserId() {
     return userId;
@@ -74,16 +78,26 @@ public final class User {
     return email;
   }
 
+  /**
+   * @return mobile with country code prefix (e.g +91)
+   */
   @JsonProperty("mobile")
   public Optional<String> getMobile() {
     return mobile;
   }
 
+  /**
+   * @return mobile with country code prefix (e.g. +91).
+   * if empty, <code>mobile</code> is considered for whatsapp
+   */
   @JsonProperty("whatsapp_mobile")
   public Optional<String> getWhatsappMobile() {
     return whatsappMobile;
   }
 
+  /**
+   * @return <a href="https://documentation.onesignal.com/docs/external-user-ids">OneSignal external user IDs</a>
+   */
   @JsonProperty("onesignal_external_id")
   public Optional<String> getOnesignalExternalId() {
     return onesignalExternalId;
@@ -94,6 +108,9 @@ public final class User {
     return onesignalPlayerIds;
   }
 
+  /**
+   * @return List of fcm tokens.  eg. [&quot;&lt;fcmtoken1&quot;, &quot;&lt;fcmtoken2&gt;&quot;]
+   */
   @JsonProperty("fcm_tokens")
   public Optional<List<String>> getFcmTokens() {
     return fcmTokens;

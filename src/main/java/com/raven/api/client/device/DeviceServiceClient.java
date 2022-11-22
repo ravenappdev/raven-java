@@ -29,23 +29,48 @@ public final class DeviceServiceClient {
     this.auth = Optional.of(auth);
   }
 
+  /**
+   * <p>Add Device for a User.
+   * If a device_sid is specified, then devices will be merged if one is found.
+   * If no device_sid is specified, then a new device will be created.</p>
+   * @param request Wrapper object for the request body that includes any path parameters, query parameters, and headers
+   * @throws AddException Exception that wraps all possible endpoint errors 
+   * @return <p>the updated Device</p>
+   */
   public Device add(Add.Request request) throws AddException {
-    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required for add")));
+    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
     return this.service.add(authValue, request.getAppId(), request.getUserId(), request.getBody());
   }
 
+  /**
+   * <p>Update a Device for a User.</p>
+   * @param request Wrapper object for the request body that includes any path parameters, query parameters, and headers
+   * @throws UpdateException Exception that wraps all possible endpoint errors 
+   * @return <p>the updated Device</p>
+   */
   public Device update(Update.Request request) throws UpdateException {
-    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required for update")));
+    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
     return this.service.update(authValue, request.getAppId(), request.getUserId(), request.getDeviceId(), request.getBody());
   }
 
+  /**
+   * <p>Delete a Device for a User</p>
+   * @param request Wrapper object that includes any path parameters, query parameters, and headers
+   * @throws DeleteException Exception that wraps all possible endpoint errors 
+   */
   public void delete(Delete.Request request) throws DeleteException {
-    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required for delete")));
+    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
     this.service.delete(authValue, request.getAppId(), request.getUserId(), request.getDeviceId());
   }
 
+  /**
+   * <p>Get a Device for a User</p>
+   * @param request Wrapper object that includes any path parameters, query parameters, and headers
+   * @throws GetDeviceException Exception that wraps all possible endpoint errors 
+   * @return Device
+   */
   public Device getDevice(GetDevice.Request request) throws GetDeviceException {
-    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required for getDevice")));
+    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
     return this.service.getDevice(authValue, request.getAppId(), request.getUserId(), request.getDeviceId());
   }
 }

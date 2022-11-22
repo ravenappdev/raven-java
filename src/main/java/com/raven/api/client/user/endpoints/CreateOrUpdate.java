@@ -13,22 +13,18 @@ public final class CreateOrUpdate {
   }
 
   public static final class Request {
-    private final Optional<Authorization> authOverride;
-
     private final String appId;
 
     private final CreateUserRequest body;
 
+    private final Optional<Authorization> authOverride;
+
     private int _cachedHashCode;
 
-    Request(Optional<Authorization> authOverride, String appId, CreateUserRequest body) {
-      this.authOverride = authOverride;
+    Request(String appId, CreateUserRequest body, Optional<Authorization> authOverride) {
       this.appId = appId;
       this.body = body;
-    }
-
-    public Optional<Authorization> getAuthOverride() {
-      return authOverride;
+      this.authOverride = authOverride;
     }
 
     public String getAppId() {
@@ -39,6 +35,10 @@ public final class CreateOrUpdate {
       return body;
     }
 
+    public Optional<Authorization> getAuthOverride() {
+      return authOverride;
+    }
+
     @Override
     public boolean equals(Object other) {
       if (this == other) return true;
@@ -46,20 +46,20 @@ public final class CreateOrUpdate {
     }
 
     private boolean equalTo(Request other) {
-      return authOverride.equals(other.authOverride) && appId.equals(other.appId) && body.equals(other.body);
+      return appId.equals(other.appId) && body.equals(other.body) && authOverride.equals(other.authOverride);
     }
 
     @Override
     public int hashCode() {
       if (_cachedHashCode == 0) {
-        _cachedHashCode = Objects.hash(this.authOverride, this.appId, this.body);
+        _cachedHashCode = Objects.hash(this.appId, this.body, this.authOverride);
       }
       return _cachedHashCode;
     }
 
     @Override
     public String toString() {
-      return "CreateOrUpdate.Request{" + "authOverride: " + authOverride + ", appId: " + appId + ", body: " + body + "}";
+      return "CreateOrUpdate.Request{" + "appId: " + appId + ", body: " + body + ", authOverride: " + authOverride + "}";
     }
 
     public static AppIdStage builder() {
@@ -84,7 +84,7 @@ public final class CreateOrUpdate {
       _FinalStage authOverride(Authorization authOverride);
     }
 
-    static final class Builder implements AppIdStage, BodyStage, _FinalStage {
+    public static final class Builder implements AppIdStage, BodyStage, _FinalStage {
       private String appId;
 
       private CreateUserRequest body;
@@ -96,9 +96,9 @@ public final class CreateOrUpdate {
 
       @Override
       public Builder from(Request other) {
-        authOverride(other.getAuthOverride());
         appId(other.getAppId());
         body(other.getBody());
+        authOverride(other.getAuthOverride());
         return this;
       }
 
@@ -128,7 +128,7 @@ public final class CreateOrUpdate {
 
       @Override
       public Request build() {
-        return new Request(authOverride, appId, body);
+        return new Request(appId, body, authOverride);
       }
     }
   }

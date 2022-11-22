@@ -65,6 +65,10 @@ public final class RavenUser {
     this.updatedAt = updatedAt;
   }
 
+  /**
+   * @return Your user identifier.
+   * If user_id already exists, user properties will be updated else a new user will be created
+   */
   @JsonProperty("user_id")
   public String getUserId() {
     return userId;
@@ -90,6 +94,9 @@ public final class RavenUser {
     return email;
   }
 
+  /**
+   * @return Include this only when user's whatsapp mobile is different than primary mobile
+   */
   @JsonProperty("whatsapp_mobile")
   public Optional<String> getWhatsappMobile() {
     return whatsappMobile;
@@ -218,7 +225,7 @@ public final class RavenUser {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  static final class Builder implements UserIdStage, _FinalStage {
+  public static final class Builder implements UserIdStage, _FinalStage {
     private String userId;
 
     private Optional<Long> updatedAt = Optional.empty();
@@ -266,6 +273,11 @@ public final class RavenUser {
       return this;
     }
 
+    /**
+     * <p>Your user identifier.
+     * If user_id already exists, user properties will be updated else a new user will be created</p>
+     * @return Reference to {@code this} so that method calls can be chained together.
+     */
     @Override
     @JsonSetter("user_id")
     public _FinalStage userId(String userId) {
@@ -385,6 +397,10 @@ public final class RavenUser {
       return this;
     }
 
+    /**
+     * <p>Include this only when user's whatsapp mobile is different than primary mobile</p>
+     * @return Reference to {@code this} so that method calls can be chained together.
+     */
     @Override
     public _FinalStage whatsappMobile(String whatsappMobile) {
       this.whatsappMobile = Optional.of(whatsappMobile);

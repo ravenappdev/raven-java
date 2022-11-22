@@ -66,7 +66,7 @@ public final class TelegramProfile {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  static final class Builder implements ChatIdStage, _FinalStage {
+  public static final class Builder implements ChatIdStage, _FinalStage {
     private String chatId;
 
     private Builder() {

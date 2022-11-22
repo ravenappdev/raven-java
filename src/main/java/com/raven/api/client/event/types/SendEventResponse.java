@@ -78,7 +78,7 @@ public final class SendEventResponse {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  static final class Builder implements IdStage, SuccessStage, _FinalStage {
+  public static final class Builder implements IdStage, SuccessStage, _FinalStage {
     private String id;
 
     private boolean success;

@@ -100,11 +100,17 @@ public final class Device {
     return huaweiToken;
   }
 
+  /**
+   * @return firebase device token
+   */
   @JsonProperty("fcm_token")
   public Optional<String> getFcmToken() {
     return fcmToken;
   }
 
+  /**
+   * @return user id affiliated with device
+   */
   @JsonProperty("raven_id")
   public Optional<String> getRavenId() {
     return ravenId;

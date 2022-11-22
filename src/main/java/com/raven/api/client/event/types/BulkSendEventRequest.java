@@ -32,6 +32,9 @@ public final class BulkSendEventRequest {
     return event;
   }
 
+  /**
+   * @return List of events
+   */
   @JsonProperty("batch")
   public List<BatchEvent> getBatch() {
     return batch;
@@ -83,7 +86,7 @@ public final class BulkSendEventRequest {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  static final class Builder implements EventStage, _FinalStage {
+  public static final class Builder implements EventStage, _FinalStage {
     private String event;
 
     private List<BatchEvent> batch = new ArrayList<>();
@@ -105,12 +108,20 @@ public final class BulkSendEventRequest {
       return this;
     }
 
+    /**
+     * <p>List of events</p>
+     * @return Reference to {@code this} so that method calls can be chained together.
+     */
     @Override
     public _FinalStage addAllBatch(List<BatchEvent> batch) {
       this.batch.addAll(batch);
       return this;
     }
 
+    /**
+     * <p>List of events</p>
+     * @return Reference to {@code this} so that method calls can be chained together.
+     */
     @Override
     public _FinalStage batch(BatchEvent batch) {
       this.batch.add(batch);

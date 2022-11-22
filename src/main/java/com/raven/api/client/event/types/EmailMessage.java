@@ -90,7 +90,7 @@ public final class EmailMessage {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  static final class Builder implements TextStage, HtmlBodyStage, SubjectStage, _FinalStage {
+  public static final class Builder implements TextStage, HtmlBodyStage, SubjectStage, _FinalStage {
     private String text;
 
     private String htmlBody;

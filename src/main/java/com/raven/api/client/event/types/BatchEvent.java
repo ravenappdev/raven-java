@@ -31,6 +31,13 @@ public final class BatchEvent {
     this.override = override;
   }
 
+  /**
+   * @return {
+   * &quot;param1&quot; : &quot;&lt;value1&gt;&quot;,
+   * &quot;param2&quot; : &quot;&lt;value2&gt;&quot;,
+   * &quot;param3&quot; : object/array&quot;
+   * }
+   */
   @JsonProperty("data")
   public Map<String, Object> getData() {
     return data;

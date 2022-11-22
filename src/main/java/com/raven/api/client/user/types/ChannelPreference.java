@@ -66,7 +66,7 @@ public final class ChannelPreference {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  static final class Builder implements DisabledStage, _FinalStage {
+  public static final class Builder implements DisabledStage, _FinalStage {
     private boolean disabled;
 
     private Builder() {

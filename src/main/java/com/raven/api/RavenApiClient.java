@@ -1,55 +1,41 @@
 package com.raven.api;
 
 import com.raven.api.client.Authorization;
-import com.raven.api.client.device.DeviceServiceClient;
-import com.raven.api.client.event.EventServiceClient;
-import com.raven.api.client.event.endpoints.Send;
-import com.raven.api.client.event.endpoints.SendBulk;
-import com.raven.api.client.event.exceptions.SendBulkException;
-import com.raven.api.client.event.exceptions.SendException;
-import com.raven.api.client.event.types.SendEventResponse;
-import com.raven.api.client.user.UserServiceClient;
+import com.raven.api.client.ServiceClient;
+import com.raven.api.client.device.deviceServiceClient;
+import com.raven.api.client.user.userServiceClient;
 import com.raven.api.core.Environment;
-import java.lang.String;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 
 public final class RavenApiClient {
-  private final Supplier<DeviceServiceClient> deviceServiceClient;
+  private final Supplier<ServiceClient> serviceClient;
 
-  private final Supplier<EventServiceClient> eventServiceClient;
+  private final Supplier<deviceServiceClient> deviceServiceClient;
 
-  private final Supplier<UserServiceClient> userServiceClient;
+  private final Supplier<userServiceClient> userServiceClient;
 
   public RavenApiClient(Authorization auth) {
     this(Environment.PROD, auth);
   }
 
   public RavenApiClient(Environment environment, Authorization auth) {
-    this.userServiceClient = memoize(() -> new UserServiceClient(environment.getUrl(), auth));
-    this.eventServiceClient = memoize(() -> new EventServiceClient(environment.getUrl(), auth));
-    this.deviceServiceClient = memoize(() -> new DeviceServiceClient(environment.getUrl(), auth));
+    this.userServiceClient = memoize(() -> new userServiceClient(environment.getUrl(), auth));
+    this.serviceClient = memoize(() -> new ServiceClient(environment.getUrl(), auth));
+    this.deviceServiceClient = memoize(() -> new deviceServiceClient(environment.getUrl(), auth));
   }
 
-  public final DeviceServiceClient device() {
+  public final ServiceClient service() {
+    return this.serviceClient.get();
+  }
+
+  public final deviceServiceClient device() {
     return this.deviceServiceClient.get();
   }
 
-  public final EventServiceClient event() {
-    return this.eventServiceClient.get();
-  }
-
-  public final UserServiceClient user() {
+  public final userServiceClient user() {
     return this.userServiceClient.get();
-  }
-
-  public SendEventResponse send(Send.Request request) throws SendException {
-    return event().send(request);
-  }
-
-  public SendEventResponse sendBulk(SendBulk.Request request) throws SendBulkException {
-    return event().sendBulk(request);
   }
 
   private static <T> Supplier<T> memoize(Supplier<T> delegate) {

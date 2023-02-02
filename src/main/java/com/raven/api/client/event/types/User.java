@@ -66,7 +66,7 @@ public final class User {
 
   /**
    * @return userId to send the notifications to.
-   * This is  your own user identifier which you have used to create user on Raven
+   * This is  your own user identifier which you have used to <a href="https://docs.raven.dev/api-reference/create-user">create user on Raven</a>
    */
   @JsonProperty("user_id")
   public Optional<String> getUserId() {

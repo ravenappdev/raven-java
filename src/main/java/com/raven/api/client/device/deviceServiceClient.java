@@ -14,18 +14,18 @@ import java.lang.RuntimeException;
 import java.lang.String;
 import java.util.Optional;
 
-public final class DeviceServiceClient {
-  private final DeviceService service;
+public final class deviceServiceClient {
+  private final deviceService service;
 
   private final Optional<Authorization> auth;
 
-  public DeviceServiceClient(String url) {
-    this.service = DeviceService.getClient(url);
+  public deviceServiceClient(String url) {
+    this.service = deviceService.getClient(url);
     this.auth = Optional.empty();
   }
 
-  public DeviceServiceClient(String url, Authorization auth) {
-    this.service = DeviceService.getClient(url);
+  public deviceServiceClient(String url, Authorization auth) {
+    this.service = deviceService.getClient(url);
     this.auth = Optional.of(auth);
   }
 

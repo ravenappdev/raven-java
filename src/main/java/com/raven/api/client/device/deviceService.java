@@ -27,7 +27,7 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/v1/apps")
-interface DeviceService {
+interface deviceService {
   @POST
   @Path("/{app_id}/users/{user_id}/devices")
   Device add(@HeaderParam("Authorization") Authorization auth, @PathParam("app_id") String appId,
@@ -51,11 +51,11 @@ interface DeviceService {
       @PathParam("app_id") String appId, @PathParam("user_id") String userId,
       @PathParam("device_id") String deviceId) throws GetDeviceException;
 
-  static DeviceService getClient(String url) {
+  static deviceService getClient(String url) {
     return Feign.builder()
         .contract(new OptionalAwareContract(new JAXRSContract()))
         .decoder(new JacksonDecoder(ObjectMappers.JSON_MAPPER))
         .encoder(new JacksonEncoder(ObjectMappers.JSON_MAPPER))
-        .errorDecoder(new DeviceServiceErrorDecoder()).target(DeviceService.class, url);
+        .errorDecoder(new deviceServiceErrorDecoder()).target(deviceService.class, url);
   }
 }

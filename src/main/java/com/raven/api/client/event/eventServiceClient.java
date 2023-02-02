@@ -10,18 +10,18 @@ import java.lang.RuntimeException;
 import java.lang.String;
 import java.util.Optional;
 
-public final class EventServiceClient {
-  private final EventService service;
+public final class eventServiceClient {
+  private final eventService service;
 
   private final Optional<Authorization> auth;
 
-  public EventServiceClient(String url) {
-    this.service = EventService.getClient(url);
+  public eventServiceClient(String url) {
+    this.service = eventService.getClient(url);
     this.auth = Optional.empty();
   }
 
-  public EventServiceClient(String url, Authorization auth) {
-    this.service = EventService.getClient(url);
+  public eventServiceClient(String url, Authorization auth) {
+    this.service = eventService.getClient(url);
     this.auth = Optional.of(auth);
   }
 

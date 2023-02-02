@@ -24,7 +24,7 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/v1/apps")
-interface UserService {
+interface userService {
   @POST
   @Path("/{app_id}/users")
   RavenUser createOrUpdate(@HeaderParam("Authorization") Authorization auth,
@@ -35,11 +35,11 @@ interface UserService {
   RavenUser get(@HeaderParam("Authorization") Authorization auth, @PathParam("app_id") String appId,
       @PathParam("user_id") String userId) throws GetException;
 
-  static UserService getClient(String url) {
+  static userService getClient(String url) {
     return Feign.builder()
         .contract(new OptionalAwareContract(new JAXRSContract()))
         .decoder(new JacksonDecoder(ObjectMappers.JSON_MAPPER))
         .encoder(new JacksonEncoder(ObjectMappers.JSON_MAPPER))
-        .errorDecoder(new UserServiceErrorDecoder()).target(UserService.class, url);
+        .errorDecoder(new userServiceErrorDecoder()).target(userService.class, url);
   }
 }

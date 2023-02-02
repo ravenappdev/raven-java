@@ -10,18 +10,18 @@ import java.lang.RuntimeException;
 import java.lang.String;
 import java.util.Optional;
 
-public final class UserServiceClient {
-  private final UserService service;
+public final class userServiceClient {
+  private final userService service;
 
   private final Optional<Authorization> auth;
 
-  public UserServiceClient(String url) {
-    this.service = UserService.getClient(url);
+  public userServiceClient(String url) {
+    this.service = userService.getClient(url);
     this.auth = Optional.empty();
   }
 
-  public UserServiceClient(String url, Authorization auth) {
-    this.service = UserService.getClient(url);
+  public userServiceClient(String url, Authorization auth) {
+    this.service = userService.getClient(url);
     this.auth = Optional.of(auth);
   }
 

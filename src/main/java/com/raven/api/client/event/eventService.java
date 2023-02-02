@@ -25,7 +25,7 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/v1/apps")
-interface EventService {
+interface eventService {
   @POST
   @Path("/{app_id}/events/send")
   SendEventResponse send(@HeaderParam("Authorization") Authorization auth,
@@ -38,11 +38,11 @@ interface EventService {
       @HeaderParam("Idempotency-Key") Optional<String> idempotencyKey,
       @PathParam("app_id") String appId, BulkSendEventRequest body) throws SendBulkException;
 
-  static EventService getClient(String url) {
+  static eventService getClient(String url) {
     return Feign.builder()
         .contract(new OptionalAwareContract(new JAXRSContract()))
         .decoder(new JacksonDecoder(ObjectMappers.JSON_MAPPER))
         .encoder(new JacksonEncoder(ObjectMappers.JSON_MAPPER))
-        .errorDecoder(new EventServiceErrorDecoder()).target(EventService.class, url);
+        .errorDecoder(new eventServiceErrorDecoder()).target(eventService.class, url);
   }
 }

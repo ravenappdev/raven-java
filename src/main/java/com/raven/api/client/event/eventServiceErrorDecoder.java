@@ -12,7 +12,7 @@ import java.lang.Override;
 import java.lang.RuntimeException;
 import java.lang.String;
 
-final class EventServiceErrorDecoder implements ErrorDecoder {
+final class eventServiceErrorDecoder implements ErrorDecoder {
   @Override
   public Exception decode(String methodKey, Response response) {
     try {

@@ -43,6 +43,9 @@ public final class Send {
       return idempotencyKey;
     }
 
+    /**
+     * @return The <code>id</code> of the app
+     */
     public String getAppId() {
       return appId;
     }
@@ -125,6 +128,10 @@ public final class Send {
         return this;
       }
 
+      /**
+       * <p>The <code>id</code> of the app</p>
+       * @return Reference to {@code this} so that method calls can be chained together.
+       */
       @Override
       public BodyStage appId(String appId) {
         this.appId = appId;

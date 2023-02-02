@@ -40,20 +40,13 @@ public final class SendEventRequest {
   }
 
   /**
-   * @return event name
+   * @return The name of the event
    */
   @JsonProperty("event")
   public String getEvent() {
     return event;
   }
 
-  /**
-   * @return {
-   * &quot;param1&quot; : &quot;&lt;value1&gt;&quot;,
-   * &quot;param2&quot; : &quot;&lt;value2&gt;&quot;,
-   * &quot;param3&quot; : object/array&quot;
-   * }
-   */
   @JsonProperty("data")
   public Map<String, Object> getData() {
     return data;
@@ -161,7 +154,7 @@ public final class SendEventRequest {
     }
 
     /**
-     * <p>event name</p>
+     * <p>The name of the event</p>
      * @return Reference to {@code this} so that method calls can be chained together.
      */
     @Override
@@ -224,28 +217,12 @@ public final class SendEventRequest {
       return this;
     }
 
-    /**
-     * <p>{
-     * &quot;param1&quot; : &quot;&lt;value1&gt;&quot;,
-     * &quot;param2&quot; : &quot;&lt;value2&gt;&quot;,
-     * &quot;param3&quot; : object/array&quot;
-     * }</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
     @Override
     public _FinalStage data(String key, Object value) {
       this.data.put(key, value);
       return this;
     }
 
-    /**
-     * <p>{
-     * &quot;param1&quot; : &quot;&lt;value1&gt;&quot;,
-     * &quot;param2&quot; : &quot;&lt;value2&gt;&quot;,
-     * &quot;param3&quot; : object/array&quot;
-     * }</p>
-     * @return Reference to {@code this} so that method calls can be chained together.
-     */
     @Override
     public _FinalStage putAllData(Map<String, Object> data) {
       this.data.putAll(data);

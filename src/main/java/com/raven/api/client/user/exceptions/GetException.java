@@ -41,19 +41,19 @@ public final class GetException extends Exception {
     return new GetException(new UnknownErrorValue(unknownValue), statusCode);
   }
 
-  public boolean isOther() {
+  public boolean _isOther() {
     return value instanceof UnknownErrorValue;
   }
 
-  public Optional<Object> getOther() {
-    if (isOther()) {
+  public Optional<Object> _getOther() {
+    if (_isOther()) {
       return Optional.of(((UnknownErrorValue) value).unknownValue);
     }
     return Optional.empty();
   }
 
   public interface Visitor<T> {
-    T visitOther(Object other);
+    T _visitOther(Object otherType);
   }
 
   @JsonTypeInfo(
@@ -81,7 +81,7 @@ public final class GetException extends Exception {
 
     @Override
     public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitOther(unknownValue);
+      return visitor._visitOther(unknownValue);
     }
 
     @Override

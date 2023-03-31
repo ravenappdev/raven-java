@@ -1,9 +1,9 @@
 package com.raven.api;
 
-import com.raven.api.client.Authorization;
+import com.raven.api.client.AuthKey;
 import com.raven.api.client.ServiceClient;
-import com.raven.api.client.device.deviceServiceClient;
-import com.raven.api.client.user.userServiceClient;
+import com.raven.api.client.device.DeviceServiceClient;
+import com.raven.api.client.user.UserServiceClient;
 import com.raven.api.core.Environment;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
@@ -12,29 +12,29 @@ import java.util.function.Supplier;
 public final class RavenApiClient {
   private final Supplier<ServiceClient> serviceClient;
 
-  private final Supplier<deviceServiceClient> deviceServiceClient;
+  private final Supplier<DeviceServiceClient> deviceServiceClient;
 
-  private final Supplier<userServiceClient> userServiceClient;
+  private final Supplier<UserServiceClient> userServiceClient;
 
-  public RavenApiClient(Authorization auth) {
+  public RavenApiClient(AuthKey auth) {
     this(Environment.PROD, auth);
   }
 
-  public RavenApiClient(Environment environment, Authorization auth) {
-    this.userServiceClient = memoize(() -> new userServiceClient(environment.getUrl(), auth));
+  public RavenApiClient(Environment environment, AuthKey auth) {
+    this.userServiceClient = memoize(() -> new UserServiceClient(environment.getUrl(), auth));
     this.serviceClient = memoize(() -> new ServiceClient(environment.getUrl(), auth));
-    this.deviceServiceClient = memoize(() -> new deviceServiceClient(environment.getUrl(), auth));
+    this.deviceServiceClient = memoize(() -> new DeviceServiceClient(environment.getUrl(), auth));
   }
 
   public final ServiceClient service() {
     return this.serviceClient.get();
   }
 
-  public final deviceServiceClient device() {
+  public final DeviceServiceClient device() {
     return this.deviceServiceClient.get();
   }
 
-  public final userServiceClient user() {
+  public final UserServiceClient user() {
     return this.userServiceClient.get();
   }
 

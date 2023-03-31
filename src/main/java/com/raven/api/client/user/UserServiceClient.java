@@ -1,6 +1,6 @@
 package com.raven.api.client.user;
 
-import com.raven.api.client.Authorization;
+import com.raven.api.client.AuthKey;
 import com.raven.api.client.user.endpoints.CreateOrUpdate;
 import com.raven.api.client.user.endpoints.Get;
 import com.raven.api.client.user.exceptions.CreateOrUpdateException;
@@ -10,18 +10,18 @@ import java.lang.RuntimeException;
 import java.lang.String;
 import java.util.Optional;
 
-public final class userServiceClient {
-  private final userService service;
+public final class UserServiceClient {
+  private final UserService service;
 
-  private final Optional<Authorization> auth;
+  private final Optional<AuthKey> auth;
 
-  public userServiceClient(String url) {
-    this.service = userService.getClient(url);
+  public UserServiceClient(String url) {
+    this.service = UserService.getClient(url);
     this.auth = Optional.empty();
   }
 
-  public userServiceClient(String url, Authorization auth) {
-    this.service = userService.getClient(url);
+  public UserServiceClient(String url, AuthKey auth) {
+    this.service = UserService.getClient(url);
     this.auth = Optional.of(auth);
   }
 
@@ -32,7 +32,7 @@ public final class userServiceClient {
    * @return <p>updated or newly created user.</p>
    */
   public RavenUser createOrUpdate(CreateOrUpdate.Request request) throws CreateOrUpdateException {
-    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
+    AuthKey authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
     return this.service.createOrUpdate(authValue, request.getAppId(), request.getBody());
   }
 
@@ -43,7 +43,7 @@ public final class userServiceClient {
    * @return RavenUser
    */
   public RavenUser get(Get.Request request) throws GetException {
-    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
+    AuthKey authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
     return this.service.get(authValue, request.getAppId(), request.getUserId());
   }
 }

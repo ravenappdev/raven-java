@@ -1,9 +1,7 @@
-package com.raven.api.client.device;
+package com.raven.api.client.user;
 
-import com.raven.api.client.device.exceptions.AddException;
-import com.raven.api.client.device.exceptions.DeleteException;
-import com.raven.api.client.device.exceptions.GetDeviceException;
-import com.raven.api.client.device.exceptions.UpdateException;
+import com.raven.api.client.user.exceptions.CreateOrUpdateException;
+import com.raven.api.client.user.exceptions.GetException;
 import com.raven.api.core.ObjectMappers;
 import feign.Response;
 import feign.codec.ErrorDecoder;
@@ -14,21 +12,15 @@ import java.lang.Override;
 import java.lang.RuntimeException;
 import java.lang.String;
 
-final class deviceServiceErrorDecoder implements ErrorDecoder {
+final class UserServiceErrorDecoder implements ErrorDecoder {
   @Override
   public Exception decode(String methodKey, Response response) {
     try {
-      if (methodKey.contains("add")) {
-        return decodeException(response, AddException.class);
+      if (methodKey.contains("createOrUpdate")) {
+        return decodeException(response, CreateOrUpdateException.class);
       }
-      if (methodKey.contains("update")) {
-        return decodeException(response, UpdateException.class);
-      }
-      if (methodKey.contains("delete")) {
-        return decodeException(response, DeleteException.class);
-      }
-      if (methodKey.contains("getDevice")) {
-        return decodeException(response, GetDeviceException.class);
+      if (methodKey.contains("get")) {
+        return decodeException(response, GetException.class);
       }
     }
     catch (IOException e) {

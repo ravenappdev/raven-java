@@ -6,10 +6,10 @@ import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
 
-public final class Authorization {
+public final class AuthKey {
   private final String value;
 
-  private Authorization(String value) {
+  private AuthKey(String value) {
     this.value = value;
   }
 
@@ -20,7 +20,7 @@ public final class Authorization {
 
   @Override
   public boolean equals(Object other) {
-    return this == other || (other instanceof Authorization && this.value.equals(((Authorization) other).value));
+    return this == other || (other instanceof AuthKey && this.value.equals(((AuthKey) other).value));
   }
 
   @Override
@@ -36,11 +36,11 @@ public final class Authorization {
   @JsonCreator(
       mode = JsonCreator.Mode.DELEGATING
   )
-  public static Authorization of(String value) {
-    return new Authorization(value);
+  public static AuthKey of(String value) {
+    return new AuthKey(value);
   }
 
-  public static Authorization valueOf(String value) {
+  public static AuthKey valueOf(String value) {
     return of(value);
   }
 }

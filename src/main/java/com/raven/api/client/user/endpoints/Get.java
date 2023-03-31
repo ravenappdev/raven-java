@@ -1,6 +1,6 @@
 package com.raven.api.client.user.endpoints;
 
-import com.raven.api.client.Authorization;
+import com.raven.api.client.AuthKey;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -16,11 +16,11 @@ public final class Get {
 
     private final String userId;
 
-    private final Optional<Authorization> authOverride;
+    private final Optional<AuthKey> authOverride;
 
     private int _cachedHashCode;
 
-    Request(String appId, String userId, Optional<Authorization> authOverride) {
+    Request(String appId, String userId, Optional<AuthKey> authOverride) {
       this.appId = appId;
       this.userId = userId;
       this.authOverride = authOverride;
@@ -40,7 +40,7 @@ public final class Get {
       return userId;
     }
 
-    public Optional<Authorization> getAuthOverride() {
+    public Optional<AuthKey> getAuthOverride() {
       return authOverride;
     }
 
@@ -84,9 +84,9 @@ public final class Get {
     public interface _FinalStage {
       Request build();
 
-      _FinalStage authOverride(Optional<Authorization> authOverride);
+      _FinalStage authOverride(Optional<AuthKey> authOverride);
 
-      _FinalStage authOverride(Authorization authOverride);
+      _FinalStage authOverride(AuthKey authOverride);
     }
 
     public static final class Builder implements AppIdStage, UserIdStage, _FinalStage {
@@ -94,7 +94,7 @@ public final class Get {
 
       private String userId;
 
-      private Optional<Authorization> authOverride = Optional.empty();
+      private Optional<AuthKey> authOverride = Optional.empty();
 
       private Builder() {
       }
@@ -128,13 +128,13 @@ public final class Get {
       }
 
       @Override
-      public _FinalStage authOverride(Authorization authOverride) {
+      public _FinalStage authOverride(AuthKey authOverride) {
         this.authOverride = Optional.of(authOverride);
         return this;
       }
 
       @Override
-      public _FinalStage authOverride(Optional<Authorization> authOverride) {
+      public _FinalStage authOverride(Optional<AuthKey> authOverride) {
         this.authOverride = authOverride;
         return this;
       }

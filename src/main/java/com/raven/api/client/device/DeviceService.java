@@ -1,7 +1,7 @@
 package com.raven.api.client.device;
 
 import com.fern.java.jersey.contracts.OptionalAwareContract;
-import com.raven.api.client.Authorization;
+import com.raven.api.client.AuthKey;
 import com.raven.api.client.device.exceptions.AddException;
 import com.raven.api.client.device.exceptions.DeleteException;
 import com.raven.api.client.device.exceptions.GetDeviceException;
@@ -27,35 +27,35 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("/v1/apps")
-interface deviceService {
+interface DeviceService {
   @POST
   @Path("/{app_id}/users/{user_id}/devices")
-  Device add(@HeaderParam("Authorization") Authorization auth, @PathParam("app_id") String appId,
+  Device add(@HeaderParam("Authorization") AuthKey auth, @PathParam("app_id") String appId,
       @PathParam("user_id") String userId, Device body) throws AddException;
 
   @PUT
   @Path("/{app_id}/users/{user_id}/devices/{device_id}")
-  Device update(@HeaderParam("Authorization") Authorization auth, @PathParam("app_id") String appId,
+  Device update(@HeaderParam("Authorization") AuthKey auth, @PathParam("app_id") String appId,
       @PathParam("user_id") String userId, @PathParam("device_id") String deviceId, Device body)
       throws UpdateException;
 
   @DELETE
   @Path("/{app_id}/users/{user_id}/devices/{device_id}")
-  void delete(@HeaderParam("Authorization") Authorization auth, @PathParam("app_id") String appId,
+  void delete(@HeaderParam("Authorization") AuthKey auth, @PathParam("app_id") String appId,
       @PathParam("user_id") String userId, @PathParam("device_id") String deviceId) throws
       DeleteException;
 
   @GET
   @Path("/{app_id}/users/{user_id}/devices/{device_id}")
-  Device getDevice(@HeaderParam("Authorization") Authorization auth,
-      @PathParam("app_id") String appId, @PathParam("user_id") String userId,
-      @PathParam("device_id") String deviceId) throws GetDeviceException;
+  Device getDevice(@HeaderParam("Authorization") AuthKey auth, @PathParam("app_id") String appId,
+      @PathParam("user_id") String userId, @PathParam("device_id") String deviceId) throws
+      GetDeviceException;
 
-  static deviceService getClient(String url) {
+  static DeviceService getClient(String url) {
     return Feign.builder()
         .contract(new OptionalAwareContract(new JAXRSContract()))
         .decoder(new JacksonDecoder(ObjectMappers.JSON_MAPPER))
         .encoder(new JacksonEncoder(ObjectMappers.JSON_MAPPER))
-        .errorDecoder(new deviceServiceErrorDecoder()).target(deviceService.class, url);
+        .errorDecoder(new DeviceServiceErrorDecoder()).target(DeviceService.class, url);
   }
 }

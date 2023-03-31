@@ -12,14 +12,14 @@ import java.util.Optional;
 public final class ServiceClient {
   private final Service service;
 
-  private final Optional<Authorization> auth;
+  private final Optional<AuthKey> auth;
 
   public ServiceClient(String url) {
     this.service = Service.getClient(url);
     this.auth = Optional.empty();
   }
 
-  public ServiceClient(String url, Authorization auth) {
+  public ServiceClient(String url, AuthKey auth) {
     this.service = Service.getClient(url);
     this.auth = Optional.of(auth);
   }
@@ -31,12 +31,12 @@ public final class ServiceClient {
    * @return SendEventResponse
    */
   public SendEventResponse send(Send.Request request) throws SendException {
-    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
+    AuthKey authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
     return this.service.send(authValue, request.getIdempotencyKey(), request.getAppId(), request.getBody());
   }
 
   public SendEventResponse sendBulk(SendBulk.Request request) throws SendBulkException {
-    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
+    AuthKey authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
     return this.service.sendBulk(authValue, request.getIdempotencyKey(), request.getAppId(), request.getBody());
   }
 }

@@ -1,6 +1,6 @@
 package com.raven.api.client.user.endpoints;
 
-import com.raven.api.client.Authorization;
+import com.raven.api.client.AuthKey;
 import com.raven.api.client.user.types.CreateUserRequest;
 import java.lang.Object;
 import java.lang.Override;
@@ -17,11 +17,11 @@ public final class CreateOrUpdate {
 
     private final CreateUserRequest body;
 
-    private final Optional<Authorization> authOverride;
+    private final Optional<AuthKey> authOverride;
 
     private int _cachedHashCode;
 
-    Request(String appId, CreateUserRequest body, Optional<Authorization> authOverride) {
+    Request(String appId, CreateUserRequest body, Optional<AuthKey> authOverride) {
       this.appId = appId;
       this.body = body;
       this.authOverride = authOverride;
@@ -35,7 +35,7 @@ public final class CreateOrUpdate {
       return body;
     }
 
-    public Optional<Authorization> getAuthOverride() {
+    public Optional<AuthKey> getAuthOverride() {
       return authOverride;
     }
 
@@ -79,9 +79,9 @@ public final class CreateOrUpdate {
     public interface _FinalStage {
       Request build();
 
-      _FinalStage authOverride(Optional<Authorization> authOverride);
+      _FinalStage authOverride(Optional<AuthKey> authOverride);
 
-      _FinalStage authOverride(Authorization authOverride);
+      _FinalStage authOverride(AuthKey authOverride);
     }
 
     public static final class Builder implements AppIdStage, BodyStage, _FinalStage {
@@ -89,7 +89,7 @@ public final class CreateOrUpdate {
 
       private CreateUserRequest body;
 
-      private Optional<Authorization> authOverride = Optional.empty();
+      private Optional<AuthKey> authOverride = Optional.empty();
 
       private Builder() {
       }
@@ -115,13 +115,13 @@ public final class CreateOrUpdate {
       }
 
       @Override
-      public _FinalStage authOverride(Authorization authOverride) {
+      public _FinalStage authOverride(AuthKey authOverride) {
         this.authOverride = Optional.of(authOverride);
         return this;
       }
 
       @Override
-      public _FinalStage authOverride(Optional<Authorization> authOverride) {
+      public _FinalStage authOverride(Optional<AuthKey> authOverride) {
         this.authOverride = authOverride;
         return this;
       }

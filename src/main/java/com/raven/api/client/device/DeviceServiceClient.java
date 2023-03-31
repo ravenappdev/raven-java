@@ -1,6 +1,6 @@
 package com.raven.api.client.device;
 
-import com.raven.api.client.Authorization;
+import com.raven.api.client.AuthKey;
 import com.raven.api.client.device.endpoints.Add;
 import com.raven.api.client.device.endpoints.Delete;
 import com.raven.api.client.device.endpoints.GetDevice;
@@ -14,18 +14,18 @@ import java.lang.RuntimeException;
 import java.lang.String;
 import java.util.Optional;
 
-public final class deviceServiceClient {
-  private final deviceService service;
+public final class DeviceServiceClient {
+  private final DeviceService service;
 
-  private final Optional<Authorization> auth;
+  private final Optional<AuthKey> auth;
 
-  public deviceServiceClient(String url) {
-    this.service = deviceService.getClient(url);
+  public DeviceServiceClient(String url) {
+    this.service = DeviceService.getClient(url);
     this.auth = Optional.empty();
   }
 
-  public deviceServiceClient(String url, Authorization auth) {
-    this.service = deviceService.getClient(url);
+  public DeviceServiceClient(String url, AuthKey auth) {
+    this.service = DeviceService.getClient(url);
     this.auth = Optional.of(auth);
   }
 
@@ -38,7 +38,7 @@ public final class deviceServiceClient {
    * @return <p>the updated Device</p>
    */
   public Device add(Add.Request request) throws AddException {
-    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
+    AuthKey authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
     return this.service.add(authValue, request.getAppId(), request.getUserId(), request.getBody());
   }
 
@@ -49,7 +49,7 @@ public final class deviceServiceClient {
    * @return <p>the updated Device</p>
    */
   public Device update(Update.Request request) throws UpdateException {
-    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
+    AuthKey authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
     return this.service.update(authValue, request.getAppId(), request.getUserId(), request.getDeviceId(), request.getBody());
   }
 
@@ -59,7 +59,7 @@ public final class deviceServiceClient {
    * @throws DeleteException Exception that wraps all possible endpoint errors 
    */
   public void delete(Delete.Request request) throws DeleteException {
-    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
+    AuthKey authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
     this.service.delete(authValue, request.getAppId(), request.getUserId(), request.getDeviceId());
   }
 
@@ -70,7 +70,7 @@ public final class deviceServiceClient {
    * @return Device
    */
   public Device getDevice(GetDevice.Request request) throws GetDeviceException {
-    Authorization authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
+    AuthKey authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required")));
     return this.service.getDevice(authValue, request.getAppId(), request.getUserId(), request.getDeviceId());
   }
 }

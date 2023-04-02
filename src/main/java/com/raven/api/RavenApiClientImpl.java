@@ -133,7 +133,7 @@ public final class RavenApiClientImpl implements RavenApiClient {
 
         @Override
         public RavenApiClient.Builder authKey(String authKey) {
-          this.clientOptionsBuilder.addHeader("Authorization", authKey);
+          this.clientOptionsBuilder.addHeader("Authorization", "AuthKey" + authKey);
           return this;
         }
 

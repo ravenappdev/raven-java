@@ -14,7 +14,7 @@ API documentation is available at <https://docs.ravenapp.dev/introduction>.
 Add this dependency to your project's build file:
 
 ```groovy
-implementation "dev.ravenapp:raven-java:0.0.33"
+implementation "dev.ravenapp:raven-java:0.0.50"
 ```
 
 ### Maven users
@@ -25,28 +25,25 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>dev.ravenapp</groupId>
   <artifactId>raven-java</artifactId>
-  <version>0.0.33</version>
+  <version>0.0.50</version>
 </dependency>
 ```
 
 ## Usage
 
 ```java
-RavenApiClient ravenApiClient = new RavenApiClient(Authorization.of("AuthKey <auth>"));
-try {
-    var response = client.send(Send.Request.builder()
-                .appId("<app_id>")
-                .body(SendEventRequest.builder()
-                    .event("payment_alert")
-                    .data(Map.of("name", "Adam"))
-                    .user(User.builder().mobile("+1234567890").build())
-                    .build())
-                .build());
-    
-    System.out.println(response.getId());
-} catch (SendException e) {
-   System.out.println("Failed to send request" + e.getMessage());
-}
+
+RavenApiClient ravenApiClient = RavenApiClient.builder()
+        .authKey(System.getenv("RAVEN_TOKEN"))
+        .build();
+
+var response = client.send("appId", SendEventRequest.builder()
+        .event("payment_alert")
+        .data(Map.of("name", "Adam"))
+        .user(User.builder().mobile("+1234567890").build())
+        .build());
+
+System.out.println(response.getId());
 ```
 
 ## Sample app
